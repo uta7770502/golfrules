@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>オフラインモード</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; padding:1rem; }
+    header { background: #16a34a; color: white; padding: 1rem; text-align: center; font-weight: bold; }
+    section { margin:1rem 0; }
+    ul { list-style:none; padding:0; margin:0; }
+    li { padding:0.5rem 0; display:flex; align-items:center; gap:0.5rem; border-bottom:1px solid #ddd; }
+    li a { text-decoration:none; color:#16a34a; font-weight:bold; display:flex; align-items:center; gap:0.5rem; flex:1; }
+    .thumb { width:40px; height:40px; object-fit:cover; border-radius:0.3rem; flex-shrink:0; }
+    a.back { display:block; margin:1rem 0; color:#16a34a; }
+  </style>
+</head>
+<body>
+  <header>📴 オフラインモード</header>
+  <div id="root"></div>
+  <a class="back" href="index.html">← トップへ戻る</a>
+
+  <script type="text/babel">
+    function Offline() {
+      const [rules, setRules] = React.useState([]);
+      const [favorites, setFavorites] = React.useState([]);
+      const [recent, setRecent] = React.useState([]);
+
+      React.useEffect(() => {
+        fetch("rules.json")
+          .then(res => res.json())
+          .then(data => setRules(data));
+
+        const favs = JSON.parse(localStorage.getItem("favorites") || "[]");
+        setFavorites(favs);
+
+        const recents = JSON.parse(localStorage.getItem("recentRules") || "[]");
+        setRecent(recents);
+      }, []);
+
+      const favoriteRules = rules.filter(r => favorites.includes(r.id));
+      const recentRules = rules.filter(r => recent.includes(r.id));
+
+      return (
+        <div>
+          <section>
+            <h2>⭐ お気に入りルール</h2>
+            <ul>
+              {favoriteRules.length === 0 ? (
+                <li>お気に入りはまだありません</li>
+              ) : (
+                favoriteRules.map(rule => (
+                  <li key={rule.id}>
+                    {rule.image && rule.image !== "" && (
+                      <img src={rule.image} alt={rule.name} className="thumb" />
+                    )}
+                    <span>{rule.name}</span>
+                  </li>
+                ))
+              )}
+            </ul>
+          </section>
+          <section>
+            <h2>📘 最近見たルール</h2>
+            <ul>
+              {recentRules.length === 0 ? (
+                <li>最近見たルールはまだありません</li>
+              ) : (
+                recentRules.map(rule => (
+                  <li key={rule.id}>
+                    {rule.image && rule.image !== "" && (
+                      <img src={rule.image} alt={rule.name} className="thumb" />
+                    )}
+                    <span>{rule.name}</span>
+                  </li>
+                ))
+              )}
+            </ul>
+          </section>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<Offline />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ルール詳細</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; padding:1rem; }
+    header { background: #16a34a; color: white; padding: 1rem; text-align: center; font-weight: bold; }
+    .container { padding:1rem; }
+    .tip { margin-top:1rem; font-size:0.9rem; color:#555; }
+    button { margin-top:1rem; padding:0.5rem 1rem; background:#facc15; border:none; border-radius:0.5rem; cursor:pointer; }
+    button:hover { background:#eab308; }
+    a.back { display:block; margin:1rem 0; color:#16a34a; }
+    .illustration img { width:100%; max-width:400px; margin:1rem 0; border-radius:0.5rem; }
+    .related { margin-top:2rem; }
+    .related h3 { margin-bottom:0.5rem; }
+    .carousel-wrapper { display:flex; align-items:center; position:relative; gap:0.5rem; }
+    .related-carousel { display:flex; gap:0.75rem; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; flex:1; }
+    .related-card { flex:0 0 auto; width:100px; scroll-snap-align:start; text-align:center; text-decoration:none; color:#16a34a; }
+    .related-card img { width:100%; max-width:80px; border-radius:0.5rem; }
+    .related-card span { font-size:0.8rem; margin-top:0.25rem; display:block; }
+    .scroll-btn { background:#16a34a; color:white; border:none; padding:0.5rem; cursor:pointer; font-size:1.2rem; border-radius:0.25rem; }
+    .scroll-btn:hover { background:#15803d; }
+  </style>
+</head>
+<body>
+  <header>📘 ルール詳細</header>
+  <div id="root"></div>
+  <a class="back" href="rules.html">← ルール一覧へ戻る</a>
+
+  <script type="text/babel">
+    function RuleDetail() {
+      const [rule, setRule] = React.useState(null);
+      const [isFavorite, setIsFavorite] = React.useState(false);
+      const [related, setRelated] = React.useState([]);
+
+      React.useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get("id"));
+        fetch("rules.json")
+          .then(res => res.json())
+          .then(data => {
+            const found = data.find(r => r.id === id);
+            setRule(found);
+
+            const favs = JSON.parse(localStorage.getItem("favorites") || "[]");
+            setIsFavorite(favs.includes(id));
+
+            if (found) {
+              let recents = JSON.parse(localStorage.getItem("recentRules") || "[]");
+              recents = [found.id, ...recents.filter(rid => rid !== found.id)];
+              if (recents.length > 10) recents = recents.slice(0, 10);
+              localStorage.setItem("recentRules", JSON.stringify(recents));
+
+              // 関連ルール抽出
+              const relatedRules = data.filter(r =>
+                r.id !== found.id &&
+                (r.category === found.category || (r.tags && r.tags.some(t => found.tags.includes(t))))
+              ).slice(0, 10);
+              setRelated(relatedRules);
+            }
+          });
+      }, []);
+
+      function toggleFavorite() {
+        if (!rule) return;
+        let favs = JSON.parse(localStorage.getItem("favorites") || "[]");
+        if (isFavorite) {
+          favs = favs.filter(f => f !== rule.id);
+        } else {
+          favs.push(rule.id);
+        }
+        localStorage.setItem("favorites", JSON.stringify(favs));
+        setIsFavorite(!isFavorite);
+      }
+
+      function scrollCarousel(direction) {
+        const el = document.getElementById("relatedCarousel");
+        if (el) {
+          const scrollAmount = 120;
+          el.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+        }
+      }
+
+      if (!rule) return <div>読み込み中...</div>;
+
+      return (
+        <div className="container">
+          <h2>{rule.name}</h2>
+          <p>{rule.detail}</p>
+          {rule.illustration && (
+            <div className="illustration">
+              <img src={rule.illustration} alt={rule.name + "の図解"} />
+            </div>
+          )}
+          <div className="tip">💡 {rule.tip}</div>
+          <button onClick={toggleFavorite}>
+            {isFavorite ? "⭐ お気に入り解除" : "⭐ お気に入りに追加"}
+          </button>
+
+          {related.length > 0 && (
+            <section className="related">
+              <h3>🔗 関連ルール</h3>
+              <div className="carousel-wrapper">
+                <button className="scroll-btn" onClick={() => scrollCarousel(-1)}>←</button>
+                <div className="related-carousel" id="relatedCarousel">
+                  {related.map(r => (
+                    <a key={r.id} href={"rule-detail.html?id=" + r.id} className="related-card">
+                      <img src={r.image} alt={r.name} />
+                      <span>{r.name}</span>
+                    </a>
+                  ))}
+                </div>
+                <button className="scroll-btn" onClick={() => scrollCarousel(1)}>→</button>
+              </div>
+            </section>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<RuleDetail />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>ゴルフルール</title>
+<script crossorigin="" src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+      body { font-family: system-ui, sans-serif; margin: 0; background: #fff; }
+      header { background: #16a34a; color: #fff; padding: 1rem; text-align: center; font-weight: bold; }
+      button { cursor: pointer; border: none; width: 100%; }
+      .card { border-radius: 0.5rem; padding: 1.2rem; text-align: center; font-size: 1.1rem; }
+      .green { background: #ecfdf5; }
+      .yellow { background: #fef9c3; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+      a { text-decoration: none; color: inherit; display: block; }
+      ul.suggestions { list-style:none; padding:0; margin:0.5rem 0 0 0; border:1px solid #ccc; border-radius:0.5rem; background:#fff; }
+      ul.suggestions li { padding:0.5rem; border-bottom:1px solid #eee; }
+      ul.suggestions li:last-child { border-bottom:none; }
+      ul.suggestions a { color:#16a34a; text-decoration:none; }
+    </style>
+<style>
+.filter-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filter-section button {
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  background: #f2f8f2;
+  cursor: pointer;
+}
+
+.filter-section button:hover {
+  background: #d8efd8;
+}
+
+@media (max-width: 600px) {
+  .filter-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .filter-section h3 {
+    font-size: 14px;
+  }
+}
+</style>
+<style>
+    .home-block{margin:16px 12px;}
+    .search-wrap{display:flex;gap:8px}
+    #search-box{flex:1;padding:12px 14px;font-size:16px;border:1px solid #c9e3c9;border-radius:10px;background:#f6fbf6}
+    #voice-btn{min-width:48px;border:none;border-radius:10px;padding:0 10px;font-size:20px;background:#e8f5e8}
+    .quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+    .quick-btn{display:block;text-decoration:none;text-align:center;padding:14px 10px;border-radius:14px;border:1px solid #dfeee0;background:#f2f9f2;font-weight:600}
+    .quick-btn:hover{background:#e5f4e6}
+    .chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{display:inline-block;padding:8px 12px;border-radius:20px;border:1px solid #dfeee0;background:#f7faf7;text-decoration:none}
+    .suggest{position:relative}
+    .suggest ul{list-style:none;margin:8px 0 0;padding:0;border:1px solid #cfe8cf;border-radius:10px;background:#fff;overflow:hidden}
+    .suggest li{padding:10px 12px;border-top:1px solid #eef7ee;cursor:pointer}
+    .suggest li:first-child{border-top:none}
+    @media (max-width:600px){ .quick-grid{grid-template-columns:repeat(2,1fr)} }
+    </style>
+<style>
+/* override: lighter green for top page buttons */
+.quick-btn{
+  background:#f9fef9 !important;   /* lighter than #f2f9f2 */
+  border-color:#e7f5ea !important;  /* lighter than #dfeee0 */
+}
+.quick-btn:hover{
+  background:#eefaf0 !important;    /* subtle hover */
+}
+</style>
+</head>
+<body>
+<section class="home-block" id="search-section">
+<h2>ルールを検索</h2>
+<div class="search-wrap">
+<input aria-label="ルール検索" id="search-box" placeholder="キーワードで検索（例：OB、赤杭、バンカー）" type="search"/>
+<button aria-label="音声入力" id="voice-btn">🎤</button>
+</div>
+<div class="suggest" id="suggest-list"></div>
+</section>
+<div class="search-sections">
+<!-- 左カラム : 場所で探す -->
+<div class="search-column">
+<h2>場所で探す</h2>
+<div class="search-buttons">
+<button class="card">ティー</button>
+<button class="card">フェアウェイ</button>
+<button class="card">ラフ</button>
+<button class="card">グリーン</button>
+<button class="card">バンカー</button>
+</div>
+</div>
+<!-- 右カラム : 種類から探す -->
+<div class="search-column">
+<h2>種類から探す</h2>
+<div class="search-buttons">
+<button class="card">ティーショット</button>
+<button class="card">ペナルティ</button>
+<button class="card">ドロップ</button>
+<button class="card">救済</button>
+<button class="card">スコア</button>
+</div>
+</div>
+</div>
+<section id="favorites-entry">
+<p><a class="quick-btn fav">⭐️ お気に入り</a></p>
+</section>
+<section class="home-block" id="popular-keywords">
+<h2>人気のキーワード</h2>
+<div id="keyword-grid">
+</div></section>
+<script>
+  // グローバル変数として定義（React外でも使えるようにする）
+  let rules = [];
+
+  const keywords = [
+    {name:"OB", icon:""},
+    {name:"赤杭", icon:""},
+    {name:"黄杭", icon:""},
+    {name:"白杭", icon:""},
+    {name:"青杭", icon:""},
+    {name:"ロストボール", icon:""},
+    {name:"暫定球", icon:""},
+    {name:"バンカー", icon:""},
+  ];
+
+  function getCount(key){
+    return parseInt(localStorage.getItem("kw_" + key)) || 0;
+  }
+
+  function addCount(key){
+    const now = getCount(key) + 1;
+    localStorage.setItem("kw_" + key, now);
+  }
+
+  function renderKeywords(){
+    const grid = document.getElementById("keyword-grid");
+    if(!grid) return;
+
+    const sorted = [...keywords]
+      .map(k => ({...k, count: getCount(k.name)}))
+      .sort((a,b) => b.count - a.count)
+      .slice(0,6); // ← TOP6だけ表示
+
+    grid.innerHTML = ""; // 初期化
+
+    sorted.forEach(k => {
+      const btn = document.createElement("button");
+      btn.className = "card keyword-btn";
+      btn.textContent = k.name;
+      btn.addEventListener("click", () => {
+        addCount(k.name);
+        renderKeywords(); // 再描画
+
+        // rulesが読み込まれていればフィルタ
+        const filtered = rules.filter(r =>
+          (r.name && r.name.includes(k.name)) ||
+          (r.detail && r.detail.includes(k.name))
+        );
+        if (typeof showResults === "function") {
+          showResults(filtered);
+        }
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  // ページロード時に呼ぶ
+  document.addEventListener("DOMContentLoaded", renderKeywords);
+</script>
+<style>
+/* 人気のキーワードを3列表示にする */
+#keyword-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3列に分ける */
+  gap: 10px; /* ボタン同士の余白 */
+  margin-top: 10px;
+}
+
+#keyword-grid .card {
+  text-align: center;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+  .search-sections {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.search-column {
+  flex: 1;
+}
+
+.search-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.search-buttons .card {
+  width: 100%;
+}
+</style>
+<!-- React部分 -->
+<script type="text/babel">
+  function App() {
+    const [query, setQuery] = React.useState("");
+    const [suggestions, setSuggestions] = React.useState([]);
+    const [rulesState, setRules] = React.useState([]);
+
+    React.useEffect(() => {
+      fetch("rules.json")
+        .then(res => res.json())
+        .then(data => {
+          setRules(data);
+          rules = data; // ←グローバルにもコピー
+        });
+    }, []);
+
+    const handleChange = (e) => {
+      const value = e.target.value;
+      setQuery(value);
+      if (value.length > 0) {
+        const filtered = rules.filter(rule =>
+          rule.name.toLowerCase().includes(value.toLowerCase())
+        );
+        setSuggestions(filtered);
+      } else {
+        setSuggestions([]);
+      }
+    };
+
+    return (
+      <main>
+        <a href="rules.html">
+          <button className="card yellow-card">ルール一覧（2025 最新ver.）</button>
+        </a>
+        <div>
+          <input
+            type="text"
+            placeholder="ルールを検索…"
+            value={query}
+            onChange={handleChange}
+          />
+        </div>
+      </main>
+    );
+  }
+
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>
+<script>
+function resetKeywords(){
+  localStorage.clear();
+  alert("人気キーワードの履歴をリセットしました！");
+  renderKeywords(); // もう一度描画
+}
+</script>
+<div id="root"></div>
+<script type="text/babel">
+      function App() {
+        const [query, setQuery] = React.useState("");
+        const [suggestions, setSuggestions] = React.useState([]);
+        const [rules, setRules] = React.useState([]);
+
+        React.useEffect(() => {
+          fetch("rules.json")
+            .then(res => res.json())
+            .then(data => setRules(data));
+        }, []);
+
+        const handleChange = (e) => {
+          const value = e.target.value;
+          setQuery(value);
+          if (value.length > 0) {
+            const filtered = rules.filter((rule) =>
+              rule.name.toLowerCase().includes(value.toLowerCase())
+            );
+            setSuggestions(filtered);
+          } else {
+            setSuggestions([]);
+          }
+        };
+
+        return (
+          <main style={{ padding: "1rem" }}>
+            <a href="rules.html">
+              <button className="card yellow" style={{ marginBottom: "1rem", fontWeight: "bold" }}>
+                ルール一覧（2025 最新ver.）
+              </button>
+            </a>
+
+            <div>
+              <input
+                type="text"
+                value={query}
+                onChange={handleChange}
+                placeholder="ルールを検索..."
+                style={{ width: "100%", border: "1px solid #ccc", borderRadius: "0.5rem", padding: "0.75rem" }}
+              />
+              {suggestions.length > 0 && (
+                <ul className="suggestions">
+                  {suggestions.map((s) => (
+                    <li key={s.id}>
+                      <a href={"rule-detail.html?id=" + s.id}>{s.name}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            
+          </main>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+<script>
+// カテゴリフィルターボタン処理
+document.querySelectorAll('.filter-section button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const category = btn.getAttribute('data-category');
+    displayRules(rules.filter(rule => rule.category === category));
+  });
+});
+</script>
+<script>
+    (function(){
+      const input = document.getElementById('search-box');
+      const list = document.getElementById('suggest-list');
+      if(!input || !list) return;
+      const common = ["OB", "赤杭", "黄杭", "白杭", "青杭", "緑杭", "黒杭", "バンカー", "グリーン", "空振り", "暫定球", "誤球", "ロストボール", "カート道", "修理地"];
+      function render(items){
+        if(!items.length){ list.innerHTML=""; return; }
+        list.innerHTML = '<ul>'+items.map(w=>'<li>'+w+'</li>').join('')+'</ul>';
+        list.querySelectorAll('li').forEach(li=>{
+          li.addEventListener('click', ()=>{ input.value = li.textContent; window.location.href = 'rules.html?q='+encodeURIComponent(li.textContent); });
+        });
+      }
+      input.addEventListener('input', ()=>{
+        const q = input.value.trim();
+        const items = common.filter(w=>w.toLowerCase().includes(q.toLowerCase())).slice(0,8);
+        render(items);
+      });
+      // voice
+      const vb = document.getElementById('voice-btn');
+      if(vb){
+        vb.addEventListener('click', ()=>{
+          const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+          if(!SR){ alert('音声入力に対応していません'); return; }
+          const r = new SR();
+          r.lang = 'ja-JP';
+          r.onresult = (e)=>{
+            const t = e.results[0][0].transcript;
+            input.value = t;
+            window.location.href = 'rules.html?q='+encodeURIComponent(t);
+          };
+          r.start();
+        });
+      }
+    })();
+    </script>
+</body>
+</html>
