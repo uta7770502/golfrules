@@ -1,0 +1,97 @@
+/* 全体 */
+body {
+  margin: 0;
+  font-family: "Noto Sans JP", "Roboto", sans-serif;
+  background-color: #f9fdfd;
+  color: #333;
+}
+
+/* ヘッダー */
+.header {
+  background-color: #1BC4B5;
+  color: #fff;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* カード */
+.welcome-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+/* ボタン */
+.btn {
+  display: block;
+  width: 80%;
+  margin: 12px auto;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 40px; /* pill型 */
+  text-decoration: none;
+  text-align: center;
+  transition: 0.3s;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.btn-green {
+  background-color: #1BC4B5;
+  color: #fff;
+}
+
+.btn-green:hover {
+  background-color: #17a093;
+}
+
+.btn-yellow {
+  background-color: #FFD74A;
+  color: #000;
+}
+
+.btn-yellow:hover {
+  background-color: #e6c038;
+}
+
+/* カテゴリ・場面ブロック */
+.category-block {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.category-block h2 {
+  font-size: 20px;
+  margin: 20px 0 10px;
+  color: #1BC4B5;
+}
+
+/* ナビゲーション */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  border-top: 1px solid #eee;
+}
+
+.nav-item {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 14px;
+  text-decoration: none;
+  color: #888;
+  text-align: center;
+}
+
+.nav-item.active {
+  color: #1BC4B5;
+  font-weight: bold;
+}
