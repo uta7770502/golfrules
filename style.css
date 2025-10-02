@@ -70,25 +70,33 @@ body {
   border-radius: 20px;
 }
 
-/* 場所/種類 2カラム */
+/* 2カラム構成 */
 .category-grid {
   display: flex;
   justify-content: center;
   gap: 20px;
   margin: 20px auto;
+  max-width: 800px;
 }
 
 .category-column {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: center;
+  align-items: stretch;
 }
 
 .category-column h3 {
+  text-align: center;
   margin-bottom: 10px;
   font-size: 16px;
+  font-weight: bold;
   color: #1BC4B5;
+}
+
+.category-column .btn {
+  width: 100%;
 }
 
 /* お気に入り */
