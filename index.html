@@ -8,28 +8,74 @@
 </head>
 <body>
   <header class="header">
-    <h1>⛳ 世界一使いやすいゴルフルール</h1>
+    <h1>ルールを検索</h1>
   </header>
 
   <main class="main">
-    <div class="welcome-card">
-      <h2>ラウンド中でも迷わない！</h2>
-      <p>3タップ以内でルールに到達できます。</p>
+    <!-- 検索ボックス -->
+    <div class="search-card">
+      <input type="text" placeholder="キーワードで検索（例：OB、ペナルティ）">
+      <button class="btn btn-green">🔍</button>
+      <button class="btn btn-yellow">🎤</button>
     </div>
 
-    <div class="button-group">
-      <a href="category.html" class="btn btn-green">場所から探す</a>
-      <a href="scene.html" class="btn btn-green">場面から探す</a>
-      <a href="search.html" class="btn btn-yellow">検索</a>
+    <!-- 場所 / 種類 2カラム -->
+    <div class="category-grid">
+      <!-- 場所で探す -->
+      <div class="category-column">
+        <h3>場所で探す</h3>
+        <a href="#" class="btn btn-green">ティー</a>
+        <a href="#" class="btn btn-green">フェアウェイ</a>
+        <a href="#" class="btn btn-green">ラフ</a>
+        <a href="#" class="btn btn-green">グリーン</a>
+        <a href="#" class="btn btn-green">バンカー</a>
+      </div>
+
+      <!-- 種類から探す -->
+      <div class="category-column">
+        <h3>種類から探す</h3>
+        <a href="#" class="btn btn-green">ティーショット</a>
+        <a href="#" class="btn btn-green">ペナルティ</a>
+        <a href="#" class="btn btn-green">ドロップ</a>
+        <a href="#" class="btn btn-green">救済</a>
+        <a href="#" class="btn btn-green">スコア</a>
+      </div>
+    </div>
+
+    <!-- お気に入り -->
+    <div class="favorite-card">
+      ⭐️ お気に入り
+    </div>
+
+    <!-- 人気のキーワード -->
+    <div class="keyword-card">
+      <h3>人気のキーワード</h3>
+      <div class="keyword-list">
+        <button class="btn btn-light">OB</button>
+        <button class="btn btn-light">暫定球</button>
+        <button class="btn btn-light">黄杭</button>
+        <button class="btn btn-light">白杭</button>
+        <button class="btn btn-light">赤杭</button>
+        <button class="btn btn-light">青杭</button>
+      </div>
+    </div>
+
+    <!-- ルール一覧 -->
+    <a href="#" class="btn btn-yellow wide-btn">ルール一覧（2025最新ver.）</a>
+
+    <!-- 下部検索 -->
+    <div class="search-footer">
+      <input type="text" placeholder="ルールを検索…">
+      <button class="btn btn-green">🔍</button>
     </div>
   </main>
 
   <nav class="bottom-nav">
-    <a href="index.html" class="nav-item active">🏠 ホーム</a>
-    <a href="category.html" class="nav-item">🌳 場所</a>
-    <a href="scene.html" class="nav-item">🎯 場面</a>
-    <a href="search.html" class="nav-item">🔍 検索</a>
-    <a href="settings.html" class="nav-item">⚙️ 設定</a>
+    <a href="#" class="nav-item active">🏠 ホーム</a>
+    <a href="#" class="nav-item">🌳 場所</a>
+    <a href="#" class="nav-item">🎯 種類</a>
+    <a href="#" class="nav-item">🔍 検索</a>
+    <a href="#" class="nav-item">⚙️ 設定</a>
   </nav>
 </body>
 </html>
