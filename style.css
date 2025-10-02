@@ -5,7 +5,7 @@ body {
   color: #333;
 }
 
-/* ヘッダー（角丸カード風） */
+/* ヘッダー */
 .header {
   background-color: #1BC4B5;
   color: #fff;
@@ -50,16 +50,13 @@ body {
 
 /* ボタン共通 */
 .btn {
-  display: inline-block;
   font-size: 16px;
   font-weight: bold;
-  text-decoration: none;
-  text-align: center;
-  transition: 0.3s;
   border: none;
+  cursor: pointer;
 }
 
-/* 緑・黄・ライトボタン */
+/* 緑・黄・ライト */
 .btn-green {
   background-color: #1BC4B5;
   color: #fff;
@@ -85,21 +82,21 @@ body {
   border-radius: 20px;
 }
 
-/* 文字数に応じたカード型ボタン */
-.btn-card {
+/* カードボタン（リンク用） */
+a.btn-card {
   display: inline-block;
   padding: 12px 20px;
   font-size: 15px;
   font-weight: bold;
   border-radius: 12px;
   background-color: #1BC4B5;
-  color: #fff;
+  color: #fff !important;
+  text-decoration: none !important;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  text-align: center;
   white-space: nowrap;
 }
 
-/* 2カラム構成 */
+/* 2カラム */
 .category-grid {
   display: flex;
   justify-content: center;
