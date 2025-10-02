@@ -68,18 +68,23 @@ h1 {
 
 .btn-card {
   display: inline-block;
-  padding: 12px 24px;
-  font-size: 15px;
+  padding: 14px 28px;
+  font-size: 16px;
   font-weight: bold;
-  border-radius: 999px; /* 完全に丸い角 */
+  border-radius: 50px; /* pill型の角丸 */
   background-color: #1BC4B5;
   color: #fff !important;
   text-decoration: none !important;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
   white-space: nowrap;
   text-align: center;
-  min-width: 110px;
-  margin: 6px 0;
+  min-width: 130px;
+  margin: 8px 0;
+  transition: transform 0.1s ease-in-out;
+}
+
+.btn-card:hover {
+  transform: scale(1.05);
 }
 
 .category-grid {
@@ -118,7 +123,7 @@ h1 {
   text-align: center;
   margin: 20px auto;
   padding: 12px;
-  border-radius: 12px;
+  border-radius: 20px;
   font-weight: bold;
   text-decoration: none;
 }
