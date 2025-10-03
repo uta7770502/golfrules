@@ -1,166 +1,76 @@
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f9fdfb;
-  color: #333;
-}
-
-.header {
-  background: #1BC4B5;
-  color: #fff;
+  background: #f9f9f9;
   text-align: center;
-  padding: 16px;
-  border-radius: 0 0 20px 20px;
 }
-
-h1 {
-  margin: 0;
+.header {
+  background: #1abc9c;
+  padding: 20px;
+  border-radius: 0 0 20px 20px;
+  color: white;
   font-size: 20px;
 }
-
-.main {
-  padding: 16px;
-}
-
-.search-card {
-  display: flex;
-  gap: 8px;
-  background: #fff;
+.search-card, .search-footer {
+  margin: 15px auto;
   padding: 10px;
-  border-radius: 12px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  margin: 16px 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  background: #fff;
+  border-radius: 15px;
+  width: 90%;
 }
-
-.search-card input {
+.search-card input, .search-footer input {
   flex: 1;
-  padding: 8px 12px;
+  padding: 10px;
+  border-radius: 20px;
   border: 1px solid #ccc;
-  border-radius: 20px;
 }
-
-.btn {
-  border: none;
-  cursor: pointer;
-  padding: 10px 16px;
-  border-radius: 50%;
-  font-size: 16px;
-}
-
-.btn-green {
-  background: #1BC4B5;
-  color: #fff;
-}
-
-.btn-yellow {
-  background: #FFD84D;
-  color: #333;
-}
-
-.btn-light {
-  background: #eafaf7;
-  color: #333;
-  border-radius: 20px;
-  margin: 4px;
-  padding: 6px 12px;
-}
-
-.btn-card {
-  display: inline-block;
-  padding: 14px 24px;   /* 可変幅に対応 */
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 50px;  /* pill型の角丸 */
-  background-color: #1BC4B5;
-  color: #fff !important;
-  text-decoration: none !important;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-  white-space: nowrap;  /* 折り返しなし */
-  text-align: center;
-  margin: 8px 0;
-  transition: transform 0.1s ease-in-out;
-  width: fit-content; /* 文字幅に合わせる */
-  min-width: 100px; /* 最小幅確保 */
-}
-
-.btn-card:hover {
-  transform: scale(1.05);
-}
-
 .category-grid {
   display: flex;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.category-column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.favorite-card {
-  background: #fdfdf2;
-  padding: 12px;
-  margin: 16px 0;
-  border-radius: 12px;
-  text-align: center;
-}
-
-.keyword-card {
-  margin: 16px 0;
-}
-
-.keyword-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.wide-btn {
-  display: block;
-  text-align: center;
-  margin: 20px auto;
-  padding: 12px;
-  border-radius: 20px;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.search-footer {
-  display: flex;
-  gap: 8px;
+  justify-content: space-around;
   margin: 20px 0;
 }
-
-.search-footer input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
+.category-column h3 {
+  margin-bottom: 10px;
 }
-
+.btn {
+  display: inline-block;
+  padding: 10px 18px;
+  margin: 8px 0;
+  border-radius: 999px;
+  background-color: #1abc9c;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  min-width: auto;
+  white-space: nowrap;
+}
+.btn-green { background: #1abc9c; }
+.btn-yellow { background: #f1c40f; color: black; }
+.btn-light { background: #ecf0f1; color: #333; }
+.wide-btn { display: block; margin: 20px auto; width: 90%; }
+.favorite-card {
+  background: #fffde7;
+  margin: 15px auto;
+  padding: 10px;
+  border-radius: 15px;
+  width: 90%;
+  font-size: 18px;
+}
+.keyword-list { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
   justify-content: space-around;
   background: #fff;
-  border-top: 1px solid #ddd;
-  padding: 8px 0;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
-
-.nav-item {
-  text-decoration: none;
-  color: #333;
-  font-size: 14px;
-}
-
-.nav-item.active {
-  color: #1BC4B5;
-  font-weight: bold;
-}
+.nav-item { text-decoration: none; color: #555; font-size: 14px; }
+.nav-item.active { color: #1abc9c; font-weight: bold; }
