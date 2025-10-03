@@ -19,31 +19,29 @@ body {
 }
 
 .main {
-  padding: 15px;
+  padding: 20px;
 }
 
-.search-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.rule-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.rule-card {
   background: #fff;
-  padding: 10px;
+  padding: 20px;
   border-radius: 15px;
-  margin: 15px 0;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.search-card input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
+  margin-bottom: 20px;
+  line-height: 1.6;
 }
 
 .btn {
   display: inline-block;
-  padding: 10px 18px;
-  margin: 5px;
+  padding: 12px 20px;
+  margin: 10px;
   border-radius: 999px;
   font-size: 16px;
   text-align: center;
@@ -52,102 +50,19 @@ body {
   white-space: nowrap;
 }
 
-.btn-green {
-  background: #1abc9c;
-  color: white;
-}
-
 .btn-yellow {
   background: #f1c40f;
   color: white;
 }
 
-.btn-light {
-  background: #eee;
-  color: #333;
-  font-size: 14px;
-}
-
 .wide-btn {
   display: block;
   text-align: center;
-  margin: 20px auto;
-  padding: 14px;
-  border-radius: 30px;
+  margin: 0 auto;
   font-weight: bold;
 }
 
-.category-grid {
-  display: flex;
-  justify-content: space-between;
-  margin: 15px 0;
-}
-
-.category-column {
-  flex: 1;
+.back-btn-container {
   text-align: center;
-}
-
-.category-column h3 {
-  font-size: 15px;
-  margin-bottom: 10px;
-  color: #444;
-}
-
-.favorite-card {
-  background: #fff9e6;
-  padding: 10px;
-  margin: 15px 0;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.keyword-card {
-  margin: 20px 0;
-}
-
-.keyword-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.keyword-list .btn {
-  margin: 5px;
-}
-
-.search-footer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-.search-footer input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-}
-
-.bottom-nav {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  background: #fff;
-  border-top: 1px solid #ddd;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-
-.bottom-nav .nav-item {
-  color: #555;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.bottom-nav .active {
-  color: #1abc9c;
+  margin-top: 20px;
 }
