@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>世界一使いやすいゴルフルール</title>
+  <title>3タップルールズ</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,73 +11,65 @@
     <h1>3タップルールズ</h1>
   </header>
 
-  <main class="main">
-    <!-- 検索ボックス -->
-    <div class="search-card">
+  <main>
+    <div class="search-bar">
       <input type="text" placeholder="キーワードで検索（例：OB、）">
-      <button class="btn btn-green">🔍</button>
-      <button class="btn btn-yellow">🎤</button>
+      <button class="search-btn">🔍</button>
+      <button class="voice-btn">🎤</button>
     </div>
 
-    <!-- 場所 / 種類 2カラム -->
-    <div class="category-grid">
-      <!-- 場所で探す -->
-      <div class="category-column">
-        <h3>場所で探す</h3>
-        <a href="#" class="btn btn-green">ティー</a>
-        <a href="#" class="btn btn-green">フェアウェイ</a>
-        <a href="#" class="btn btn-green">ラフ</a>
-        <a href="#" class="btn btn-green">グリーン</a>
-        <a href="#" class="btn btn-green">バンカー</a>
+    <section class="favorites">
+      <p>⭐ お気に入り</p>
+    </section>
+
+    <section class="categories">
+      <h2>場所で探す</h2>
+      <div class="button-group">
+        <button>ティー</button>
+        <button>フェアウェイ</button>
+        <button>ラフ</button>
+        <button>グリーン</button>
+        <button>バンカー</button>
       </div>
 
-      <!-- 種類から探す -->
-      <div class="category-column">
-        <h3>種類から探す</h3>
-        <a href="#" class="btn btn-green">ティーショット</a>
-        <a href="#" class="btn btn-green">ペナルティ</a>
-        <a href="#" class="btn btn-green">ドロップ</a>
-        <a href="#" class="btn btn-green">救済</a>
-        <a href="#" class="btn btn-green">スコア</a>
+      <h2>種類から探す</h2>
+      <div class="button-group">
+        <button>ティーショット</button>
+        <button>ペナルティ</button>
+        <button>ドロップ</button>
+        <button>救済</button>
+        <button>スコア</button>
       </div>
-    </div>
+    </section>
 
-    <!-- お気に入り -->
-    <div class="favorite-card">
-      ⭐ お気に入り
-    </div>
-
-    <!-- 人気のキーワード -->
-    <div class="keyword-card">
-      <h3>人気のキーワード</h3>
-      <div class="keyword-list">
-        <button class="btn btn-light">OB</button>
-        <button class="btn btn-light">暫定球</button>
-        <button class="btn btn-light">黄杭</button>
-        <button class="btn btn-light">白杭</button>
-        <button class="btn btn-light">赤杭</button>
-        <button class="btn btn-light">青杭</button>
-        <button class="btn btn-light">再ティーショット</button>
-        <button class="btn btn-light">アンプレヤブル</button>
+    <section class="keywords">
+      <h2>人気のキーワード</h2>
+      <div class="button-group">
+        <button>OB</button>
+        <button>暫定球</button>
+        <button>黄杭</button>
+        <button>白杭</button>
+        <button>赤杭</button>
+        <button>青杭</button>
+        <button>再ティーショット</button>
+        <button>アンプレヤブル</button>
       </div>
-    </div>
+    </section>
 
-    <!-- ルール一覧 -->
-    <a href="#" class="btn btn-yellow wide-btn">ルール一覧（2025 最新ver.）</a>
-
-    <!-- 下部検索 -->
-    <div class="search-footer">
-      <input type="text" placeholder="ルールを検索…">
-      <button class="btn btn-green">🔍</button>
-    </div>
+    <section class="rules-link">
+      <!-- 修正版: aタグでリンク -->
+      <a href="rules.html" class="rules-button">📘 ルール一覧（2025 最新ver.）</a>
+    </section>
   </main>
 
-  <nav class="bottom-nav">
-    <a href="#" class="nav-item active">🏠 ホーム</a>
-    <a href="#" class="nav-item">🌳 場所</a>
-    <a href="#" class="nav-item">🎯 種類</a>
-    <a href="#" class="nav-item">🔍 検索</a>
-    <a href="#" class="nav-item">⚙️ 設定</a>
-  </nav>
+  <footer>
+    <nav class="nav-bar">
+      <a href="#">🏠 ホーム</a>
+      <a href="#">🌳 場所</a>
+      <a href="#">🎯 種類</a>
+      <a href="#">🔍 検索</a>
+      <a href="#">⚙️ 設定</a>
+    </nav>
+  </footer>
 </body>
 </html>
