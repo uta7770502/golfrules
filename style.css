@@ -68,19 +68,20 @@ h1 {
 
 .btn-card {
   display: inline-block;
-  padding: 14px 28px;
+  padding: 14px 24px;   /* 可変幅に対応 */
   font-size: 16px;
   font-weight: bold;
-  border-radius: 50px; /* pill型の角丸 */
+  border-radius: 50px;  /* pill型の角丸 */
   background-color: #1BC4B5;
   color: #fff !important;
   text-decoration: none !important;
   box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-  white-space: nowrap;
+  white-space: nowrap;  /* 折り返しなし */
   text-align: center;
-  min-width: 130px;
   margin: 8px 0;
   transition: transform 0.1s ease-in-out;
+  width: fit-content; /* 文字幅に合わせる */
+  min-width: 100px; /* 最小幅確保 */
 }
 
 .btn-card:hover {
