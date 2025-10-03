@@ -3,449 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ゴルフルール一覧</title>
-  <style>
-    body { font-family: system-ui; margin: 0; padding: 0; background: #f5f5f5; }
-    header { background: #16a34a; color: #fff; padding: 1rem; font-size: 20px; font-weight: bold; text-align: center; }
-    .search-container { padding: 10px 16px; }
-    #search-box { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; }
-    .accordion { margin: 10px 16px; border-radius: 6px; border: 1px solid #ddd; overflow: hidden; background: #fff; }
-    .accordion-header {
-      background: #f8f9fa;
-      padding: 12px 16px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      border-bottom: 1px solid #ddd;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .accordion-header::after {
-      content: "+";
-      font-size: 18px;
-      color: #333;
-    }
-    .accordion-header.active::after {
-      content: "−";
-    }
-    .accordion-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out;
-      background: #fff;
-      line-height: 1.6;
-    }
-    .rule-item { display: block; padding: 6px 16px; border-bottom: 1px solid #eee; font-size: 15px; text-decoration: none; color: #333; }
-    .rule-item:hover { background: #f0f0f0; }
-    .rule-item:last-child { border-bottom: none; }
-    .back-top-btn {
-      display: block;
-      margin: 10px 16px;
-      padding: 10px 14px;
-      background: #16a34a;
-      color: #fff;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 6px;
-      text-align: center;
-    }
-    .back-top-btn:hover {
-      background: #128c3b;
-    }
-  </style>
+  <title>ルール一覧 - 3タップルールズ</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>📋 ゴルフルール一覧</header>
+  <header class="header">
+    <h1>ルール一覧</h1>
+    <a href="index.html" class="btn-back">← トップページに戻る</a>
+  </header>
 
-  <!-- 🔹 上部の戻るボタン -->
-  <a href="index.html" class="back-top-btn">← トップページに戻る</a>
-
-  <div class="search-container">
-    <input type="text" id="search-box" placeholder="ルールを検索">
-  </div>
-
-  <div id="accordion-container">
-
+  <main class="main">
     <div class="accordion">
-      <div class="accordion-header">ティーイングエリア</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=1" class="rule-item">ティーイングエリアでのルール</a>
-<a href="rule.html?id=101" class="rule-item">暫定球の宣言</a>
-<a href="rule.html?id=108" class="rule-item">ティーマークの色の違い</a>
-<a href="rule.html?id=114" class="rule-item">ティーイングエリアの範囲</a>
-<a href="rule.html?id=115" class="rule-item">ティーマークを動かす行為</a>
-<a href="rule.html?id=131" class="rule-item">ティーアップした球が落ちた場合</a>
-<a href="rule.html?id=132" class="rule-item">誤って範囲外からティーショット</a>
-<a href="rule.html?id=167" class="rule-item">ティーマークのカラーの違い</a>
+      <div class="accordion-item">
+        <button class="accordion-header">ティーイングエリア</button>
+        <div class="accordion-content">
+          <p>ティーイングエリアでのルール</p>
+          <p>ティーマーカーを動かす行為は禁止</p>
+        </div>
+      </div>
 
+      <div class="accordion-item">
+        <button class="accordion-header">フェアウェイ</button>
+        <div class="accordion-content">
+          <p>フェアウェイでのルール</p>
+          <p>空振りの扱い</p>
+          <p>ディボット跡からの救済は不可</p>
+          <p>ボールが動いた場合（自然）</p>
+          <p>ボールが動いた場合（自分で触った）</p>
+          <p>動かせる障害物（落ち枝やボトル）</p>
+          <p>異常なコース状態からの救済</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">ラフ</button>
+        <div class="accordion-content">
+          <p>ラフでのルール</p>
+          <p>ボールが深く埋まった場合の処置</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">バンカー</button>
+        <div class="accordion-content">
+          <p>バンカーでのルール</p>
+          <p>ソール禁止</p>
+          <p>バンカー外への救済方法</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">グリーン</button>
+        <div class="accordion-content">
+          <p>グリーンでのルール</p>
+          <p>マークして拾い上げ可能</p>
+          <p>ラインを踏んではいけない</p>
+        </div>
       </div>
     </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">フェアウェイ</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=2" class="rule-item">フェアウェイでのルール</a>
-<a href="rule.html?id=102" class="rule-item">空振りの扱い</a>
-<a href="rule.html?id=116" class="rule-item">ディボット跡からの救済は不可</a>
-<a href="rule.html?id=117" class="rule-item">ボールが動いた場合（自然）</a>
-<a href="rule.html?id=118" class="rule-item">ボールが動いた場合（自分で触った）</a>
-<a href="rule.html?id=136" class="rule-item">動かせる障害物（落ち枝やボトル）</a>
-<a href="rule.html?id=137" class="rule-item">動かせない障害物（スプリンクラー等）</a>
-<a href="rule.html?id=138" class="rule-item">異常なコース状態からの救済</a>
+  </main>
 
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">ラフ</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=3" class="rule-item">ラフでのルール</a>
-<a href="rule.html?id=103" class="rule-item">草木を折ったとき</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">バンカー</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=4" class="rule-item">バンカーでクラブを砂につけていい？</a>
-<a href="rule.html?id=111" class="rule-item">バンカーでのアンプレヤブル</a>
-<a href="rule.html?id=119" class="rule-item">バンカーの水たまり（異常な状態）</a>
-<a href="rule.html?id=120" class="rule-item">バンカー内の石や落ち葉</a>
-<a href="rule.html?id=139" class="rule-item">クラブを砂にソールする行為</a>
-<a href="rule.html?id=140" class="rule-item">練習スイングで砂に触れる</a>
-<a href="rule.html?id=141" class="rule-item">バンカーからの無罰救済はNG</a>
-<a href="rule.html?id=178" class="rule-item">バンカーを均さずに出ない</a>
-<a href="rule.html?id=186" class="rule-item">バンカーに大量の水がある場合</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">グリーン</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=5" class="rule-item">グリーンでのルール</a>
-<a href="rule.html?id=104" class="rule-item">旗竿を立てたままパット</a>
-<a href="rule.html?id=112" class="rule-item">マークしてボールを拾い上げる</a>
-<a href="rule.html?id=113" class="rule-item">ラインを踏む行為</a>
-<a href="rule.html?id=121" class="rule-item">グリーン上のボールマーク修復</a>
-<a href="rule.html?id=122" class="rule-item">他人のラインを踏んだ場合</a>
-<a href="rule.html?id=123" class="rule-item">ボールがグリーン上で動いた場合</a>
-<a href="rule.html?id=142" class="rule-item">他人のパットを助ける行為</a>
-<a href="rule.html?id=143" class="rule-item">グリーン上の練習パット</a>
-<a href="rule.html?id=144" class="rule-item">フラッグスティックを抜く行為</a>
-<a href="rule.html?id=169" class="rule-item">グリーンマークの置き方</a>
-<a href="rule.html?id=170" class="rule-item">ピッチマーク修復の方法</a>
-<a href="rule.html?id=171" class="rule-item">マークが他人のラインを妨げる場合</a>
-<a href="rule.html?id=184" class="rule-item">ライン上の砂や落ち葉を取り除く</a>
-<a href="rule.html?id=185" class="rule-item">マークにボールが当たった場合</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">OB</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=6" class="rule-item">OBのルール</a>
-<a href="rule.html?id=105" class="rule-item">OBの処置</a>
-<a href="rule.html?id=106" class="rule-item">杭の扱い（白・赤・黄色・青）</a>
-<a href="rule.html?id=127" class="rule-item">OBと池の両方が絡むケース</a>
-<a href="rule.html?id=148" class="rule-item">OBの特設ティー</a>
-<a href="rule.html?id=149" class="rule-item">ロストボールの扱い</a>
-<a href="rule.html?id=150" class="rule-item">暫定球の宣言と処理</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">黄杭（正面）</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=7" class="rule-item">旗を抜いていい？</a>
-<a href="rule.html?id=107" class="rule-item">ローカルルールの確認</a>
-<a href="rule.html?id=109" class="rule-item">池に入ったときの処置（水際・赤杭・黄杭）</a>
-<a href="rule.html?id=110" class="rule-item">アンプレヤブルの宣言</a>
-<a href="rule.html?id=124" class="rule-item">カート道に止まった場合</a>
-<a href="rule.html?id=125" class="rule-item">修理地に入った場合</a>
-<a href="rule.html?id=126" class="rule-item">動物の穴に入った場合</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">マナー</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=128" class="rule-item">プレーのスピードに関するルール（スロープレー）</a>
-<a href="rule.html?id=154" class="rule-item">音楽をかけながらのプレー</a>
-<a href="rule.html?id=155" class="rule-item">携帯電話の使用</a>
-<a href="rule.html?id=156" class="rule-item">同伴競技者への配慮</a>
-<a href="rule.html?id=157" class="rule-item">飛球線後方に立たない</a>
-<a href="rule.html?id=158" class="rule-item">アドレス中は動かない</a>
-<a href="rule.html?id=159" class="rule-item">素振りで芝を削らない</a>
-<a href="rule.html?id=160" class="rule-item">グリーン上では走らない</a>
-<a href="rule.html?id=161" class="rule-item">ショット音や会話に注意</a>
-<a href="rule.html?id=163" class="rule-item">前の組との間隔を空けない</a>
-<a href="rule.html?id=165" class="rule-item">クラブは数本持って移動</a>
-<a href="rule.html?id=174" class="rule-item">ライン上に立つ行為の禁止</a>
-<a href="rule.html?id=175" class="rule-item">プレー準備不足による遅延</a>
-<a href="rule.html?id=176" class="rule-item">グリーンにバッグを置かない</a>
-<a href="rule.html?id=177" class="rule-item">ピンを不用意に倒さない</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">基本</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=129" class="rule-item">プレーの順番（マッチプレー / ストロークプレー）</a>
-<a href="rule.html?id=130" class="rule-item">レディゴルフ（Ready Golf）</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">捜索</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=133" class="rule-item">探索時間は3分以内</a>
-<a href="rule.html?id=134" class="rule-item">誤球（他人のボールを打った場合）</a>
-<a href="rule.html?id=135" class="rule-item">複数のボールを打ってしまった場合</a>
-<a href="rule.html?id=164" class="rule-item">ボール探しは3分以内</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">ペナルティエリア</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=145" class="rule-item">赤杭と黄杭の違い</a>
-<a href="rule.html?id=146" class="rule-item">池に入ったボールを打つ選択</a>
-<a href="rule.html?id=147" class="rule-item">池の対岸からの救済</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">カート道 / 固定物</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=151" class="rule-item">ドロップの方法（膝の高さ）</a>
-<a href="rule.html?id=152" class="rule-item">ドロップ後に転がりすぎた場合</a>
-<a href="rule.html?id=153" class="rule-item">救済エリアの決め方</a>
-<a href="rule.html?id=173" class="rule-item">動かせない人工物に近い場合</a>
-<a href="rule.html?id=187" class="rule-item">救済エリアにドロップした球が戻った場合</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">コース標識</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=162" class="rule-item">カラー杭の意味</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">その他</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=166" class="rule-item">クラブが壊れた場合</a>
-<a href="rule.html?id=188" class="rule-item">練習スイングでボールに当たった場合</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">クラブ本数</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=168" class="rule-item">クラブの本数制限</a>
-<a href="rule.html?id=172" class="rule-item">クラブをカートに置き忘れた場合</a>
-<a href="rule.html?id=197" class="rule-item">多い本数でスタートした場合の処置</a>
-<a href="rule.html?id=198" class="rule-item">クラブを壊した場合の扱い</a>
-<a href="rule.html?id=199" class="rule-item">クラブを置き忘れても追加不可</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">自然要因</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=179" class="rule-item">動物がボールを拾って持って行った場合</a>
-<a href="rule.html?id=180" class="rule-item">動物がOBゾーンで落とした場合</a>
-<a href="rule.html?id=181" class="rule-item">風や水でボールが動いた場合</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">ボール接触</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=182" class="rule-item">自分のアプローチが同伴者のボールに当たりカップインした場合</a>
-<a href="rule.html?id=183" class="rule-item">同伴者のボールが接触でカップインした場合</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">空振り</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=189" class="rule-item">空振りは1打と数える</a>
-<a href="rule.html?id=190" class="rule-item">練習スイングで偶然当たった場合は1打</a>
-<a href="rule.html?id=191" class="rule-item">アドレス中に動いた場合はストローク扱いにならない</a>
-<a href="rule.html?id=192" class="rule-item">ティーが倒れただけなら無罰</a>
-<a href="rule.html?id=193" class="rule-item">素振りと空振りの違い</a>
-<a href="rule.html?id=194" class="rule-item">空振り後に暫定球を宣言できる</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">素振り</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=195" class="rule-item">素振りで水や砂に触れるとペナルティ</a>
-<a href="rule.html?id=196" class="rule-item">素振りは何回しても打数に入らない</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">誤球</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=200" class="rule-item">複数のボールを打った場合</a>
-<a href="rule.html?id=201" class="rule-item">マッチとストロークでの誤球処置の違い</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">ロストボール</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=202" class="rule-item">ローカルルールで特設ティーから打ち直し</a>
-<a href="rule.html?id=203" class="rule-item">ロスト時は必ず暫定球を打つ</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">同伴者配慮</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=204" class="rule-item">ライン上に立たない</a>
-<a href="rule.html?id=205" class="rule-item">アドレス中に話さない</a>
-<a href="rule.html?id=206" class="rule-item">グリーンを横切らない</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">杭</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=207" class="rule-item">杭の基本的な意味</a>
-<a href="rule.html?id=208" class="rule-item">杭は動かせない障害物</a>
-<a href="rule.html?id=209" class="rule-item">ローカルルールでの杭の扱い</a>
-<a href="rule.html?id=212" class="rule-item">杭（全般）のルール</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">白杭</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=210" class="rule-item">白杭はOBの境界</a>
-<a href="rule.html?id=215" class="rule-item">白杭（OB）</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">黒杭</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=211" class="rule-item">黒杭は特別なエリアを示す</a>
-<a href="rule.html?id=218" class="rule-item">黒杭（特殊ルール）</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">赤杭</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=213" class="rule-item">赤杭（ラテラルウォーターハザード）</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">黄杭</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=214" class="rule-item">黄杭（ウォーターハザード）</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">青杭</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=216" class="rule-item">青杭（修理地/GUR）</a>
-
-      </div>
-    </div>
-    
-    <div class="accordion">
-      <div class="accordion-header">緑杭</div>
-      <div class="accordion-content">
-    <a href="rule.html?id=217" class="rule-item">緑杭（環境保護エリア/特設ティー）</a>
-
-      </div>
-    </div>
-    
-  </div>
-  <!-- 🔹 下部の戻るボタン -->
-  <a href="index.html" class="back-top-btn">← トップページに戻る</a>
-
-  <script>
-    // アコーディオン動作
-    document.querySelectorAll('.accordion-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const acc = header.parentElement;
-        const content = header.nextElementSibling;
-
-        header.classList.toggle('active');
-        acc.classList.toggle('active');
-
-        if (acc.classList.contains('active')) {
-          content.style.maxHeight = content.scrollHeight + "px";
-        } else {
-          content.style.maxHeight = null;
-        }
-      });
-    });
-
-    // 検索機能
-    document.getElementById("search-box").addEventListener("input", function() {
-      const query = this.value.toLowerCase();
-      document.querySelectorAll(".accordion").forEach(acc => {
-        const rules = acc.querySelectorAll(".rule-item");
-        let match = false;
-
-        rules.forEach(rule => {
-          const text = rule.textContent.toLowerCase();
-          if (text.includes(query)) {
-            rule.style.display = "block";
-            match = true;
-          } else {
-            rule.style.display = "none";
-          }
-        });
-
-        const content = acc.querySelector(".accordion-content");
-        if (match) {
-          acc.classList.add("active");
-          acc.querySelector(".accordion-header").classList.add("active");
-          content.style.maxHeight = content.scrollHeight + "px";
-        } else {
-          acc.classList.remove("active");
-          acc.querySelector(".accordion-header").classList.remove("active");
-          content.style.maxHeight = null;
-        }
-      });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
