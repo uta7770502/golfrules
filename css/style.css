@@ -334,3 +334,9 @@ header {
   position: relative;
   top: -100px; /* 上方向に移動 */
 }
+/* ⭐ お気に入り一覧ボタンを上に50px移動 */
+#favorites-entry {
+  position: relative;
+  top: -50px; /* ←ここで上方向に50px */
+  margin-bottom: 0;
+}
