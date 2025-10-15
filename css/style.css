@@ -286,3 +286,31 @@ header {
     padding: 8px 12px;
   }
 }
+/* --- お気に入り一覧カード削除 --- */
+#favorites-entry {
+  background: none;      /* 背景色を削除 */
+  box-shadow: none;      /* 枠線影も削除 */
+  border: none;
+  padding: 0;
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* --- 人気キーワードを隙間なく敷き詰め --- */
+#keyword-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px; /* ボタン同士の間隔を最小限に */
+  padding: 0 4px;
+}
+
+#keyword-container button {
+  background-color: #f4f4f4;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: #444;
+  white-space: nowrap;
+}
