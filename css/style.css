@@ -324,3 +324,8 @@ header {
 #search-box {
   margin-bottom: 2px;
 }
+/* === お気に入り一覧の下の全要素を上に50px詰める === */
+#content-below-favorites {
+  position: relative;
+  top: -50px; /* 上方向に移動 */
+}
