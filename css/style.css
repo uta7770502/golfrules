@@ -229,3 +229,60 @@ nav a.active {
 #popular-keywords {
   margin-top: 8px;
 }
+/* === スマホファーストビュー上部圧縮 === */
+
+/* 全体の上下余白を軽く */
+body {
+  padding-top: 0;
+}
+
+/* ヘッダーをやや薄く */
+header {
+  padding: 20px 10px 15px 10px;
+}
+
+/* 検索ボックスを詰める */
+#search-box {
+  margin-top: 8px;
+  margin-bottom: 5px;
+}
+
+/* 検索ボタン少し小さめに */
+#search-box button {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+/* 黄色ルール一覧ボタンをコンパクト化 */
+#latest-rules button {
+  margin: 8px auto 6px;
+  padding: 9px 18px;
+  font-size: 15px;
+  width: 78%;
+}
+
+/* お気に入り一覧バナーも縮小 */
+#favorites-entry {
+  margin-top: 6px;
+  margin-bottom: 8px;
+  padding: 8px 6px;
+  width: 80%;
+  font-size: 14px;
+}
+
+/* 「人気のキーワード」タイトルを少し上に */
+#popular-keywords {
+  margin-top: 5px;
+}
+
+/* スマホ専用（小画面向け）微調整 */
+@media screen and (max-width: 480px) {
+  header h1 {
+    font-size: 1.6em;
+  }
+  #search-box input {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
