@@ -329,3 +329,8 @@ header {
   position: relative;
   top: -100px; /* 上方向に移動 */
 }
+/* === お気に入り一覧の下の全要素を上に50px詰める === */
+#content-below-favorites {
+  position: relative;
+  top: -100px; /* 上方向に移動 */
+}
