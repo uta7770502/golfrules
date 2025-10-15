@@ -205,3 +205,27 @@ nav a.active {
   color: #18c6b0;
   font-weight: bold;
 }
+/* === スペース調整（検索〜バナー間）=== */
+
+/* 検索ボックス下の余白を少し縮める */
+#search-box {
+  margin-bottom: 10px;
+}
+
+/* 黄色ボタン（ルール一覧）まわりのバランス調整 */
+#latest-rules button {
+  margin: 10px auto 10px; /* 上下の余白を縮小 */
+  padding: 10px 20px;
+}
+
+/* お気に入り一覧バナー */
+#favorites-entry {
+  margin-top: 10px; /* 間隔を詰める */
+  padding: 10px 8px;
+  width: 85%;
+}
+
+/* 人気キーワードタイトルとの距離も微調整 */
+#popular-keywords {
+  margin-top: 8px;
+}
