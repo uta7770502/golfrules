@@ -314,3 +314,13 @@ header {
   color: #444;
   white-space: nowrap;
 }
+/* === ルール一覧ボタンを上に引き上げる（余白詰め） === */
+#latest-rules {
+  position: relative;
+  top: -50px; /* ←500pxは大きすぎるのでまず-50pxで確認推奨 */
+}
+
+/* 検索ボックスの下余白も削減 */
+#search-box {
+  margin-bottom: 2px;
+}
