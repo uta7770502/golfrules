@@ -354,6 +354,6 @@ header {
 /* === 人気のキーワード全体を上に詰める === */
 #popular-keywords {
   position: relative;
-  top: -120px; /* ← この数値で上に上げる。調整可能 */
+  top: -50px; /* ← この数値で上に上げる。調整可能 */
   margin-bottom: 0;
 }
