@@ -357,3 +357,8 @@ header {
   top: -50px; /* ← この数値で上に上げる。調整可能 */
   margin-bottom: 0;
 }
+/* === 「場所で探す」「種類で探す」セクションを上に詰める === */
+#search-by-category {
+  position: relative;
+  top: -50px;  /* 上に50px移動 */
+}
