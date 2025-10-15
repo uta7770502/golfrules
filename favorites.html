@@ -3,57 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>お気に入りルール</title>
-  <style>
-    body { font-family: system-ui; margin: 0; padding: 0; background: #f5f5f5; }
-    header { background: #16a34a; color: #fff; padding: 1rem; font-size: 20px; font-weight: bold; text-align: center; }
-    main { padding: 20px; max-width: 800px; margin: auto; }
-    .rule-item {
-      display: block;
-      padding: 12px 16px;
-      margin-bottom: 10px;
-      background: #fff;
-      border-radius: 6px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      text-decoration: none;
-      color: #333;
-      font-size: 16px;
-      font-weight: bold;
-    }
-    .rule-item:hover { background: #f0f0f0; }
-  </style>
+  <title>お気に入り一覧 | 3タップルールズ</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
 </head>
 <body>
-  <header>⭐️ お気に入りルール一覧</header>
-  <main id="favorites-list">
-    <p>お気に入りがまだありません。</p>
-  </main>
+  <header>
+    <h1>⭐ お気に入り一覧</h1>
+    <button class="back-btn" onclick="window.location.href='index.html'">← トップに戻る</button>
+  </header>
 
-  <script>
-    async function loadFavorites() {
-      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-      const response = await fetch("rules.json");
-      const rules = await response.json();
-      const list = document.getElementById("favorites-list");
-      list.innerHTML = "";
+  <main id="favorites-list"></main>
 
-      if (favorites.length === 0) {
-        list.innerHTML = "<p>お気に入りがまだありません。</p>";
-        return;
-      }
-
-      favorites.forEach(id => {
-        const rule = rules.find(r => r.id == id);
-        if (rule) {
-          const a = document.createElement("a");
-          a.href = "rule.html?id=" + rule.id;
-          a.className = "rule-item";
-          a.textContent = rule.name;
-          list.appendChild(a);
-        }
-      });
-    }
-    loadFavorites();
-  </script>
+  <footer>
+    <p>© 2025 3タップルールズ</p>
+  </footer>
 </body>
 </html>
