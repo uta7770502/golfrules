@@ -3,29 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ルール詳細 - 3タップルールズ</title>
-  <link rel="stylesheet" href="style.css">
+  <title>ルール詳細 | 3タップルールズ</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
 </head>
 <body>
-  <header class="header">
-    <h1>3タップルールズ</h1>
-  </header>
+  <main id="rule-detail"></main>
 
-  <main class="main">
-    <!-- ルールタイトル -->
-    <h2 class="rule-title">OBの扱い</h2>
+  <!-- お気に入り追加ボタン -->
+  <button id="addFavoriteBtn">⭐ お気に入り追加</button>
 
-    <!-- 本文カード -->
-    <div class="rule-card">
-      <p>OB（アウトオブバウンズ）とは、規定の境界を超えたエリアのことを指します。白杭や白線で示され、ボールが完全に境界線を越えた場合にOBとなります。</p>
-      <p>OBとなった場合、1打罰を加えた上で、元の場所から打ち直しを行います（ストロークと距離の処置）。</p>
-      <p>ただし、ローカルルールで特別な処置（2打罰の特設ティーなど）が定められている場合は、それに従います。</p>
-    </div>
-
-    <!-- 戻るボタン -->
-    <div class="back-btn-container">
-      <a href="index.html" class="btn btn-yellow wide-btn">⬅️ 戻る</a>
-    </div>
-  </main>
+  <!-- 戻るボタン -->
+  <button id="backToList" onclick="window.location.href='rules.html'">← ルール一覧に戻る</button>
 </body>
 </html>
