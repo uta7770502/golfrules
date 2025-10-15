@@ -1,100 +1,171 @@
+/* ================================
+   基本スタイル
+================================ */
 body {
   font-family: "Noto Sans JP", sans-serif;
   margin: 0;
-  background: #f7fff7;
+  background: #ffffff;
   color: #333;
   text-align: center;
 }
 
+/* ヘッダー */
 header {
-  background: #eaffea;
-  padding: 20px 10px;
+  background: #20bfa9;
+  color: #fff;
+  padding: 25px 10px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
-h1 {
+header h1 {
+  font-size: 1.8em;
   margin: 0;
-  font-size: 1.4em;
+  font-weight: bold;
 }
 
 .subtitle {
   font-size: 0.9em;
-  color: #666;
+  color: #f0f0f0;
 }
 
-section {
+/* 検索ボックス */
+#search-box {
   margin: 20px auto;
-  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
-button {
-  display: inline-block;
-  background: #a9eaa9;
-  color: #333;
+#search-box input {
+  width: 65%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 15px;
+}
+
+#search-box button {
   border: none;
-  border-radius: 8px;
-  padding: 12px 18px;
-  margin: 6px;
-  font-size: 16px;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  color: white;
+  font-size: 18px;
   cursor: pointer;
+}
+
+#searchButton {
+  background: #12b89a;
+}
+
+#voiceButton {
+  background: #f8cb2e;
+}
+
+/* ボタン共通 */
+button {
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 25px;
+  margin: 8px;
+  cursor: pointer;
+  background-color: #12b89a;
+  color: white;
   transition: 0.2s;
 }
 
 button:hover {
-  background: #93dd93;
+  background-color: #0fa48b;
+}
+
+/* セクション */
+section {
+  width: 90%;
+  margin: 20px auto;
+  text-align: center;
+}
+
+section h2 {
+  font-size: 1.1em;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+/* 2カラムボタン配置 */
+.search-column {
+  display: inline-block;
+  vertical-align: top;
+  width: 48%;
 }
 
 .button-group {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 人気のキーワード */
+#keyword-container {
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-
-#keyword-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   gap: 8px;
-  justify-content: center;
 }
 
-.back-btn {
-  background: #d1f3d1;
-  font-size: 14px;
+#keyword-container button {
+  background: #f0f0f0;
+  color: #333;
+  border-radius: 30px;
+  padding: 8px 16px;
 }
 
-#search-box {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin: 10px 0;
-}
-
-input {
-  padding: 10px;
-  width: 65%;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-footer {
-  margin-top: 40px;
-  padding: 20px;
-  background: #eaffea;
-  font-size: 0.8em;
-  color: #555;
-}
-
-#rules-container .rule-card {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  margin: 10px auto;
-  padding: 15px;
-  width: 90%;
-}
-
-#addFavoriteBtn, #backToList {
-  display: block;
+/* 特殊ボタン */
+#latest-rules button {
+  background: #f8cb2e;
+  color: #333;
+  font-weight: bold;
   width: 80%;
-  margin: 15px auto;
-  background: #a9eaa9;
+  max-width: 350px;
+}
+
+#favorites-entry button {
+  background: #fff6da;
+  color: #444;
+  font-weight: bold;
+  width: 70%;
+  border: 1px solid #f8cb2e;
+}
+
+/* ルール一覧カード */
+.rule-card {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px auto;
+  width: 90%;
+  text-align: left;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* 戻るボタン */
+.back-btn {
+  background: #d8f8f2;
+  color: #333;
+  font-size: 15px;
+  border-radius: 20px;
+  padding: 8px 18px;
+}
+
+/* フッター */
+footer {
+  margin-top: 50px;
+  background: #fafafa;
+  padding: 20px;
+  font-size: 0.8em;
+  color: #666;
 }
