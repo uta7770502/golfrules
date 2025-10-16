@@ -110,7 +110,7 @@
           }
           list.innerHTML = data.map((r) => `
             <div class="rule-item">
-              <a href="rule.html?id=${r.id}">${r.title}</a>
+              <a href="/rule.html?id=${r.id}">${r.title}</a>
               <p>${r.description || ""}</p>
             </div>
           `).join("");
