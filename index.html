@@ -1,127 +1,80 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ゴルフルール一覧</title>
-<link rel="stylesheet" href="style.css" />
-<style>
-body {
-  font-family: "Hiragino Sans", sans-serif;
-  background: #f7fff7;
-  margin: 0;
-  padding: 0;
-}
-header {
-  background: #c9f5c9;
-  padding: 12px;
-  text-align: center;
-  font-weight: bold;
-  color: #004400;
-  font-size: 20px;
-}
-#searchBox {
-  text-align: center;
-  margin: 16px;
-}
-#searchInput {
-  padding: 8px;
-  width: 80%;
-  max-width: 400px;
-  border-radius: 6px;
-  border: 1px solid #aaa;
-}
-.rules-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.rule-card {
-  background: #fff;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 600px;
-  margin: 10px 0;
-  padding: 12px 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-.rule-title {
-  font-weight: 700;
-  font-size: 16px;
-  color: #006400;
-}
-.rule-category {
-  font-size: 12px;
-  color: #777;
-  margin-bottom: 6px;
-}
-.back-btn {
-  display: block;
-  margin: 24px auto;
-  padding: 10px 24px;
-  background: #66bb6a;
-  color: white;
-  border-radius: 8px;
-  text-align: center;
-  width: fit-content;
-  text-decoration: none;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3タップルールズ</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <script src="js/main.js" defer></script>
 </head>
-
 <body>
-<header>ゴルフルール一覧（2025 最新版）</header>
+  <header>
+    <h1>3タップルールズ</h1>
+  </header>
 
-<div id="searchBox">
-  <input id="searchInput" type="text" placeholder="キーワードで検索..." />
-</div>
+  <!-- 🔍 検索ボックス -->
+  <section id="search-box">
+    <input type="text" id="searchInput" placeholder="ルールを検索" />
+    <button id="searchButton">検索</button>
+    <button id="voiceButton">🎤</button>
+  </section>
 
-<div id="rulesContainer" class="rules-container"></div>
+  <!-- ルール一覧（2025最新ver.） -->
+  <section id="latest-rules">
+    <button onclick="window.location.href='rules.html'">ルール一覧（2025 最新ver.）</button>
+  </section>
 
-<a href="index.html" class="back-btn">🏠 トップページへ戻る</a>
+   <!-- ⭐ お気に入り -->
+  <section id="favorites-entry">
+    <button onclick="window.location.href='favorites.html'">⭐ お気に入り一覧</button>
+  </section>
 
-<script>
-async function loadRules() {
-  const res = await fetch('rules.json');
-  const rules = await res.json();
-  const container = document.getElementById('rulesContainer');
+  <!-- 人気のキーワード -->
+  <section id="popular-keywords">
+  <h2>人気のキーワード</h2>
+  <div id="keyword-container">
+    <button>OB</button>
+    <button>暫定球</button>
+    <button>黄杭</button>
+    <button>白杭</button>
+    <button>赤杭</button>
+    <button>アンプレヤブル</button>
+    <button>空振り</button>
+    <button>ロストボール</button>
+    <button>特設ティ</button>
+    <button>誤球</button>
+  </div>
+</section>
 
-  const params = new URLSearchParams(window.location.search);
-  const category = params.get('category');
-  const keyword = params.get('keyword');
+  <!-- 場所で探す / 種類で探す -->
+  <section id="search-sections">
+    <div class="search-column">
+      <h2>場所で探す</h2>
+      <div class="button-group">
+        <button onclick="filterRules('ティーイングエリア')">ティー</button>
+        <button onclick="filterRules('フェアウェイ')">フェアウェイ</button>
+        <button onclick="filterRules('ラフ')">ラフ</button>
+        <button onclick="filterRules('バンカー')">バンカー</button>
+        <button onclick="filterRules('グリーン')">グリーン</button>
+      </div>
+    </div>
 
-  let filtered = rules;
-  if (category) filtered = rules.filter(r => r.category === category);
-  if (keyword) filtered = rules.filter(r =>
-    r.title.includes(keyword) || r.description.includes(keyword)
-  );
+    <div class="search-column">
+      <h2>種類で探す</h2>
+      <div class="button-group">
+        <button onclick="filterRules('ペナルティ')">ペナルティ</button>
+        <button onclick="filterRules('救済')">救済</button>
+        <button onclick="filterRules('紛失球')">紛失球</button>
+        <button onclick="filterRules('旗の扱い')">旗の扱い</button>
+        <button onclick="filterRules('OB')">OB</button>
+      </div>
+    </div>
+  </section>
 
-  function render(list) {
-    container.innerHTML = "";
-    list.forEach(r => {
-      const card = document.createElement('div');
-      card.className = 'rule-card';
-      card.innerHTML = `
-        <div class="rule-title">${r.title}</div>
-        <div class="rule-category">カテゴリ：${r.category}</div>
-        <div class="rule-description">${r.description}</div>
-      `;
-      container.appendChild(card);
-    });
-  }
 
-  render(filtered);
-
-  document.getElementById('searchInput').addEventListener('input', e => {
-    const val = e.target.value.toLowerCase();
-    const result = filtered.filter(r =>
-      r.title.toLowerCase().includes(val) ||
-      r.description.toLowerCase().includes(val)
-    );
-    render(result);
-  });
-}
-loadRules();
-</script>
+  <footer>
+    <p>© 2025 3タップルールズ</p>
+  </footer>
 </body>
 </html>
