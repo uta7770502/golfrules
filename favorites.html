@@ -97,10 +97,10 @@
       return;
     }
     listEl.innerHTML = items.map(f => `
-      <div class="fav-item">
-        <div class="title" data-id="${f.id}">${f.title}</div>
-      </div>
-    `).join("");
+  <div class="fav-item">
+    <div class="title" data-id="${f.id}">${f.title}</div>
+  </div>
+`).join("");
 
     // タイトルをタップ → 詳細へ
     listEl.querySelectorAll(".title").forEach(el => {
