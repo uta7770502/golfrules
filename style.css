@@ -432,3 +432,7 @@ button {
   margin-top: 0;
   margin-bottom: 0;
 }
+/* お気に入り一覧ボタンの位置調整（上に25px） */
+#favorites-entry {
+  margin-top: -25px !important;
+}
