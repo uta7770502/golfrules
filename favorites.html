@@ -113,5 +113,54 @@
   render(cleaned);
 })();
 </script>
+  <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const listEl = document.getElementById("favoritesList");
+
+  // 🟢 localStorageからお気に入り取得
+  let favorites = [];
+  try {
+    favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  } catch {
+    favorites = [];
+  }
+
+  // 🟢 rules.jsonの読み込み
+  let rules = [];
+  try {
+    const res = await fetch("rules.json");
+    rules = await res.json();
+  } catch (e) {
+    console.warn("rules.json の読み込みに失敗しました", e);
+  }
+
+  // 🧩 お気に入りとルールを照合（id一致）
+  const merged = favorites
+    .map(f => {
+      const match = rules.find(r => Number(r.id) === Number(f.id));
+      if (!match) return null;
+      return {
+        id: match.id,
+        title: match.title || f.title || "タイトル不明"
+      };
+    })
+    .filter(Boolean); // null除外
+
+  // 🟡 表示
+  if (merged.length === 0) {
+    listEl.innerHTML = `<p class="empty">お気に入りはまだ登録されていません。</p>`;
+  } else {
+    listEl.innerHTML = merged
+      .map(
+        r => `
+          <div class="fav-item" onclick="location.href='rule.html?id=${r.id}'">
+            ${r.title}
+          </div>
+        `
+      )
+      .join("");
+  }
+});
+</script>
 </body>
 </html>
