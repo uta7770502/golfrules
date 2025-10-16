@@ -57,19 +57,22 @@
   <a href="index.html" class="back-btn">← トップへ戻る</a>
 
   <script>
-    const list = document.getElementById("favoritesList");
-    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  const list = document.getElementById("favoritesList");
+  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
-    if (favorites.length === 0) {
-      list.innerHTML = '<p class="empty">お気に入り登録されたルールはありません。</p>';
-    } else {
-      list.innerHTML = favorites.map(
-        (f) => `
-          <div class="fav-item" onclick="location.href='rule.html?id=${f.id}'">
-            ${f.title}
-          </div>`
-      ).join("");
-    }
-  </script>
+  // ✅ titleが無い（undefined）データを自動除外
+  favorites = favorites.filter(f => f && f.title);
+
+  if (favorites.length === 0) {
+    list.innerHTML = '<p class="empty">お気に入り登録されたルールはありません。</p>';
+  } else {
+    list.innerHTML = favorites.map(
+      (f) => `
+        <div class="fav-item" onclick="location.href='rule.html?id=${f.id}'">
+          ${f.title}
+        </div>`
+    ).join("");
+  }
+</script>
 </body>
 </html>
