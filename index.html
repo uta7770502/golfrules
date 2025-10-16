@@ -1,80 +1,85 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3タップルールズ</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
-  <script src="js/main.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>世界一使いやすいゴルフルール</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>3タップルールズ</h1>
-  </header>
 
-  <!-- 🔍 検索ボックス -->
-  <section id="search-box">
-    <input type="text" id="searchInput" placeholder="ルールを検索" />
-    <button id="searchButton">検索</button>
-    <button id="voiceButton">🎤</button>
-  </section>
+<header>
+  <h1>世界一使いやすいゴルフルール</h1>
+</header>
 
-  <!-- ルール一覧（2025最新ver.） -->
-  <section id="latest-rules">
-    <button onclick="window.location.href='rules.html'">ルール一覧（2025 最新ver.）</button>
-  </section>
+<!-- 🔍 検索ボックス -->
+<section id="search-box">
+  <input type="text" id="searchInput" placeholder="ルールを検索..." />
+  <button id="micButton">🎤</button>
+</section>
 
-   <!-- ⭐ お気に入り -->
-  <section id="favorites-entry">
-    <button onclick="window.location.href='favorites.html'">⭐ お気に入り一覧</button>
-  </section>
+<!-- 📋 ルール一覧ボタン -->
+<section id="rules-entry">
+  <a href="rules.html" class="main-btn">ルール一覧（2025 最新ver.）</a>
+</section>
 
-  <!-- 人気のキーワード -->
-  <section id="popular-keywords">
+<!-- ⭐ お気に入り一覧ボタン -->
+<section id="favorites-entry">
+  <a href="favorites.html" class="main-btn">⭐ お気に入り一覧</a>
+</section>
+
+<!-- 🏷️ 人気のキーワード -->
+<section id="popular-keywords">
   <h2>人気のキーワード</h2>
-  <div id="keyword-container">
-    <button>OB</button>
-    <button>暫定球</button>
-    <button>黄杭</button>
-    <button>白杭</button>
-    <button>赤杭</button>
-    <button>アンプレヤブル</button>
-    <button>空振り</button>
-    <button>ロストボール</button>
-    <button>特設ティ</button>
-    <button>誤球</button>
+  <div class="keyword-grid">
+    <a href="rules.html?keyword=OB" class="keyword-btn">OB</a>
+    <a href="rules.html?keyword=ペナルティ" class="keyword-btn">ペナルティ</a>
+    <a href="rules.html?keyword=暫定球" class="keyword-btn">暫定球</a>
+    <a href="rules.html?keyword=ドロップ" class="keyword-btn">ドロップ</a>
+    <a href="rules.html?keyword=グリーン" class="keyword-btn">グリーン</a>
+    <a href="rules.html?keyword=救済" class="keyword-btn">救済</a>
   </div>
 </section>
 
-  <!-- 場所で探す / 種類で探す -->
-  <section id="search-sections">
-    <div class="search-column">
-      <h2>場所で探す</h2>
-      <div class="button-group">
-        <button onclick="filterRules('ティーイングエリア')">ティー</button>
-        <button onclick="filterRules('フェアウェイ')">フェアウェイ</button>
-        <button onclick="filterRules('ラフ')">ラフ</button>
-        <button onclick="filterRules('バンカー')">バンカー</button>
-        <button onclick="filterRules('グリーン')">グリーン</button>
-      </div>
-    </div>
+<!-- 📍 場所で探す -->
+<section id="search-by-place">
+  <h2>場所で探す</h2>
+  <div class="btn-grid">
+    <a href="rules.html?category=ティーイングエリア" class="card-btn">ティーイングエリア</a>
+    <a href="rules.html?category=フェアウェイ" class="card-btn">フェアウェイ</a>
+    <a href="rules.html?category=ラフ" class="card-btn">ラフ</a>
+    <a href="rules.html?category=バンカー" class="card-btn">バンカー</a>
+    <a href="rules.html?category=グリーン上" class="card-btn">グリーン上</a>
+  </div>
+</section>
 
-    <div class="search-column">
-      <h2>種類で探す</h2>
-      <div class="button-group">
-        <button onclick="filterRules('ペナルティ')">ペナルティ</button>
-        <button onclick="filterRules('救済')">救済</button>
-        <button onclick="filterRules('紛失球')">紛失球</button>
-        <button onclick="filterRules('旗の扱い')">旗の扱い</button>
-        <button onclick="filterRules('OB')">OB</button>
-      </div>
-    </div>
-  </section>
+<!-- 🎯 種類で探す -->
+<section id="search-by-type">
+  <h2>種類で探す</h2>
+  <div class="btn-grid">
+    <a href="rules.html?category=ペナルティ" class="card-btn">ペナルティ</a>
+    <a href="rules.html?category=救済" class="card-btn">救済</a>
+    <a href="rules.html?category=マナー" class="card-btn">マナー</a>
+    <a href="rules.html?category=ルール全般" class="card-btn">ルール全般</a>
+    <a href="rules.html?category=その他" class="card-btn">その他</a>
+  </div>
+</section>
 
+<footer>
+  <p>© 2025 世界一使いやすいゴルフルール</p>
+</footer>
 
-  <footer>
-    <p>© 2025 3タップルールズ</p>
-  </footer>
+<script>
+const input = document.getElementById("searchInput");
+input.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    const keyword = input.value.trim();
+    if (keyword) {
+      window.location.href = `rules.html?keyword=${encodeURIComponent(keyword)}`;
+    }
+  }
+});
+</script>
+
 </body>
 </html>
