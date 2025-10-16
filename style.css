@@ -599,3 +599,24 @@ button {
   color: #007f3b;
   transform: scale(1.03);
 }
+#search-results {
+  width: 90%;
+  max-width: 600px;
+  margin: 10px auto;
+}
+
+.result-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.result-card:hover {
+  background: #f4fff4;
+  transform: translateY(-1px);
+}
