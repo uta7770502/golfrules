@@ -31,29 +31,45 @@
       <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+  const id = Number(params.get("id"));
   const res = await fetch("rules.json");
   const rules = await res.json();
-  const rule = rules.find((r) => r.id == id);
+  const rule = rules.find(r => r.id === id);
   if (!rule) return;
 
+  // タイトルなど表示
+  document.getElementById("t").textContent = rule.title;
+  document.getElementById("c").textContent = rule.category;
+  document.getElementById("d").textContent = rule.description;
+  document.getElementById("x").textContent = rule.detail || "";
+
+  // ==============================
+  // ✅ お気に入り登録・解除処理
+  // ==============================
   const favBtn = document.getElementById("favoriteButton");
 
-  // すでに登録済みならボタン変更
-  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-  if (favorites.find((f) => f.id == rule.id)) {
-    favBtn.textContent = "✅ 登録済み";
-    favBtn.disabled = true;
-  }
+  // 登録状態を確認
+  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  let isFav = favorites.some(f => f.id === rule.id);
+  favBtn.textContent = isFav ? "✅ 登録済み（解除する）" : "⭐ お気に入り登録";
 
-  // 登録処理
+  // ボタンクリックで切り替え
   favBtn.addEventListener("click", () => {
-    const current = JSON.parse(localStorage.getItem("favorites") || "[]");
-    if (!current.find((f) => f.id == rule.id)) {
-      current.push(rule);
-      localStorage.setItem("favorites", JSON.stringify(current));
-      favBtn.textContent = "✅ 登録済み";
-      favBtn.disabled = true;
+    favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    const exists = favorites.find(f => f.id === rule.id);
+
+    if (exists) {
+      // 解除
+      favorites = favorites.filter(f => f.id !== rule.id);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      favBtn.textContent = "⭐ お気に入り登録";
+      alert("お気に入りを解除しました。");
+    } else {
+      // 登録
+      favorites.push({ id: rule.id, title: rule.title });
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      favBtn.textContent = "✅ 登録済み（解除する）";
+      alert("お気に入りに登録しました！");
     }
   });
 });
