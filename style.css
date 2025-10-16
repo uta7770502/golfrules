@@ -732,3 +732,7 @@ button {
 #search-suggestions {
   border-top: none; /* ← これも重要！下線の重複を防止 */
 }
+#search-box {
+  border: none !important;
+  box-shadow: none !important;
+}
