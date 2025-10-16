@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       // 登録追加
 favorites.push({
   id: rule.id,
-  title: rule.title || document.getElementById("t").textContent.trim()
+  title: document.getElementById("t").textContent.trim()
 });
 localStorage.setItem("favorites", JSON.stringify(favorites));
 favBtn.textContent = "✅ 登録済み";
