@@ -4,7 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>世界一使いやすいゴルフルール</title>
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4" />
+  <style>
+    /* 🔍 検索結果ボックス */
+    #search-results {
+      width: 90%;
+      max-width: 600px;
+      margin: 8px auto 0 auto;
+    }
+    .result-card {
+      background: #ffffff;
+      border: 1px solid #d8f7d8;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      padding: 10px 12px;
+      margin-bottom: 6px;
+      transition: 0.2s;
+    }
+    .result-card:hover {
+      background: #f4fff4;
+      transform: translateY(-1px);
+      cursor: pointer;
+    }
+    .result-card h3 {
+      font-size: 15px;
+      color: #006400;
+      margin: 0 0 3px 0;
+    }
+    .result-card p {
+      font-size: 13px;
+      color: #333;
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -18,12 +50,15 @@
     <button id="voiceButton">🎤</button>
   </section>
 
-  <!-- 📋 ルール一覧ボタン -->
+  <!-- 検索結果表示エリア -->
+  <div id="search-results"></div>
+
+  <!-- 📋 ルール一覧 -->
   <section id="latest-rules">
     <button onclick="window.location.href='rules.html'">ルール一覧（2025 最新ver.）</button>
   </section>
 
-  <!-- ⭐ お気に入り一覧ボタン -->
+  <!-- ⭐ お気に入り一覧 -->
   <section id="favorites-entry">
     <button onclick="window.location.href='favorites.html'">⭐ お気に入り一覧</button>
   </section>
@@ -34,14 +69,14 @@
     <div id="keyword-container">
       <button onclick="window.location.href='rules.html?keyword=OB'">OB</button>
       <button onclick="window.location.href='rules.html?keyword=暫定球'">暫定球</button>
-      <button onclick="window.location.href='rules.html?keyword=黄杭'">黄杭</button>
-      <button onclick="window.location.href='rules.html?keyword=白杭'">白杭</button>
       <button onclick="window.location.href='rules.html?keyword=赤杭'">赤杭</button>
-      <button onclick="window.location.href='rules.html?keyword=アンプレヤブル'">アンプレヤブル</button>
+      <button onclick="window.location.href='rules.html?keyword=黄杭'">黄杭</button>
+      <button onclick="window.location.href='rules.html?keyword=グリーン'">グリーン</button>
+      <button onclick="window.location.href='rules.html?keyword=救済'">救済</button>
     </div>
   </section>
 
-  <!-- 🏌️ 場所／種類で探す -->
+  <!-- 📍 場所で探す・種類で探す -->
   <section id="search-sections">
     <div class="search-column">
       <h2>場所で探す</h2>
@@ -71,15 +106,43 @@
   </footer>
 
   <script>
-    const input = document.getElementById("searchInput");
-    input.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        const keyword = input.value.trim();
-        if (keyword) {
-          window.location.href = `rules.html?keyword=${encodeURIComponent(keyword)}`;
-        }
+    // 🔍 リアルタイム検索
+    async function setupSearch() {
+      const input = document.getElementById("searchInput");
+      const results = document.getElementById("search-results");
+      let rules = [];
+
+      try {
+        const res = await fetch("rules.json");
+        rules = await res.json();
+      } catch {
+        results.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
+        return;
       }
-    });
+
+      input.addEventListener("input", (e) => {
+        const val = e.target.value.trim().toLowerCase();
+        if (!val) {
+          results.innerHTML = "";
+          return;
+        }
+
+        const matched = rules.filter(r =>
+          r.title.toLowerCase().includes(val) ||
+          r.description.toLowerCase().includes(val)
+        ).slice(0, 5);
+
+        results.innerHTML = matched.length
+          ? matched.map(r => `
+              <div class="result-card" onclick="window.location.href='rules.html?id=${r.id}'">
+                <h3>${r.title}</h3>
+                <p>${r.description}</p>
+              </div>
+            `).join("")
+          : "<p>該当するルールがありません。</p>";
+      });
+    }
+    setupSearch();
   </script>
 </body>
 </html>
