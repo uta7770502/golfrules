@@ -1,19 +1,54 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ルール詳細 | 3タップルールズ</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/main.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3タップルールズ | ルール詳細</title>
+  <link rel="stylesheet" href="style.css?v=6"/>
+  <style>
+    body{background:#f9fff9;margin:0;font-family:"Hiragino Sans",sans-serif}
+    header{background:#c9f5c9;color:#044;text-align:center;font-weight:700;padding:12px 8px}
+    .wrap{max-width:760px;margin:10px auto;padding:0 12px}
+    .card{background:#fff;border:1px solid #d9f7d9;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06);padding:16px}
+    .title{color:#064;font-size:18px;font-weight:700;margin:0 0 6px}
+    .cat{font-size:12px;color:#666;margin:0 0 12px}
+    .desc{font-size:14px;margin:0 0 10px}
+    .detail{font-size:14px;line-height:1.7}
+    .btns{display:flex;gap:10px;justify-content:center;margin:18px 0}
+    .btn{background:#66bb6a;color:#fff;text-decoration:none;padding:10px 16px;border-radius:8px}
+  </style>
 </head>
 <body>
-  <main id="rule-detail"></main>
+  <header>3タップルールズ</header>
 
-  <!-- お気に入り追加ボタン -->
-  <button id="addFavoriteBtn">⭐ お気に入り追加</button>
+  <div class="wrap">
+    <div class="card">
+      <h1 class="title" id="t">読み込み中…</h1>
+      <p class="cat" id="c"></p>
+      <p class="desc" id="d"></p>
+      <div class="detail" id="x"></div>
+    </div>
 
-  <!-- 戻るボタン -->
-  <button id="backToList" onclick="window.location.href='rules.html'">← ルール一覧に戻る</button>
+    <div class="btns">
+      <a href="javascript:history.back()" class="btn">⬅ 一覧に戻る</a>
+      <a href="index.html" class="btn">🏠 トップへ</a>
+    </div>
+  </div>
+
+  <script>
+    async function main(){
+      const q = new URLSearchParams(location.search);
+      const id = Number(q.get("id"));
+      const res = await fetch("rules.json");
+      const data = await res.json();
+      const r = data.find(v=>v.id===id);
+      if(!r){ document.getElementById("t").textContent="ルールが見つかりません"; return; }
+      document.getElementById("t").textContent = r.title;
+      document.getElementById("c").textContent = `カテゴリ：${r.category}`;
+      document.getElementById("d").textContent = r.description;
+      document.getElementById("x").textContent = r.detail;
+    }
+    main();
+  </script>
 </body>
 </html>
