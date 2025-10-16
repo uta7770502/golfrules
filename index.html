@@ -226,5 +226,42 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     setupSearch();
   </script>
+  <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const input = document.getElementById("searchInput");
+  const suggestions = document.getElementById("search-suggestions");
+
+  // rules.json 読み込み
+  const res = await fetch("rules.json");
+  const rules = await res.json();
+
+  // 入力イベント
+  input.addEventListener("input", (e) => {
+    const val = e.target.value.trim().toLowerCase();
+    if (!val) {
+      suggestions.innerHTML = "";
+      return;
+    }
+
+    // タイトルに部分一致する候補を取得（最大6件）
+    const matched = rules
+      .filter((r) => r.title.toLowerCase().includes(val))
+      .slice(0, 6);
+
+    // 結果を描画
+    suggestions.innerHTML = matched.length
+      ? matched
+          .map(
+            (r) => `
+              <div class="suggestion-item" 
+                onclick="location.href='rule.html?id=${r.id}'">
+                ${r.title}
+              </div>`
+          )
+          .join("")
+      : `<div class="suggestion-item empty">該当するルールがありません</div>`;
+  });
+});
+</script>
 </body>
 </html>
