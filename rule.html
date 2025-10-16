@@ -80,6 +80,36 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("x").textContent = r.detail;
     }
     main();
+    // ✅ お気に入り登録・解除ボタン制御
+const favBtn = document.querySelector(".fav-btn"); // 登録ボタン
+if (favBtn) {
+  const id = Number(new URLSearchParams(location.search).get("id"));
+  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+  // 現在のルールが登録済みかどうかをチェック
+  const isFav = favorites.some(f => Number(f.id) === id);
+  favBtn.textContent = isFav ? "✅ 登録済み（解除する）" : "⭐ お気に入り登録";
+
+  // ボタンクリック時の処理
+  favBtn.addEventListener("click", () => {
+    favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    const exists = favorites.find(f => Number(f.id) === id);
+
+    if (exists) {
+      // 登録解除
+      favorites = favorites.filter(f => Number(f.id) !== id);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      favBtn.textContent = "⭐ お気に入り登録";
+      alert("お気に入りを解除しました。");
+    } else {
+      // 登録追加
+      favorites.push({ id, title: document.getElementById("t").textContent });
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      favBtn.textContent = "✅ 登録済み（解除する）";
+      alert("お気に入りに登録しました！");
+    }
+  });
+}
   </script>
 </body>
 </html>
