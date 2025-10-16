@@ -474,11 +474,3 @@ button {
 #search-sections {
   margin-top: -30px !important;
 }
-/* 人気のキーワードセクションに薄い黄色の帯を追加 */
-#popular-keywords {
-  background-color: #FFF7D6; /* 柔らかい薄黄色 */
-  border-radius: 12px;       /* 角を少し丸く */
-  padding: 16px 8px 20px 8px; /* 内側余白を調整（上下左右） */
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
