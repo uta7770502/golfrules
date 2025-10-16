@@ -376,3 +376,7 @@ header {
 #search-by-category {
   margin-top: -120px !important;  /* ← 距離は好みに応じて調整可 (-100〜-150pxが目安) */
 }
+/* お気に入り一覧ボタンの余白を調整して、下のスペースを詰める */
+.favorite-button {
+  margin-bottom: 10px !important; /* ← たぶん今 40〜60px くらいあるので詰める */
+}
