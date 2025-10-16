@@ -372,3 +372,7 @@ header {
   top: -10px; /* ←ここで上方向に50px */
   margin-bottom: 0;
 }
+/* 「場所で探す／種類で探す」をお気に入りボタンのすぐ下に上げる */
+#search-by-category {
+  margin-top: -120px !important;  /* ← 距離は好みに応じて調整可 (-100〜-150pxが目安) */
+}
