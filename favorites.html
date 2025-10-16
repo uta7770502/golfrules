@@ -4,19 +4,72 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>お気に入り一覧 | 3タップルールズ</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/main.js" defer></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: "Helvetica", sans-serif;
+      background: #f9fff9;
+      margin: 0;
+    }
+    h1 {
+      background: #00bfa5;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      margin: 0 0 20px;
+      font-size: 20px;
+    }
+    #favoritesList {
+      padding: 10px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .fav-item {
+      background: #fff;
+      border-radius: 6px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .fav-item:hover {
+      background: #eaf9e6;
+    }
+    .empty {
+      text-align: center;
+      color: #777;
+    }
+    .back-btn {
+      display: block;
+      text-align: center;
+      color: #007f3b;
+      text-decoration: none;
+      margin: 20px auto;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>⭐ お気に入り一覧</h1>
-    <button class="back-btn" onclick="window.location.href='index.html'">← トップに戻る</button>
-  </header>
+  <h1>⭐ お気に入り一覧</h1>
+  <main id="favoritesList"></main>
+  <a href="index.html" class="back-btn">← トップへ戻る</a>
 
-  <main id="favorites-list"></main>
+  <script>
+    const list = document.getElementById("favoritesList");
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
-  <footer>
-    <p>© 2025 3タップルールズ</p>
-  </footer>
+    if (favorites.length === 0) {
+      list.innerHTML = '<p class="empty">お気に入り登録されたルールはありません。</p>';
+    } else {
+      list.innerHTML = favorites.map(
+        (f) => `
+          <div class="fav-item" onclick="location.href='rule.html?id=${f.id}'">
+            ${f.title}
+          </div>`
+      ).join("");
+    }
+  </script>
 </body>
 </html>
