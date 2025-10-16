@@ -561,3 +561,41 @@ button {
   color: #007f3b !important;
   transform: scale(1.03) !important;
 }
+/* =======================================
+   人気キーワード完全リセット＆再デザイン
+   （aタグ対応／上書き競合完全回避）
+======================================= */
+
+/* まずリセット：リンク青字化を防ぐ */
+#keyword-container a {
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* 再デザイン */
+#keyword-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 8px;
+  margin-top: 10px;
+}
+
+#keyword-container a {
+  background-color: #f2f2f2;
+  color: #333;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 14px;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+#keyword-container a:hover {
+  background-color: #e0f8e0;
+  color: #007f3b;
+  transform: scale(1.03);
+}
