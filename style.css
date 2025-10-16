@@ -452,3 +452,14 @@ button {
 #favorites-entry {
   margin-top: -25px !important;
 }
+/* --- 微調整 --- */
+
+/* お気に入り一覧ボタンを上に25px移動 */
+#favorites-entry {
+  margin-top: -25px !important;
+}
+
+/* 人気のキーワードボタンの隙間を詰める */
+#keyword-container button {
+  margin: 4px 6px !important;
+}
