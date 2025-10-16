@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>世界一使いやすいゴルフルール</title>
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
-
 <body>
   <header>
     <h1>世界一使いやすいゴルフルール</h1>
@@ -15,53 +14,55 @@
   <!-- 🔍 検索ボックス -->
   <section id="search-box">
     <input type="text" id="searchInput" placeholder="ルールを検索…" />
-    <button id="micButton">🎤</button>
+    <button id="searchButton">🔍</button>
+    <button id="voiceButton">🎤</button>
   </section>
 
   <!-- 📋 ルール一覧ボタン -->
-  <section id="rules-entry">
-    <a href="rules.html" class="main-btn">ルール一覧（2025 最新ver.）</a>
+  <section id="latest-rules">
+    <button onclick="window.location.href='rules.html'">ルール一覧（2025 最新ver.）</button>
   </section>
 
   <!-- ⭐ お気に入り一覧ボタン -->
   <section id="favorites-entry">
-    <a href="favorites.html" class="fav-btn">⭐ お気に入り一覧</a>
+    <button onclick="window.location.href='favorites.html'">⭐ お気に入り一覧</button>
   </section>
 
   <!-- 📌 人気のキーワード -->
   <section id="popular-keywords">
     <h2>人気のキーワード</h2>
-    <div class="keyword-grid">
-      <a href="rules.html?keyword=OB">OB</a>
-      <a href="rules.html?keyword=ペナルティ">ペナルティ</a>
-      <a href="rules.html?keyword=暫定球">暫定球</a>
-      <a href="rules.html?keyword=ドロップ">ドロップ</a>
-      <a href="rules.html?keyword=グリーン">グリーン</a>
-      <a href="rules.html?keyword=救済">救済</a>
+    <div id="keyword-container">
+      <button onclick="window.location.href='rules.html?keyword=OB'">OB</button>
+      <button onclick="window.location.href='rules.html?keyword=暫定球'">暫定球</button>
+      <button onclick="window.location.href='rules.html?keyword=黄杭'">黄杭</button>
+      <button onclick="window.location.href='rules.html?keyword=白杭'">白杭</button>
+      <button onclick="window.location.href='rules.html?keyword=赤杭'">赤杭</button>
+      <button onclick="window.location.href='rules.html?keyword=アンプレヤブル'">アンプレヤブル</button>
     </div>
   </section>
 
-  <!-- 📍 場所で探す -->
-  <section id="search-by-place">
-    <h2>場所で探す</h2>
-    <div class="btn-grid">
-      <a href="rules.html?category=ティー">ティー</a>
-      <a href="rules.html?category=フェアウェイ">フェアウェイ</a>
-      <a href="rules.html?category=ラフ">ラフ</a>
-      <a href="rules.html?category=バンカー">バンカー</a>
-      <a href="rules.html?category=グリーン上">グリーン上</a>
+  <!-- 🏌️ 場所／種類で探す -->
+  <section id="search-sections">
+    <div class="search-column">
+      <h2>場所で探す</h2>
+      <div class="button-group">
+        <button onclick="window.location.href='rules.html?category=ティー'">ティー</button>
+        <button onclick="window.location.href='rules.html?category=フェアウェイ'">フェアウェイ</button>
+        <button onclick="window.location.href='rules.html?category=ラフ'">ラフ</button>
+        <button onclick="window.location.href='rules.html?category=バンカー'">バンカー</button>
+        <button onclick="window.location.href='rules.html?category=グリーン上'">グリーン上</button>
+      </div>
     </div>
-  </section>
 
-  <!-- 🎯 種類で探す -->
-  <section id="search-by-type">
-    <h2>種類で探す</h2>
-    <div class="btn-grid">
-      <a href="rules.html?category=ペナルティ">ペナルティ</a>
-      <a href="rules.html?category=救済">救済</a>
-      <a href="rules.html?category=マナー">マナー</a>
-      <a href="rules.html?category=ルール全般">ルール全般</a>
-      <a href="rules.html?category=その他">その他</a>
+    <div class="search-column">
+      <h2>種類で探す</h2>
+      <div class="button-group">
+        <button onclick="window.location.href='rules.html?category=ペナルティ'">ペナルティ</button>
+        <button onclick="window.location.href='rules.html?category=救済'">救済</button>
+        <button onclick="window.location.href='rules.html?category=マナー'">マナー</button>
+        <button onclick="window.location.href='rules.html?category=ルール全般'">ルール全般</button>
+        <button onclick="window.location.href='rules.html?category=その他'">その他</button>
+      </div>
     </div>
   </section>
 
