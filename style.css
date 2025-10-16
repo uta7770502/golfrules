@@ -463,3 +463,14 @@ button {
 #keyword-container button {
   margin: 4px 6px !important;
 }
+/* --- レイアウト微調整（2025-10-16調整版）--- */
+
+/* お気に入り一覧ボタンをさらに25px上に（合計で約50px上） */
+#favorites-entry {
+  margin-top: -50px !important;
+}
+
+/* 「場所で探す／種類で探す」全体を上に30px移動 */
+#search-sections {
+  margin-top: -30px !important;
+}
