@@ -27,6 +27,37 @@
       <p class="cat" id="c"></p>
       <p class="desc" id="d"></p>
       <div class="detail" id="x"></div>
+      <button id="favoriteButton">⭐ お気に入りに追加</button>
+      <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  const res = await fetch("rules.json");
+  const rules = await res.json();
+  const rule = rules.find((r) => r.id == id);
+  if (!rule) return;
+
+  const favBtn = document.getElementById("favoriteButton");
+
+  // すでに登録済みならボタン変更
+  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  if (favorites.find((f) => f.id == rule.id)) {
+    favBtn.textContent = "✅ 登録済み";
+    favBtn.disabled = true;
+  }
+
+  // 登録処理
+  favBtn.addEventListener("click", () => {
+    const current = JSON.parse(localStorage.getItem("favorites") || "[]");
+    if (!current.find((f) => f.id == rule.id)) {
+      current.push(rule);
+      localStorage.setItem("favorites", JSON.stringify(current));
+      favBtn.textContent = "✅ 登録済み";
+      favBtn.disabled = true;
+    }
+  });
+});
+</script>
     </div>
 
     <div class="btns">
