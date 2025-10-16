@@ -380,3 +380,6 @@ header {
 .favorite-button {
   margin-bottom: 10px !important; /* ← たぶん今 40〜60px くらいあるので詰める */
 }
+#search-by-category {
+  margin-top: -50px !important; /* ← 強制的に上へ移動 */
+}
