@@ -57,22 +57,75 @@
   <a href="index.html" class="back-btn">← トップへ戻る</a>
 
   <script>
-  const list = document.getElementById("favoritesList");
-  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+(async () => {
+  const listEl = document.getElementById("favoritesList");
 
-  // ✅ titleが無い（undefined）データを自動除外
-  favorites = favorites.filter(f => f && f.title);
+  // ❶ いま保存されているお気に入りを取得
+  let favorites = [];
+  try {
+    favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  } catch { favorites = []; }
 
-  if (favorites.length === 0) {
-    list.innerHTML = '<p class="empty">お気に入り登録されたルールはありません。</p>';
-  } else {
-    list.innerHTML = favorites.map(
-      (f) => `
-        <div class="fav-item" onclick="location.href='rule.html?id=${f.id}'">
-          ${f.title}
-        </div>`
-    ).join("");
+  // ❷ 正規のルールID一覧を取得（存在しないID=孤児を除外するため）
+  let validIds = new Set();
+  try {
+    const res = await fetch("rules.json");
+    const rules = await res.json();
+    validIds = new Set(rules.map(r => Number(r.id)));
+  } catch {
+    // 読めない場合はID検証をスキップ（ただし他のフィルタは効く）
   }
+
+  // ❸ サニタイズ：形を整える + 不正/空/重複を除去
+  const map = new Map(); // 重複統合用（id→item）
+  for (const f of Array.isArray(favorites) ? favorites : []) {
+    if (!f || f.id == null || !String(f.title || "").trim()) continue;        // 空やtitle無し
+    const idNum = Number(f.id);
+    if (validIds.size && !validIds.has(idNum)) continue;                      // ルールに無いIDは除外
+    // 最新の情報を優先して上書き（重複対策）
+    map.set(idNum, { id: idNum, title: String(f.title).trim() });
+  }
+  const cleaned = Array.from(map.values());
+
+  // ❹ クリーン済みを保存（以後“不要1件”は戻ってこない）
+  localStorage.setItem("favorites", JSON.stringify(cleaned));
+
+  // ❺ 画面に描画
+  function render(items) {
+    if (!items.length) {
+      listEl.innerHTML = '<p class="empty">お気に入り登録されたルールはありません。</p>';
+      return;
+    }
+    listEl.innerHTML = items.map(f => `
+      <div class="fav-item">
+        <button class="remove" aria-label="削除" data-id="${f.id}">×</button>
+        <div class="title" data-id="${f.id}">${f.title}</div>
+      </div>
+    `).join("");
+
+    // タイトルをタップ → 詳細へ
+    listEl.querySelectorAll(".title").forEach(el => {
+      el.addEventListener("click", () => {
+        const id = Number(el.dataset.id);
+        location.href = `rule.html?id=${id}`;
+      });
+    });
+
+    // × で個別削除
+    listEl.querySelectorAll(".remove").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const id = Number(btn.dataset.id);
+        const next = (JSON.parse(localStorage.getItem("favorites") || "[]"))
+          .filter(x => Number(x.id) !== id);
+        localStorage.setItem("favorites", JSON.stringify(next));
+        render(next);
+      });
+    });
+  }
+
+  render(cleaned);
+})();
 </script>
 </body>
 </html>
