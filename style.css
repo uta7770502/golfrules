@@ -1,0 +1,411 @@
+/* ===================================
+   3タップルールズ 共通スタイル
+   （デザイン完全復元版）
+=================================== */
+
+/* --- 全体設定 --- */
+body {
+  font-family: "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+  background-color: #ffffff;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* --- ヘッダー --- */
+header {
+  background-color: #18c6b0; /* ミントグリーン濃いめ */
+  color: #fff;
+  padding: 30px 10px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+header h1 {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* --- 検索ボックス --- */
+#search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 20px auto;
+}
+
+#search-box input {
+  width: 70%;
+  padding: 10px 15px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+}
+
+#search-box button {
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#searchButton {
+  background-color: #14b59e;
+}
+
+#voiceButton {
+  background-color: #f8c52c;
+}
+
+/* --- セクション共通 --- */
+section {
+  width: 90%;
+  margin: 0 auto;
+  padding: 15px 0;
+}
+
+section h2 {
+  color: #333;
+  font-size: 1.1em;
+  margin: 15px 0 10px;
+}
+
+/* --- 丸ボタンデザイン（基本） --- */
+button {
+  background-color: #14b59e;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 25px;
+  margin: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #10a18d;
+}
+
+/* --- 2カラムボタン配置 --- */
+.search-column {
+  display: inline-block;
+  width: 48%;
+  vertical-align: top;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- お気に入りエリア --- */
+#favorites-entry {
+  background-color: #fff8dc;
+  color: #444;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 12px 10px;
+  margin: 20px auto;
+  width: 85%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 人気キーワードエリア --- */
+#keyword-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#keyword-container button {
+  background-color: #f2f2f2;
+  color: #333;
+  border: none;
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-size: 15px;
+}
+
+/* --- 黄色ボタン（ルール一覧） --- */
+#latest-rules button {
+  background-color: #f8c52c;
+  color: #333;
+  font-weight: bold;
+  border-radius: 50px;
+  padding: 12px 25px;
+  width: 80%;
+  max-width: 350px;
+  margin: 25px auto 15px;
+}
+
+/* --- 戻るボタン --- */
+.back-btn {
+  background-color: #d8f8f2;
+  color: #333;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 25px;
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+/* --- フッター --- */
+footer {
+  background-color: #fafafa;
+  padding: 20px;
+  margin-top: 40px;
+  font-size: 0.8em;
+  color: #666;
+}
+
+/* --- ルール一覧（下層ページ） --- */
+.rule-card {
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px auto;
+  width: 90%;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+/* --- タブバー --- */
+nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: #666;
+  font-size: 0.9em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+nav a.active {
+  color: #18c6b0;
+  font-weight: bold;
+}
+/* === スペース調整（検索〜バナー間）=== */
+
+/* 検索ボックス下の余白を少し縮める */
+#search-box {
+  margin-bottom: 10px;
+}
+
+/* 黄色ボタン（ルール一覧）まわりのバランス調整 */
+#latest-rules button {
+  margin: 10px auto 10px; /* 上下の余白を縮小 */
+  padding: 10px 20px;
+}
+
+/* お気に入り一覧バナー */
+#favorites-entry {
+  margin-top: 10px; /* 間隔を詰める */
+  padding: 10px 8px;
+  width: 85%;
+}
+
+/* 人気キーワードタイトルとの距離も微調整 */
+#popular-keywords {
+  margin-top: 8px;
+}
+/* === スマホファーストビュー上部圧縮 === */
+
+/* 全体の上下余白を軽く */
+body {
+  padding-top: 0;
+}
+
+/* ヘッダーをやや薄く */
+header {
+  padding: 20px 10px 15px 10px;
+}
+
+/* 検索ボックスを詰める */
+#search-box {
+  margin-top: 8px;
+  margin-bottom: 5px;
+}
+
+/* 検索ボタン少し小さめに */
+#search-box button {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+/* 黄色ルール一覧ボタンをコンパクト化 */
+#latest-rules button {
+  margin: 8px auto 6px;
+  padding: 9px 18px;
+  font-size: 15px;
+  width: 78%;
+}
+
+/* お気に入り一覧バナーも縮小 */
+#favorites-entry {
+  margin-top: 6px;
+  margin-bottom: 8px;
+  padding: 8px 6px;
+  width: 80%;
+  font-size: 14px;
+}
+
+/* 「人気のキーワード」タイトルを少し上に */
+#popular-keywords {
+  margin-top: 5px;
+}
+
+/* スマホ専用（小画面向け）微調整 */
+@media screen and (max-width: 480px) {
+  header h1 {
+    font-size: 1.6em;
+  }
+  #search-box input {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
+/* --- お気に入り一覧カード削除 --- */
+#favorites-entry {
+  background: none;      /* 背景色を削除 */
+  box-shadow: none;      /* 枠線影も削除 */
+  border: none;
+  padding: 0;
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* --- 人気キーワードを隙間なく敷き詰め --- */
+#keyword-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px; /* ボタン同士の間隔を最小限に */
+  padding: 0 4px;
+}
+
+#keyword-container button {
+  background-color: #f4f4f4;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: #444;
+  white-space: nowrap;
+}
+/* === ルール一覧ボタンを上に引き上げる（余白詰め） === */
+#latest-rules {
+  position: relative;
+  top: -35px; /* ←500pxは大きすぎるのでまず-50pxで確認推奨 */
+}
+
+/* 検索ボックスの下余白も削減 */
+#search-box {
+  margin-bottom: 2px;
+}
+/* === お気に入り一覧の下の全要素を上に50px詰める === */
+#content-below-favorites {
+  position: relative;
+  top: -100px; /* 上方向に移動 */
+}
+/* === お気に入り一覧の下の全要素を上に50px詰める === */
+#content-below-favorites {
+  position: relative;
+  top: -100px; /* 上方向に移動 */
+}
+/* ⭐ お気に入り一覧ボタンを上に50px移動 */
+#favorites-entry {
+  position: relative;
+  top: -50px; /* ←ここで上方向に50px */
+  margin-bottom: 0;
+}
+/* === 人気のキーワード全体を上に150px詰める === */
+#popular-keywords {
+  position: relative;
+  top: -50px; /* ←この数値で上に持ち上げる */
+  margin-bottom: 0;
+}
+/* === 「場所で探す」「種類で探す」全体を上に50px移動 === */
+#search-by-category {
+  position: relative;
+  top: -50px; /* 上方向に50px */
+}
+/* === 人気のキーワード全体を上に詰める === */
+#popular-keywords {
+  position: relative;
+  top: -50px; /* ← この数値で上に上げる。調整可能 */
+  margin-bottom: 0;
+}
+/* === 「場所で探す」「種類で探す」セクションを上に詰める === */
+#search-by-category {
+  position: relative;
+  top: -50px;  /* 上に50px移動 */
+}
+/* === 「場所で探す」「種類で探す」セクションを上に詰める（強制版） === */
+#search-by-category {
+  margin-top: -50px !important; /* ← 強制的に上へ移動 */
+}
+/* ⭐ お気に入り一覧ボタンを上に50px移動 */
+#favorites-entry {
+  position: relative;
+  top: -10px; /* ←ここで上方向に50px */
+  margin-bottom: 0;
+}
+/* 「場所で探す／種類で探す」をお気に入りボタンのすぐ下に上げる */
+#search-by-category {
+  margin-top: -120px !important;  /* ← 距離は好みに応じて調整可 (-100〜-150pxが目安) */
+}
+/* お気に入り一覧ボタンの余白を調整して、下のスペースを詰める */
+.favorite-button {
+  margin-bottom: 10px !important; /* ← たぶん今 40〜60px くらいあるので詰める */
+}
+#search-by-category {
+  margin-top: -50px !important; /* ← 強制的に上へ移動 */
+}
+/* 人気のキーワードセクション下の余白を詰める */
+#popular-keywords {
+  margin-bottom: 10px !important;   /* ← 以前は40〜60pxくらいある可能性あり */
+  padding-bottom: 0 !important;     /* 念のため */
+}
+/* 人気のキーワードの下余白をなくす */
+#popular-keywords {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* 場所で探す・種類で探すを上に詰める */
+#search-sections {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* セクション内部にも余白がある場合に対応 */
+#search-sections h2 {
+  margin-top: 5px !important;
+}
+
+#search-sections .search-column {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
