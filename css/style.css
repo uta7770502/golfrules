@@ -409,3 +409,46 @@ header {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
+/* --- UI改善：ベンチマーク風カードデザイン --- */
+
+/* 全体の背景を淡いグレーにしてカードを浮かせる */
+body {
+  background: #f3f5f7;
+}
+
+/* 各セクションをカード風に */
+section {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin: 16px 12px;
+  padding: 20px 16px;
+}
+
+/* 人気のキーワード：少し軽め */
+#popular-keywords {
+  background: #f8f9fa;
+  margin-bottom: 8px !important;
+}
+
+/* 場所・種類セクションをやや強調 */
+#search-sections {
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  margin-top: 0 !important;
+}
+
+/* お気に入り */
+#favorites-entry {
+  margin-top: 12px;
+}
+
+/* セクションタイトル */
+h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+  border-left: 4px solid #00bfa6; /* アクセントライン */
+  padding-left: 8px;
+}
