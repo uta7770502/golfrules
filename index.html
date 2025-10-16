@@ -151,7 +151,40 @@
   <footer>
     <p>© 2025 世界一使いやすいゴルフルール</p>
   </footer>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const input = document.getElementById("searchInput");
+  const results = document.getElementById("search-results");
 
+  // ルールデータを読み込み
+  const res = await fetch("rules.json");
+  const rules = await res.json();
+
+  // 入力時にリアルタイム表示
+  input.addEventListener("input", (e) => {
+    const val = e.target.value.trim().toLowerCase();
+    if (!val) {
+      results.innerHTML = "";
+      return;
+    }
+
+    const matched = rules.filter((r) =>
+      r.title.toLowerCase().includes(val)
+    ).slice(0, 5); // 最大5件表示
+
+    results.innerHTML = matched.length
+      ? matched
+          .map(
+            (r) => `
+          <div class="result-card" onclick="location.href='rule.html?id=${r.id}'">
+            <h3>${r.title}</h3>
+          </div>`
+          )
+          .join("")
+      : `<p>該当するルールが見つかりません</p>`;
+  });
+});
+</script>
   <script>
     // 🔍 リアルタイム検索
     async function setupSearch() {
