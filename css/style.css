@@ -383,3 +383,8 @@ header {
 #search-by-category {
   margin-top: -50px !important; /* ← 強制的に上へ移動 */
 }
+/* 人気のキーワードセクション下の余白を詰める */
+#popular-keywords {
+  margin-bottom: 10px !important;   /* ← 以前は40〜60pxくらいある可能性あり */
+  padding-bottom: 0 !important;     /* 念のため */
+}
