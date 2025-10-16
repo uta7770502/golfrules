@@ -65,11 +65,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       favBtn.textContent = "⭐ お気に入り登録";
       alert("お気に入りを解除しました。");
     } else {
-      // 登録
-      favorites.push({ id: rule.id, title: rule.title });
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-      favBtn.textContent = "✅ 登録済み（解除する）";
-      alert("お気に入りに登録しました！");
+      // 登録追加
+favorites.push({
+  id: rule.id,
+  title: rule.title || document.getElementById("t").textContent.trim()
+});
+localStorage.setItem("favorites", JSON.stringify(favorites));
+favBtn.textContent = "✅ 登録済み";
+alert("お気に入りに登録しました！");
     }
   });
 });
