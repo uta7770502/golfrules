@@ -366,3 +366,9 @@ header {
 #search-by-category {
   margin-top: -50px !important; /* ← 強制的に上へ移動 */
 }
+/* ⭐ お気に入り一覧ボタンを上に50px移動 */
+#favorites-entry {
+  position: relative;
+  top: -10px; /* ←ここで上方向に50px */
+  margin-bottom: 0;
+}
