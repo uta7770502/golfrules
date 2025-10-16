@@ -2,133 +2,136 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>3タップルールズ | ルール詳細</title>
-  <link rel="stylesheet" href="style.css?v=6"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3タップルールズ｜ルール一覧</title>
+
   <style>
-    body{background:#f9fff9;margin:0;font-family:"Hiragino Sans",sans-serif}
-    header{background:#c9f5c9;color:#044;text-align:center;font-weight:700;padding:12px 8px}
-    .wrap{max-width:760px;margin:10px auto;padding:0 12px}
-    .card{background:#fff;border:1px solid #d9f7d9;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06);padding:16px}
-    .title{color:#064;font-size:18px;font-weight:700;margin:0 0 6px}
-    .cat{font-size:12px;color:#666;margin:0 0 12px}
-    .desc{font-size:14px;margin:0 0 10px}
-    .detail{font-size:14px;line-height:1.7}
-    .btns{display:flex;gap:10px;justify-content:center;margin:18px 0}
-    .btn{background:#66bb6a;color:#fff;text-decoration:none;padding:10px 16px;border-radius:8px}
+    body {
+      background: #f9fff9;
+      margin: 0;
+      font-family: "Helvetica", sans-serif;
+    }
+
+    header {
+      background: #00bfa5;
+      color: #fff;
+      text-align: center;
+      padding: 14px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    /* 🔍 検索ボックス */
+    #searchBox {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    #searchInput {
+      width: 85%;
+      max-width: 420px;
+      padding: 10px 15px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    #rulesContainer {
+      max-width: 760px;
+      margin: auto;
+      padding: 0 15px 30px;
+    }
+
+    .rule-item {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+      padding: 12px 15px;
+      margin: 8px 0;
+      transition: all 0.2s ease;
+    }
+
+    .rule-item:hover {
+      background: #eaf9f3;
+      transform: scale(1.02);
+    }
+
+    .rule-item a {
+      text-decoration: none;
+      color: #007f3b;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .rule-item p {
+      font-size: 13px;
+      color: #555;
+      margin: 4px 0 0;
+    }
+
+    .back-btn {
+      display: block;
+      text-align: center;
+      margin: 20px auto;
+      color: #007f3b;
+      text-decoration: none;
+      font-weight: bold;
+    }
   </style>
 </head>
+
 <body>
   <header>3タップルールズ</header>
 
-  <div class="wrap">
-    <div class="card">
-      <h1 class="title" id="t">読み込み中…</h1>
-      <p class="cat" id="c"></p>
-      <p class="desc" id="d"></p>
-      <div class="detail" id="x"></div>
-      <button id="favoriteButton">⭐ お気に入りに追加</button>
-      <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const params = new URLSearchParams(window.location.search);
-  const id = Number(params.get("id"));
-  const res = await fetch("rules.json");
-  const rules = await res.json();
-  const rule = rules.find(r => r.id === id);
-  if (!rule) return;
-
-  // タイトルなど表示
-  document.getElementById("t").textContent = rule.title;
-  document.getElementById("c").textContent = rule.category;
-  document.getElementById("d").textContent = rule.description;
-  document.getElementById("x").textContent = rule.detail || "";
-
-  // ==============================
-  // ✅ お気に入り登録・解除処理
-  // ==============================
-  const favBtn = document.getElementById("favoriteButton");
-
-  // 登録状態を確認
-  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-  let isFav = favorites.some(f => f.id === rule.id);
-  favBtn.textContent = isFav ? "✅ 登録済み（解除する）" : "⭐ お気に入り登録";
-
-  // ボタンクリックで切り替え
-  favBtn.addEventListener("click", () => {
-    favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-    const exists = favorites.find(f => f.id === rule.id);
-
-    if (exists) {
-      // 解除
-      favorites = favorites.filter(f => f.id !== rule.id);
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-      favBtn.textContent = "⭐ お気に入り登録";
-      alert("お気に入りを解除しました。");
-    } else {
-      // 登録追加
-favorites.push({
-  id: rule.id,
-  title: document.getElementById("t").textContent.trim()
-});
-localStorage.setItem("favorites", JSON.stringify(favorites));
-favBtn.textContent = "✅ 登録済み";
-alert("お気に入りに登録しました！");
-    }
-  });
-});
-</script>
-    </div>
-
-    <div class="btns">
-      <a href="javascript:history.back()" class="btn">⬅ 一覧に戻る</a>
-      <a href="index.html" class="btn">🏠 トップへ</a>
-    </div>
+  <!-- 🔍 検索バー -->
+  <div id="searchBox">
+    <input id="searchInput" type="text" placeholder="ルールを検索..." />
   </div>
 
+  <!-- 🔹 一覧エリア -->
+  <main id="rulesContainer"></main>
+
+  <a href="index.html" class="back-btn">← トップへ戻る</a>
+
   <script>
-    async function main(){
-      const q = new URLSearchParams(location.search);
-      const id = Number(q.get("id"));
+    async function main() {
       const res = await fetch("rules.json");
-      const data = await res.json();
-      const r = data.find(v=>v.id===id);
-      if(!r){ document.getElementById("t").textContent="ルールが見つかりません"; return; }
-      document.getElementById("t").textContent = r.title;
-      document.getElementById("c").textContent = `カテゴリ：${r.category}`;
-      document.getElementById("d").textContent = r.description;
-      document.getElementById("x").textContent = r.detail;
+      const rules = await res.json();
+      const list = document.getElementById("rulesContainer");
+      const input = document.getElementById("searchInput");
+
+      // 一覧を描画する関数
+      function render(data) {
+        if (!data.length) {
+          list.innerHTML = `<p style="text-align:center;color:#777;">該当するルールはありません。</p>`;
+          return;
+        }
+        list.innerHTML = data.map(
+          (r) => `
+            <div class="rule-item">
+              <a href="rule.html?id=${r.id}">${r.title}</a>
+              <p>${r.description || ""}</p>
+            </div>`
+        ).join("");
+      }
+
+      // 初期表示
+      render(rules);
+
+      // 🔍 入力によるフィルタリング
+      input.addEventListener("input", (e) => {
+        const keyword = e.target.value.trim();
+        const filtered = rules.filter(
+          (r) =>
+            r.title.includes(keyword) ||
+            (r.description || "").includes(keyword)
+        );
+        render(filtered);
+      });
     }
+
     main();
-    // ✅ お気に入り登録・解除ボタン制御
-const favBtn = document.querySelector(".fav-btn"); // 登録ボタン
-if (favBtn) {
-  const id = Number(new URLSearchParams(location.search).get("id"));
-  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-
-  // 現在のルールが登録済みかどうかをチェック
-  const isFav = favorites.some(f => Number(f.id) === id);
-  favBtn.textContent = isFav ? "✅ 登録済み（解除する）" : "⭐ お気に入り登録";
-
-  // ボタンクリック時の処理
-  favBtn.addEventListener("click", () => {
-    favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-    const exists = favorites.find(f => Number(f.id) === id);
-
-    if (exists) {
-      // 登録解除
-      favorites = favorites.filter(f => Number(f.id) !== id);
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-      favBtn.textContent = "⭐ お気に入り登録";
-      alert("お気に入りを解除しました。");
-    } else {
-      // 登録追加
-      favorites.push({ id, title: document.getElementById("t").textContent });
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-      favBtn.textContent = "✅ 登録済み（解除する）";
-      alert("お気に入りに登録しました！");
-    }
-  });
-}
   </script>
 </body>
 </html>
