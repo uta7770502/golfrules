@@ -1,141 +1,109 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3タップルールズ | ルール一覧</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3タップルールズ｜ルール一覧</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      font-family: "Helvetica", sans-serif;
       background: #f9fff9;
+      font-family: "Helvetica", sans-serif;
       margin: 0;
       padding: 0;
     }
-
-    header {
+    h1 {
+      text-align: center;
       background: #00bfa5;
-      color: #fff;
-      text-align: center;
+      color: white;
       padding: 14px;
-      font-size: 22px;
-      font-weight: bold;
+      margin: 0 0 10px;
+      font-size: 20px;
     }
-
-    /* 🔍 検索ボックス */
-    #searchBox {
+    #searchInfo {
       text-align: center;
-      margin: 15px 0;
+      font-size: 15px;
+      color: #444;
+      margin-bottom: 10px;
     }
-
-    #searchInput {
-      width: 85%;
-      max-width: 400px;
-      padding: 10px 15px;
-      border: 1px solid #ccc;
-      border-radius: 25px;
-      font-size: 16px;
-      outline: none;
+    #ruleList {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 15px;
     }
-
-    #rulesContainer {
-      max-width: 760px;
-      margin: auto;
-      padding: 10px 15px 30px;
-    }
-
     .rule-item {
       background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-      padding: 12px 15px;
-      margin: 8px 0;
-      transition: all 0.2s ease;
-    }
-
-    .rule-item:hover {
-      background: #eaf9f3;
-      transform: scale(1.02);
-    }
-
-    .rule-item a {
-      text-decoration: none;
-      color: #007f3b;
-      font-weight: bold;
+      border-radius: 6px;
+      padding: 10px;
+      border: 1px solid #ddd;
       font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s ease;
     }
-
-    .rule-item p {
-      font-size: 13px;
-      color: #555;
-      margin: 4px 0 0;
+    .rule-item:hover {
+      background: #eaf9e6;
     }
-
     .back-btn {
       display: block;
       text-align: center;
-      margin: 20px auto;
       color: #007f3b;
+      margin: 20px auto;
       text-decoration: none;
       font-weight: bold;
     }
   </style>
 </head>
-
 <body>
-  <header>3タップルールズ</header>
-
-  <!-- 🔍 検索バー -->
-  <div id="searchBox">
-    <input id="searchInput" type="text" placeholder="ルールを検索..." />
-  </div>
-
-  <!-- 🔹 一覧表示 -->
-  <main id="rulesContainer">読み込み中...</main>
-
+  <h1>3タップルールズ｜ルール一覧</h1>
+  <div id="searchInfo"></div>
+  <main id="ruleList"></main>
   <a href="index.html" class="back-btn">← トップへ戻る</a>
 
   <script>
-    async function main() {
-      try {
-        const res = await fetch("rules.json");
-        const rules = await res.json();
-        const list = document.getElementById("rulesContainer");
-        const input = document.getElementById("searchInput");
+    document.addEventListener("DOMContentLoaded", async () => {
+      const list = document.getElementById("ruleList");
+      const info = document.getElementById("searchInfo");
+      const res = await fetch("rules.json");
+      const rules = await res.json();
 
-        // 一覧を描画する関数
-        function render(data) {
-          if (!data.length) {
-            list.innerHTML = `<p style="text-align:center;color:#777;">該当するルールはありません。</p>`;
-            return;
-          }
-          list.innerHTML = data.map((r) => `
-            <div class="rule-item">
-              <a href="rule.html?id=${r.id}">
-              <p>${r.description || ""}</p>
-            </div>
-          `).join("");
-        }
+      // URLパラメータを取得
+      const ps = new URLSearchParams(window.location.search);
+      const keyword = ps.get("keyword");
+      const category = ps.get("category");
 
-        // 初期表示
-        render(rules);
+      let filtered = rules;
 
-        // 🔍 入力による絞り込み
-        input.addEventListener("input", (e) => {
-          const keyword = e.target.value.trim();
-          const filtered = rules.filter((r) =>
+      // キーワード or カテゴリでフィルター
+      if (keyword) {
+        filtered = rules.filter(
+          (r) =>
             r.title.includes(keyword) ||
-            (r.description || "").includes(keyword)
-          );
-          render(filtered);
-        });
-      } catch (err) {
-        document.getElementById("rulesContainer").innerHTML =
-          `<p style="text-align:center;color:#777;">データを読み込めませんでした。</p>`;
-        console.error(err);
+            (r.description && r.description.includes(keyword))
+        );
+        info.innerHTML = `「${keyword}」に関するルール`;
+      } else if (category) {
+        filtered = rules.filter((r) => r.category === category);
+        info.innerHTML = `カテゴリ: ${category}`;
+      } else {
+        info.innerHTML = `全ルール一覧`;
       }
-    }
 
-    main();
+      // 結果を表示
+      if (filtered.length === 0) {
+        list.innerHTML = `<p style="text-align:center;color:#666;">該当するルールが見つかりません。</p>`;
+        return;
+      }
+
+      list.innerHTML = filtered
+        .map(
+          (r) => `
+          <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+            ${r.title}
+          </div>`
+        )
+        .join("");
+    });
   </script>
 </body>
 </html>
