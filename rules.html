@@ -3,56 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3タップルールズ | ルール一覧</title>
-  <link rel="stylesheet" href="style.css?v=6" />
+  <title>3タップルールズ｜ルール一覧</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body{background:#f9fff9;margin:0;font-family:"Hiragino Sans",sans-serif}
-    header{background:#c9f5c9;color:#044;font-weight:700;text-align:center;padding:12px 8px}
-    #rulesContainer{max-width:760px;margin:10px auto;padding:0 10px}
-    .rule-item{background:#fff;border:1px solid #d9f7d9;border-radius:8px;padding:10px 12px;margin:6px 0;color:#064;font-size:15px}
-    .rule-item a{display:block;color:#064;text-decoration:none}
-    .rule-item a:active{opacity:.7}
-    #searchBox{text-align:center;margin:8px}
-    #searchInput{width:85%;max-width:520px;padding:8px;border:1px solid #aaa;border-radius:6px}
-    .back-btn{display:block;width:fit-content;margin:18px auto;padding:10px 18px;background:#66bb6a;color:#fff;border-radius:8px;text-decoration:none}
+    body {
+      background: #f9fff9;
+      font-family: "Helvetica", sans-serif;
+    }
+    h1 {
+      text-align: center;
+      background: #00bfa5;
+      color: white;
+      padding: 12px;
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+    #ruleList {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 15px;
+    }
+    .rule-item {
+      background: #fff;
+      border-radius: 6px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .rule-item:hover {
+      background: #eaf9e6;
+    }
+    .back-btn {
+      display: block;
+      text-align: center;
+      color: #007f3b;
+      margin: 20px auto;
+      text-decoration: none;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-  <header>3タップルールズ</header>
-
-  <div id="searchBox">
-    <input id="searchInput" type="text" placeholder="この一覧内を検索（タイトル）…">
-  </div>
-
-  <main id="rulesContainer"></main>
-
-  <a href="index.html" class="back-btn">🏠 トップへ戻る</a>
+  <h1>3タップルールズ｜ルール一覧</h1>
+  <main id="ruleList"></main>
+  <a href="index.html" class="back-btn">← トップへ戻る</a>
 
   <script>
-    async function main(){
+    document.addEventListener("DOMContentLoaded", async () => {
+      const list = document.getElementById("ruleList");
       const res = await fetch("rules.json");
       const rules = await res.json();
-      const list = document.getElementById("rulesContainer");
-      const ps = new URLSearchParams(location.search);
-      const category = ps.get("category");
-      const keyword = ps.get("keyword");
 
-      let data = rules;
-      if(category) data = data.filter(r=>r.category===category);
-      if(keyword)  data = data.filter(r=>(r.title+r.description+r.detail).includes(keyword));
-
-      function render(arr){
-        list.innerHTML = arr.map(r=>`<div class="rule-item"><a href="rule.html?id=${r.id}">${r.title}</a></div>`).join("")||"<p>該当なし</p>";
-      }
-      render(data);
-
-      const input = document.getElementById("searchInput");
-      input.addEventListener("input",e=>{
-        const v = e.target.value.toLowerCase();
-        render(data.filter(r=>r.title.toLowerCase().includes(v)));
-      });
-    }
-    main();
+      list.innerHTML = rules
+        .map(
+          (r) => `
+          <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+            ${r.title}
+          </div>`
+        )
+        .join("");
+    });
   </script>
 </body>
 </html>
