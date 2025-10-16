@@ -409,3 +409,26 @@ header {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
+/* --- ボタンとセクション間の統一スペース調整 --- */
+
+/* ルール一覧ボタンの下・お気に入りボタンの下の感覚を統一 */
+#latest-rules,
+#favorites-entry {
+  margin-bottom: 32px !important; /* 下の余白を統一 */
+}
+
+/* お気に入り一覧ボタンと人気のキーワード間の余白も統一 */
+#favorites-entry {
+  margin-top: 16px !important; /* 上の余白 */
+}
+
+/* 人気のキーワード上の余白を調整 */
+#popular-keywords {
+  margin-top: 32px !important;
+}
+
+/* 全体でバランスを整えるため、ボタン同士の縦感覚を調整 */
+button {
+  margin-top: 0;
+  margin-bottom: 0;
+}
