@@ -362,3 +362,7 @@ header {
   position: relative;
   top: -50px;  /* 上に50px移動 */
 }
+/* === 「場所で探す」「種類で探す」セクションを上に詰める（強制版） === */
+#search-by-category {
+  margin-top: -50px !important; /* ← 強制的に上へ移動 */
+}
