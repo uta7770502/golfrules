@@ -436,3 +436,19 @@ button {
 #favorites-entry {
   margin-top: -25px !important;
 }
+/* --- レイアウト微調整 --- */
+
+/* ルール一覧ボタンを25px下に下げる */
+#latest-rules {
+  margin-top: 25px !important;
+}
+
+/* ボタン同士の間隔を整える */
+.button-group button {
+  margin-bottom: 12px !important;
+}
+
+/* お気に入りボタンは少し上に */
+#favorites-entry {
+  margin-top: -25px !important;
+}
