@@ -474,3 +474,32 @@ button {
 #search-sections {
   margin-top: -30px !important;
 }
+/* ================================
+   人気のキーワード見た目微調整（最新版）
+================================= */
+
+#keyword-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 6px; /* ← 横の隙間をさらに詰める */
+  margin-top: 8px;
+}
+
+#keyword-container button {
+  background-color: #f2f2f2;
+  color: #333;
+  border: none;
+  border-radius: 18px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+#keyword-container button:hover {
+  background-color: #e0f8e0;
+  color: #007f3b;
+  transform: scale(1.03);
+}
