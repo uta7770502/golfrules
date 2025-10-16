@@ -98,7 +98,6 @@
     }
     listEl.innerHTML = items.map(f => `
       <div class="fav-item">
-        <button class="remove" aria-label="削除" data-id="${f.id}">×</button>
         <div class="title" data-id="${f.id}">${f.title}</div>
       </div>
     `).join("");
@@ -110,19 +109,6 @@
         location.href = `rule.html?id=${id}`;
       });
     });
-
-    // × で個別削除
-    listEl.querySelectorAll(".remove").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const id = Number(btn.dataset.id);
-        const next = (JSON.parse(localStorage.getItem("favorites") || "[]"))
-          .filter(x => Number(x.id) !== id);
-        localStorage.setItem("favorites", JSON.stringify(next));
-        render(next);
-      });
-    });
-  }
 
   render(cleaned);
 })();
