@@ -388,3 +388,24 @@ header {
   margin-bottom: 10px !important;   /* ← 以前は40〜60pxくらいある可能性あり */
   padding-bottom: 0 !important;     /* 念のため */
 }
+/* 人気のキーワードの下余白をなくす */
+#popular-keywords {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* 場所で探す・種類で探すを上に詰める */
+#search-sections {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* セクション内部にも余白がある場合に対応 */
+#search-sections h2 {
+  margin-top: 5px !important;
+}
+
+#search-sections .search-column {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
