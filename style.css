@@ -1113,3 +1113,29 @@ h2, h3 {
 .by-type a:hover {
   filter: brightness(0.96);
 }
+#ruleList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  padding: 15px;
+  justify-items: center;
+  box-sizing: border-box;
+}
+
+.rule-item {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  max-width: 200px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.rule-item:hover {
+  background: #eaf9e6;
+}
