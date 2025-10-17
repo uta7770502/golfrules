@@ -88,6 +88,7 @@
       const info = document.getElementById("searchInfo");
       const res = await fetch("rules.json");
       const rules = await res.json();
+      rules.sort((a, b) => a.title.localeCompare(b.title, 'ja'));
 
       // URLパラメータを取得
       const ps = new URLSearchParams(window.location.search);
