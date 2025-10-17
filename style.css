@@ -791,3 +791,51 @@ header, .main-header, header h1 {
   border-bottom-right-radius: 25px !important;
   margin: 0 !important;
 }
+/* ===============================
+📘 ルール一覧・お気に入り共通カードレイアウト
+=============================== */
+
+/* 一覧全体（ルール・お気に入り共通） */
+#ruleList,
+#favoriteList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  padding: 15px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 各ルールカード */
+.rule-item {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 12px;
+  font-size: 15px;
+  text-align: center;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+/* hover時 */
+.rule-item:hover {
+  background: #eaf9e6;
+  transform: translateY(-2px);
+}
+
+/* スマホ最適化 */
+@media (max-width: 480px) {
+  #ruleList,
+  #favoriteList {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+  .rule-item {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
