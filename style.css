@@ -777,3 +777,17 @@ header {
   border-bottom-left-radius: 25px !important;
   border-bottom-right-radius: 25px !important;
 }
+/* ======================
+   ✅ ヘッダー完全統一版
+   ====================== */
+header, .main-header, header h1 {
+  background: #00bfa5 !important;
+  color: #fff !important;
+  text-align: center !important;
+  padding: 14px 0 !important;
+  font-size: 22px !important;
+  font-weight: bold !important;
+  border-bottom-left-radius: 25px !important;
+  border-bottom-right-radius: 25px !important;
+  margin: 0 !important;
+}
