@@ -1009,3 +1009,47 @@ h2, h3 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+/* === 場所で探す・種類で探す ボタン === */
+.category-buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 10px 20px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* 場所で探すのボタン */
+.place-btn {
+  background: #00C4A7; /* ミントグリーン */
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.place-btn:hover {
+  background: #2DD4BF; /* 少し明るいトーン */
+  transform: translateY(-1px);
+}
+
+/* 種類で探すのボタン */
+.type-btn {
+  background: #009E8C; /* 濃いグリーン */
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.type-btn:hover {
+  background: #00BCA3; /* 少し明るいトーン */
+  transform: translateY(-1px);
+}
