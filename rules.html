@@ -12,26 +12,37 @@
       margin: 0;
       padding: 0;
     }
-    h1 {
-      text-align: center;
+
+    header,
+    .main-header {
       background: #00bfa5;
-      color: white;
-      padding: 14px;
-      margin: 0 0 10px;
-      font-size: 20px;
+      color: #fff;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 22px;
+      font-weight: bold;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
     }
+
+    header + * {
+      margin-top: 15px;
+    }
+
     #searchInfo {
       text-align: center;
       font-size: 15px;
       color: #444;
       margin-bottom: 10px;
     }
+
     #ruleList {
       display: flex;
       flex-direction: column;
       gap: 6px;
       padding: 15px;
     }
+
     .rule-item {
       background: #fff;
       border-radius: 6px;
@@ -41,9 +52,11 @@
       cursor: pointer;
       transition: background 0.2s ease;
     }
+
     .rule-item:hover {
       background: #eaf9e6;
     }
+
     .back-btn {
       display: block;
       text-align: center;
@@ -52,35 +65,37 @@
       text-decoration: none;
       font-weight: bold;
     }
-    header,
-.main-header {
-  background: #00bfa5;
-  color: #fff;
-  text-align: center;
-  padding: 12px 0;
-  font-size: 22px;
-  font-weight: bold;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
-}
-    header + * {
-  margin-top: 15px;
-}
+
+    #searchArea {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    #searchInput {
+      width: 80%;
+      max-width: 400px;
+      padding: 8px 12px;
+      font-size: 16px;
+      border-radius: 25px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
   </style>
 </head>
+
 <body>
-  <h1>3タップルールズ｜ルール一覧</h1>
+  <header>
+    <h1>3タップルールズ｜ルール一覧</h1>
+  </header>
+
   <a href="index.html" class="back-btn">← トップへ戻る</a>
+
   <!-- 🔍 検索エリア（ヘッダー直下） -->
-<div id="searchArea">
-  <span id="searchInfo">キーワード検索</span>
-  <input id="searchInput" type="text" placeholder="ルールを検索..." />
-</div>
+  <div id="searchArea">
+    <span id="searchInfo">全ルール一覧</span>
+    <input id="searchInput" type="text" placeholder="ルールを検索..." />
+  </div>
 
-<main id="ruleList"></main>
-
-<a href="index.html" class="back-btn">← トップへ戻る</a>
-  <div id="searchInfo"></div>
   <main id="ruleList"></main>
 
   <script>
@@ -89,7 +104,7 @@
       const info = document.getElementById("searchInfo");
       const res = await fetch("rules.json");
       const rules = await res.json();
-      rules.sort((a, b) => a.title.localeCompare(b.title, 'ja'));
+      rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
 
       // URLパラメータを取得
       const ps = new URLSearchParams(window.location.search);
@@ -97,28 +112,29 @@
       const category = ps.get("category");
 
       let filtered = rules;
+
       // 🔍 入力によるリアルタイム絞り込み
-const input = document.getElementById("searchInput");
-input.addEventListener("input", (e) => {
-  const keyword = e.target.value.trim();
-  const filtered = rules.filter(
-    (r) =>
-      r.title.includes(keyword) ||
-      (r.description && r.description.includes(keyword))
-  );
+      const input = document.getElementById("searchInput");
+      input.addEventListener("input", (e) => {
+        const keyword = e.target.value.trim();
+        const filtered = rules.filter(
+          (r) =>
+            r.title.includes(keyword) ||
+            (r.description && r.description.includes(keyword))
+        );
 
-  // 表示を更新
-  list.innerHTML = filtered
-    .map(
-      (r) => `
-      <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
-        ${r.title}
-      </div>`
-    )
-    .join("");
-});
+        // 表示を更新
+        list.innerHTML = filtered
+          .map(
+            (r) => `
+          <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+            ${r.title}
+          </div>`
+          )
+          .join("");
+      });
 
-      // キーワード or カテゴリでフィルター
+      // 🔍 キーワード or カテゴリでフィルター
       if (keyword) {
         filtered = rules.filter(
           (r) =>
@@ -142,9 +158,9 @@ input.addEventListener("input", (e) => {
       list.innerHTML = filtered
         .map(
           (r) => `
-          <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
-            ${r.title}
-          </div>`
+        <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+          ${r.title}
+        </div>`
         )
         .join("");
     });
