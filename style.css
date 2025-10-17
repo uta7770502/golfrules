@@ -1084,3 +1084,32 @@ h2, h3 {
 .category-buttons.right button:hover {
   background: #00BCA3;  /* 明るく */
 }
+/* 場所で探す：ヘッダーと同じグリーン */
+.by-place button,
+.by-place a,
+.by-place .chip,
+.by-place .pill,
+.by-place .menu-btn {
+  background-color: #00bfa5 !important; /* ヘッダーの緑 */
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+/* 種類で探す：より濃いグリーン */
+.by-type button,
+.by-type a,
+.by-type .chip,
+.by-type .pill,
+.by-type .menu-btn {
+  background-color: #009479 !important; /* 濃い緑 */
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+/* hover/active も色“だけ”揃える（任意） */
+.by-place button:hover,
+.by-place a:hover,
+.by-type button:hover,
+.by-type a:hover {
+  filter: brightness(0.96);
+}
