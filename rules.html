@@ -78,6 +78,26 @@
       const category = ps.get("category");
 
       let filtered = rules;
+      // 🔍 入力によるリアルタイム絞り込み
+const input = document.getElementById("searchInput");
+input.addEventListener("input", (e) => {
+  const keyword = e.target.value.trim();
+  const filtered = rules.filter(
+    (r) =>
+      r.title.includes(keyword) ||
+      (r.description && r.description.includes(keyword))
+  );
+
+  // 表示を更新
+  list.innerHTML = filtered
+    .map(
+      (r) => `
+      <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+        ${r.title}
+      </div>`
+    )
+    .join("");
+});
 
       // キーワード or カテゴリでフィルター
       if (keyword) {
