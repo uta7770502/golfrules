@@ -1053,3 +1053,34 @@ h2, h3 {
   background: #00BCA3; /* 少し明るいトーン */
   transform: translateY(-1px);
 }
+/* ===== グリーン系ボタン色調整（場所で探す／種類で探す） ===== */
+
+/* ボタンの共通スタイル */
+.category-buttons button {
+  width: 100%;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 左列：場所で探す */
+.category-buttons.left button {
+  background: #00C4A7;  /* 明るいミントグリーン */
+}
+.category-buttons.left button:hover {
+  background: #2DD4BF;  /* 明るく */
+}
+
+/* 右列：種類で探す */
+.category-buttons.right button {
+  background: #009E8C;  /* 濃いグリーン */
+}
+.category-buttons.right button:hover {
+  background: #00BCA3;  /* 明るく */
+}
