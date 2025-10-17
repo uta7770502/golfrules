@@ -736,3 +736,33 @@ button {
   border: none !important;
   box-shadow: none !important;
 }
+#searchArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px auto 20px;
+  flex-wrap: wrap;
+}
+
+#searchArea span {
+  font-size: 16px;
+  color: #444;
+  white-space: nowrap;
+}
+
+#searchArea input {
+  width: 60%;
+  max-width: 300px;
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 15px;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+
+#searchArea input:focus {
+  box-shadow: 0 0 6px #00bfa5;
+  border-color: #00bfa5;
+}
