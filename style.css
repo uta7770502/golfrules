@@ -766,3 +766,14 @@ button {
   box-shadow: 0 0 6px #00bfa5;
   border-color: #00bfa5;
 }
+/* ヘッダーを共通デザインに統一 */
+header {
+  background: #00bfa5 !important;
+  color: #fff !important;
+  text-align: center !important;
+  padding: 14px !important;
+  font-size: 22px !important;
+  font-weight: bold !important;
+  border-bottom-left-radius: 25px !important;
+  border-bottom-right-radius: 25px !important;
+}
