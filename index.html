@@ -195,6 +195,46 @@ document.addEventListener("DOMContentLoaded", async () => {
       : `<p>該当するルールが見つかりません</p>`;
   });
 });
+  // 🎤 音声入力機能
+const voiceButton = document.getElementById("voiceButton");
+const searchInput = document.getElementById("searchInput");
+
+if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+
+  recognition.lang = "ja-JP";
+  recognition.interimResults = false; // 途中経過を非表示
+  recognition.maxAlternatives = 1; // 最も確信度の高い候補のみ
+
+  voiceButton.addEventListener("click", () => {
+    // 録音開始時のUI
+    voiceButton.style.background = "#00bfa5";
+    voiceButton.textContent = "🎙️";
+    recognition.start();
+  });
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    searchInput.value = transcript;
+
+    // イベントをトリガーして検索を実行
+    const inputEvent = new Event("input");
+    searchInput.dispatchEvent(inputEvent);
+  };
+
+  recognition.onend = () => {
+    // 終了時に元の見た目に戻す
+    voiceButton.style.background = "#ffcc00";
+    voiceButton.textContent = "🎤";
+  };
+} else {
+  // ブラウザ非対応時
+  voiceButton.addEventListener("click", () => {
+    alert("お使いのブラウザでは音声入力に対応していません。");
+  });
+}
 </script>
   <script>
     // 🔍 リアルタイム検索
