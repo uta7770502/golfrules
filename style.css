@@ -1120,3 +1120,10 @@ h2, h3 {
   transform: scale(0.95);
   background-color: #d6f7f0;
 }
+.recording {
+  animation: pulse 1s infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); background-color: #00bfa5; }
+  50% { transform: scale(1.1); background-color: #14b59e; }
+}
