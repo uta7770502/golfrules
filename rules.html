@@ -156,16 +156,25 @@ clearButton.addEventListener("click", () => {
             (r.description && r.description.includes(keyword))
         );
 
-        // 表示を更新
-        list.innerHTML = filtered
-          .map(
-            (r) => `
-          <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
-            ${r.title}
-          </div>`
-          )
-          .join("");
-      });
+        // アニメーション付きで更新
+list.classList.add("fade-out");
+
+setTimeout(() => {
+  list.innerHTML = filtered
+    .map(
+      (r) => `
+      <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+        ${r.title}
+      </div>`
+    )
+    .join("");
+
+  list.classList.remove("fade-out");
+  list.classList.add("fade-in");
+
+  // 一定時間後にクラスを削除してリセット
+  setTimeout(() => list.classList.remove("fade-in"), 300);
+}, 200);
 
       // 🔍 キーワード or カテゴリでフィルター
       if (keyword) {
