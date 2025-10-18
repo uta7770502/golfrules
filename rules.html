@@ -80,20 +80,6 @@
       border: 1px solid #ccc;
       outline: none;
     }
-    // 🔼 トップへ戻るスムーズスクロール
-document.querySelectorAll(".back-btn").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    // index.htmlに戻るリンクの場合はそのまま
-    if (btn.getAttribute("href") === "index.html") return;
-
-    // ページ内スクロールの場合だけ制御
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  });
-});
   </style>
 </head>
 
@@ -170,25 +156,16 @@ clearButton.addEventListener("click", () => {
             (r.description && r.description.includes(keyword))
         );
 
-        // アニメーション付きで更新
-list.classList.add("fade-out");
-
-setTimeout(() => {
-  list.innerHTML = filtered
-    .map(
-      (r) => `
-      <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
-        ${r.title}
-      </div>`
-    )
-    .join("");
-
-  list.classList.remove("fade-out");
-  list.classList.add("fade-in");
-
-  // 一定時間後にクラスを削除してリセット
-  setTimeout(() => list.classList.remove("fade-in"), 300);
-}, 200);
+        // 表示を更新
+        list.innerHTML = filtered
+          .map(
+            (r) => `
+          <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+            ${r.title}
+          </div>`
+          )
+          .join("");
+      });
 
       // 🔍 キーワード or カテゴリでフィルター
       if (keyword) {

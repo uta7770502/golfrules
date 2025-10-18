@@ -1113,15 +1113,3 @@ h2, h3 {
 .by-type a:hover {
   filter: brightness(0.96);
 }
-/* 🔹フェードアニメーション */
-.fade-out {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.fade-in {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
