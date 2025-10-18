@@ -127,6 +127,27 @@
 
       // 🔍 入力によるリアルタイム絞り込み
       const input = document.getElementById("searchInput");
+      const clearButton = document.getElementById("clearButton");
+
+// 入力時に×を表示
+input.addEventListener("input", (e) => {
+  const keyword = e.target.value.trim();
+  clearButton.style.display = keyword ? "block" : "none";
+});
+
+// ×クリックでリセット
+clearButton.addEventListener("click", () => {
+  input.value = "";
+  clearButton.style.display = "none";
+  list.innerHTML = rules
+    .map(
+      (r) => `
+      <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+        ${r.title}
+      </div>`
+    )
+    .join("");
+});
       input.addEventListener("input", (e) => {
         const keyword = e.target.value.trim();
         const filtered = rules.filter(
