@@ -1113,3 +1113,10 @@ h2, h3 {
 .by-type a:hover {
   filter: brightness(0.96);
 }
+#keyword-container button {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+#keyword-container button:active {
+  transform: scale(0.95);
+  background-color: #d6f7f0;
+}
