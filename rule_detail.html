@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ルール処置詳細｜3タップルールズ</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: #f9fff9;
+      font-family: "Helvetica", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #00bfa5;
+      color: #fff;
+      text-align: center;
+      padding: 14px 0;
+      font-size: 22px;
+      font-weight: bold;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .detail-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #007f3b;
+      margin-bottom: 10px;
+    }
+
+    .section {
+      background: #f6fff8;
+      border-left: 5px solid #00bfa5;
+      border-radius: 6px;
+      padding: 10px 15px;
+      margin-top: 15px;
+    }
+
+    .section h3 {
+      color: #007f3b;
+      margin-top: 0;
+      font-size: 17px;
+    }
+
+    .penalty-section {
+      background: #fff7f7;
+      border-left-color: #ff5555;
+    }
+
+    .back-buttons {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #00bfa5;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 25px;
+      border-radius: 25px;
+      margin: 5px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #009c86;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>3タップルールズ</header>
+
+  <main>
+    <div class="detail-card">
+      <h2 id="rule-title"></h2>
+      <p id="rule-description" style="color:#333;margin-bottom:15px;"></p>
+
+      <div class="section">
+        <h3>正しい処置方法</h3>
+        <p id="rule-procedure"></p>
+      </div>
+
+      <div class="section penalty-section">
+        <h3>処置を誤った場合のペナルティ</h3>
+        <p id="rule-penalty"></p>
+      </div>
+
+      <div class="section">
+        <h3>補足・豆知識</h3>
+        <p id="rule-note"></p>
+      </div>
+    </div>
+
+    <div class="back-buttons">
+      <a href="rule.html?id=" id="back-to-rule" class="btn">← ルール詳細へ戻る</a>
+      <a href="index.html" class="btn">🏠 トップへ</a>
+    </div>
+
+    <footer>© 3タップルールズ</footer>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const res = await fetch("rules.json");
+      const data = await res.json();
+      const rules = Array.isArray(data) ? data : (data.rules || []);
+
+      const params = new URLSearchParams(window.location.search);
+      const id = parseInt(params.get("id"));
+      const rule = rules.find(r => r.id === id);
+
+      if (!rule) {
+        document.querySelector("main").innerHTML = "<p>該当するルールが見つかりません。</p>";
+        return;
+      }
+
+      document.getElementById("rule-title").textContent = rule.title;
+      document.getElementById("rule-description").textContent = rule.description || "";
+      document.getElementById("rule-procedure").textContent = rule.procedure || "現在、このルールの処置情報は準備中です。";
+      document.getElementById("rule-penalty").textContent = rule.mistakePenalty || "特別な罰則はありません。";
+      document.getElementById("rule-note").textContent = rule.note || "補足情報はありません。";
+
+      // 「ルール詳細へ戻る」リンクを動的に修正
+      const backBtn = document.getElementById("back-to-rule");
+      backBtn.href = `rule.html?id=${id}`;
+    });
+  </script>
+</body>
+</html>
