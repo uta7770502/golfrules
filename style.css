@@ -1306,3 +1306,14 @@ h2, h3 {
   margin-left: 6px;
   vertical-align: middle;
 }
+/* --- ローカルルール用バッジ --- */
+.local-badge {
+  background: #ffe066; /* 柔らかい黄色でローカル感を出す */
+  color: #333;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
