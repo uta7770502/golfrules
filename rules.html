@@ -110,112 +110,47 @@
 
   <main id="ruleList"></main>
 <a href="index.html" class="back-btn">← トップへ戻る</a>
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      const list = document.getElementById("ruleList");
-      const info = document.getElementById("searchInfo");
-      const res = await fetch("rules.json");
-      const rules = await res.json();
-      rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
-
-      // URLパラメータを取得
-      const ps = new URLSearchParams(window.location.search);
-      const keyword = ps.get("keyword");
-      const category = ps.get("category");
-
-      let filtered = rules;
-
-      // 🔍 入力によるリアルタイム絞り込み
-      const input = document.getElementById("searchInput");
-      const clearButton = document.getElementById("clearButton");
-
-// 入力時に×を表示
-input.addEventListener("input", (e) => {
-  const keyword = e.target.value.trim();
-  clearButton.style.display = keyword ? "block" : "none";
-});
-
-// ×クリックでリセット
-clearButton.addEventListener("click", () => {
-  input.value = "";
-  clearButton.style.display = "none";
-  list.innerHTML = rules
-    .map(
-      (r) => `
-      <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
-  ${r.title}
-  ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ''}
-</div>
-    )
-    .join("");
-});
-      input.addEventListener("input", (e) => {
-        const keyword = e.target.value.trim();
-        const filtered = rules.filter(
-          (r) =>
-            r.title.includes(keyword) ||
-            (r.description && r.description.includes(keyword))
-        );
-
-        // 表示を更新
-        list.innerHTML = filtered
-          .map(
-            (r) => `
-          <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
-            ${r.title}
-          </div>`
-          )
-          .join("");
-      });
-
-      // 🔍 キーワード or カテゴリでフィルター
-      if (keyword) {
-        filtered = rules.filter(
-          (r) =>
-            r.title.includes(keyword) ||
-            (r.description && r.description.includes(keyword))
-        );
-        info.innerHTML = `「${keyword}」に関するルール`;
-      } else if (category) {
-        filtered = rules.filter((r) => r.category === category);
-        info.innerHTML = `カテゴリ: ${category}`;
-      } else {
-        info.innerHTML = ``;
-      }
-
-      // 結果を表示
-      if (filtered.length === 0) {
-        list.innerHTML = `<p style="text-align:center;color:#666;">該当するルールが見つかりません。</p>`;
-        return;
-      }
-
-      list.innerHTML = filtered
-        .map(
-          (r) => `
-        <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
-          ${r.title}
-        </div>`
-        )
-        .join("");
-    });
-  </script>
-  <!-- ▼ 下部ナビ（全ページ共通、</body> の直前に貼り付け） -->
-<nav class="bottom-nav" aria-label="グローバルナビ">
-  <div class="bar">
-    <a href="index.html" class="nav-home">🏠</a>
-    <a href="rules.html" class="nav-rules">📘</a>
-    <a href="favorites.html" class="nav-fav">⭐</a>
-  </div>
-</nav>
 
 <script>
-  // 今いるページに active を付与
-  (function(){
-    const p = location.pathname.split('/').pop() || 'index.html';
-    const map = { 'index.html': '.nav-home', 'rules.html': '.nav-rules', 'rule.html': '.nav-rules', 'favorites.html': '.nav-fav' };
-    const sel = map[p];
-    if(sel){ const a = document.querySelector(sel); a && a.classList.add('active'); }
-  })();
+  // 👇ここに「ルール出力部分」の新コードを貼り替える
+  document.addEventListener("DOMContentLoaded", async () => {
+    const list = document.getElementById("ruleList");
+    const info = document.getElementById("searchInfo");
+    const res = await fetch("rules.json");
+    const rules = await res.json();
+    rules.sort((a, b) => a.title.localeCompare(b.title, 'ja'));
+
+    const ps = new URLSearchParams(window.location.search);
+    const keyword = ps.get("keyword");
+    const category = ps.get("category");
+    let filtered = rules;
+
+    // キーワード or カテゴリで絞り込み
+    if (keyword) {
+      filtered = rules.filter(
+        (r) =>
+          r.title.includes(keyword) ||
+          (r.description && r.description.includes(keyword))
+      );
+      info.innerHTML = `「${keyword}」に関するルール`;
+    } else if (category) {
+      filtered = rules.filter((r) => r.category === category);
+      info.innerHTML = `カテゴリ: ${category}`;
+    } else {
+      info.innerHTML = `全ルール一覧`;
+    }
+
+    // 結果表示（ローカルルールにだけバッジ）
+    list.innerHTML = filtered
+      .map(
+        (r) => `
+        <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+          ${r.title}
+          ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ''}
+        </div>`
+      )
+      .join("");
+  });
 </script>
 </body>
 </html>
