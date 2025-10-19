@@ -4,6 +4,14 @@
 =================================== */
 
 /* --- 全体設定 --- */
+:root {
+  --main-green: #00bfa6;        /* メインカラー（ヘッダーなど） */
+  --dark-green: #009d8a;        /* 濃い緑（アクセント） */
+  --accent-yellow: #ffd84d;     /* 黄色（強調ボタン） */
+  --bg-light: #f9fff9;          /* ページ背景 */
+  --text-dark: #333;            /* 基本文字 */
+  --text-gray: #777;            /* 補足文字 */
+}
 body {
   font-family: "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
   background-color: #ffffff;
