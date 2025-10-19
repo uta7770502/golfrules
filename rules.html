@@ -145,7 +145,7 @@ if (category === "ローカルルール") {
       info.innerHTML = `「${keyword}」に関するルール`;
     } else if (category) {
       filtered = rules.filter((r) => r.category === category);
-      info.innerHTML = `カテゴリ: ${category}`;
+      info.innerHTML = `: ${category}`;
     } else {
       info.innerHTML = ``;
     }
