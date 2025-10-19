@@ -124,6 +124,26 @@
     const ps = new URLSearchParams(window.location.search);
     const keyword = ps.get("keyword");
     const category = ps.get("category");
+    // URLパラメータを取得
+const ps = new URLSearchParams(window.location.search);
+const keyword = ps.get("keyword");
+const category = ps.get("category");
+
+// 絞り込み処理
+let filtered = rules;
+
+if (keyword) {
+  filtered = rules.filter(r =>
+    r.title.includes(keyword) ||
+    (r.description && r.description.includes(keyword))
+  );
+  info.innerHTML = `「${keyword}」に関するルール`;
+} else if (category) {
+  filtered = rules.filter(r => r.category === category);
+  info.innerHTML = category;
+} else {
+  info.innerHTML = "すべてのルール";
+}
     // ✅ ローカルルール用バナー表示
 const localNotice = document.getElementById("localNotice");
 if (category === "ローカルルール") {
