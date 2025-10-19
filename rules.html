@@ -143,8 +143,9 @@ clearButton.addEventListener("click", () => {
     .map(
       (r) => `
       <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
-        ${r.title}
-      </div>`
+  ${r.title}
+  ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ''}
+</div>
     )
     .join("");
 });
