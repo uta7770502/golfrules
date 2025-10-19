@@ -124,6 +124,15 @@
     const ps = new URLSearchParams(window.location.search);
     const keyword = ps.get("keyword");
     const category = ps.get("category");
+    // ✅ ローカルルール用バナー表示
+const localNotice = document.getElementById("localNotice");
+if (category === "ローカルルール") {
+  localNotice.innerHTML = `
+    <div class="local-banner">
+      🏁 ローカルルール（ゴルフ場ごとに異なる特別ルールです）
+    </div>
+  `;
+}
     let filtered = rules;
 
     // キーワード or カテゴリで絞り込み
