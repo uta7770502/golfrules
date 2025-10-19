@@ -200,4 +200,144 @@
     "description": "花壇や芝養生エリアなど、立ち入り禁止の修理地扱いとするローカルルール。",
     "isLocal": true
   }
+  {
+  "id": 211,
+  "title": "修理地扱いエリアの指定",
+  "category": "ローカルルール",
+  "description": "芝張替えエリア、目土区域、新設バンカー周辺などを修理地扱いとする。",
+  "isLocal": true
+},
+{
+  "id": 212,
+  "title": "動物による掘り返し区域の処置",
+  "category": "ローカルルール",
+  "description": "イノシシやモグラによる地面の掘り返し跡は修理地とみなす。",
+  "isLocal": true
+},
+{
+  "id": 213,
+  "title": "電線や支柱に当たった球",
+  "category": "ローカルルール",
+  "description": "打球が電線またはその支柱に当たった場合、無罰で打ち直し。",
+  "isLocal": true
+},
+{
+  "id": 214,
+  "title": "距離表示杭の扱い",
+  "category": "ローカルルール",
+  "description": "固定された距離表示杭は動かせない障害物として救済を受けられる。",
+  "isLocal": true
+},
+{
+  "id": 215,
+  "title": "排水溝やカート道脇のコンクリート",
+  "category": "ローカルルール",
+  "description": "人工物（コンクリート面）は動かせない障害物とし、無罰救済可。",
+  "isLocal": true
+},
+{
+  "id": 216,
+  "title": "立入禁止区域（No Play Zone）",
+  "category": "ローカルルール",
+  "description": "花壇、芝養生エリアなどは立入禁止とし、無罰救済を受ける。",
+  "isLocal": true
+},
+{
+  "id": 217,
+  "title": "動物避けフェンス",
+  "category": "ローカルルール",
+  "description": "フェンスに接触した場合、救済エリア内でドロップ可能。",
+  "isLocal": true
+},
+{
+  "id": 218,
+  "title": "冬季特別措置（プレース）",
+  "category": "ローカルルール",
+  "description": "冬季はフェアウェイ上のボールを6インチ以内にプレース可。",
+  "isLocal": true
+},
+{
+  "id": 219,
+  "title": "落雷時の避難指示",
+  "category": "ローカルルール",
+  "description": "警報音が鳴った時点でプレー中断、避難小屋またはクラブハウスへ退避。",
+  "isLocal": true
+},
+{
+  "id": 220,
+  "title": "ティーイングエリア外からの打球禁止",
+  "category": "ローカルルール",
+  "description": "指定ティーマークの外側からのショットは禁止。違反時は2打罰。",
+  "isLocal": true
+},
+{
+  "id": 221,
+  "title": "池の処置（ペナルティエリア）",
+  "category": "ローカルルール",
+  "description": "赤杭・黄杭の位置が明示されていない場合、池は赤杭扱いとする。",
+  "isLocal": true
+},
+{
+  "id": 222,
+  "title": "クラブハウス周辺の障害物",
+  "category": "ローカルルール",
+  "description": "人工建造物周辺（時計塔・花壇など）は動かせない障害物として救済可。",
+  "isLocal": true
+},
+{
+  "id": 223,
+  "title": "修理地内の砂や目土",
+  "category": "ローカルルール",
+  "description": "砂や目土が置かれている区域全体を修理地とみなす。",
+  "isLocal": true
+},
+{
+  "id": 224,
+  "title": "グリーン保護区域",
+  "category": "ローカルルール",
+  "description": "グリーン周囲の芝養生エリアは立入禁止、救済エリア内にドロップ可。",
+  "isLocal": true
+},
+{
+  "id": 225,
+  "title": "バンカー内の水たまり",
+  "category": "ローカルルール",
+  "description": "プレーに支障がある場合は無罰救済を受け、同一バンカー内にドロップ。",
+  "isLocal": true
+},
+{
+  "id": 226,
+  "title": "プレーファスト推奨ルール",
+  "category": "ローカルルール",
+  "description": "2打目以降のプレーは、前組との間隔を保つため迅速な進行を求める。",
+  "isLocal": true
+},
+{
+  "id": 227,
+  "title": "ボール洗浄機の利用制限",
+  "category": "ローカルルール",
+  "description": "悪天候時はボール洗浄機の使用を控えること。",
+  "isLocal": true
+},
+{
+  "id": 228,
+  "title": "コース外周フェンス際の救済",
+  "category": "ローカルルール",
+  "description": "外周フェンス近くでスイングが制限される場合、無罰救済可能。",
+  "isLocal": true
+},
+{
+  "id": 229,
+  "title": "落葉による球紛失",
+  "category": "ローカルルール",
+  "description": "落葉の堆積によって球を確認できない場合、無罰でドロップ可。",
+  "isLocal": true
+},
+{
+  "id": 230,
+  "title": "仮設ティ・仮設グリーン使用時の措置",
+  "category": "ローカルルール",
+  "description": "工事・整備による仮設ティや仮設グリーンは指定区域内でプレー可。",
+  "isLocal": true
+}
 ]
