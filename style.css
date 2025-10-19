@@ -1434,14 +1434,13 @@ h2, h3 {
 }
 .category-buttons.right button:hover {
   background: #00BCA3;  /* 明るく */
-}
-/* 場所で探す：ヘッダーと同じグリーン */
+}/* 場所で探す：ヘッダーと同じグリーン */
 .by-place button,
 .by-place a,
 .by-place .chip,
 .by-place .pill,
 .by-place .menu-btn {
-  background-color: #00bfa5 !important; /* ヘッダーの緑 */
+  background-color: var(--green) !important; /* ←テーマ変数を使う */
   color: #fff !important;
   border-color: transparent !important;
 }
@@ -1452,7 +1451,7 @@ h2, h3 {
 .by-type .chip,
 .by-type .pill,
 .by-type .menu-btn {
-  background-color: #009479 !important; /* 濃い緑 */
+  background-color: var(--green-deep) !important; /* ←テーマ変数を使う */
   color: #fff !important;
   border-color: transparent !important;
 }
