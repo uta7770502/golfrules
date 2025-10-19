@@ -86,3 +86,33 @@ function filterRules(keyword) {
   localStorage.setItem("searchKeyword", keyword);
   window.location.href = "rules.html";
 }
+// 🔍 オートサジェスト機能
+const input = document.getElementById("searchInput");
+const suggestions = document.getElementById("suggestions");
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const res = await fetch("rules.json");
+    const rules = await res.json();
+
+    input.addEventListener("input", () => {
+      const keyword = input.value.trim().toLowerCase();
+      suggestions.innerHTML = "";
+
+      if (keyword.length === 0) return;
+
+      const matched = rules
+        .filter(r => r.title.toLowerCase().includes(keyword))
+        .slice(0, 5);
+
+      matched.forEach(r => {
+        const li = document.createElement("li");
+        li.textContent = r.title;
+        li.onclick = () => (location.href = `rule.html?id=${r.id}`);
+        suggestions.appendChild(li);
+      });
+    });
+  } catch (err) {
+    console.error("ルールデータの読み込みに失敗:", err);
+  }
+});
