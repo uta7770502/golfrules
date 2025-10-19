@@ -22,10 +22,14 @@ body {
 }
 
 /* --- ヘッダー --- */
-header {
-  background-color: #18c6b0; /* ミントグリーン濃いめ */
+header,
+.main-header {
+  background: var(--main-green);
   color: #fff;
-  padding: 30px 10px;
+  text-align: center;
+  padding: 14px 0;
+  font-size: 22px;
+  font-weight: bold;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
 }
