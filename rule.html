@@ -193,6 +193,11 @@
         localStorage.setItem("favorites", JSON.stringify(favs));
       });
     });
+    // ▼ rule_detail.html へのリンク設定
+const detailBtn = document.getElementById("to-detail-btn");
+if (detailBtn) {
+  detailBtn.href = `rule_detail.html?id=${id}`;
+}
   </script>
 </body>
 </html>
