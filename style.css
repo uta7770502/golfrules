@@ -1330,3 +1330,17 @@ h2, h3 {
   background-color: #ffef9f !important;
   transform: translateY(-2px);
 }
+/* 🔸 ローカルルールボタン専用（黄色） */
+.by-type button.local-rule-btn {
+  background-color: #ffe873 !important;
+  color: #007f3b !important;
+  font-weight: bold;
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.by-type button.local-rule-btn:hover {
+  background-color: #ffef9f !important;
+  transform: translateY(-2px);
+}
