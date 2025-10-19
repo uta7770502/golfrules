@@ -38,14 +38,23 @@ async function renderRulesList() {
 }
 
 function displayFilteredRules(keyword) {
-  const container = document.getElementById("rules-container");
+  const container = document.getElementById("rule-list");
   container.innerHTML = "";
-  const filtered = rules.filter(r => r.title.includes(keyword) || r.category.includes(keyword));
-  filtered.forEach(rule => {
+
+  const filtered = rules.filter(
+    (r) =>
+      r.title.includes(keyword) ||
+      (r.description && r.description.includes(keyword))
+  );
+
+  filtered.forEach((rule) => {
     const card = document.createElement("div");
-    card.className = "rule-card";
-    card.innerHTML = `<h3>${rule.title}</h3><p>${rule.category}</p>`;
-    card.onclick = () => window.location.href = `rule.html?id=${rule.id}`;
+    card.className = `rule-card ${rule.isLocal ? "local-rule" : ""}`;
+    card.innerHTML = `
+      <h3>${rule.title}</h3>
+      ${rule.isLocal ? '<span class="local-badge">ローカル</span>' : ""}
+    `;
+    card.onclick = () => (window.location.href = `rule.html?id=${rule.id}`);
     container.appendChild(card);
   });
 }
