@@ -158,13 +158,13 @@ clearButton.addEventListener("click", () => {
 
         // 表示を更新
         list.innerHTML = filtered
-  .map(r => `
-    <div class="rule-item ${r.isLocal ? 'local-rule' : ''}" onclick="showRule('${r.title}')">
-      ${r.title}
-      ${r.isLocal ? '<span class="local-tag">ローカル</span>' : ''}
-    </div>
-  `)
-  .join("");
+          .map(
+            (r) => `
+          <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+            ${r.title}
+          </div>`
+          )
+          .join("");
       });
 
       // 🔍 キーワード or カテゴリでフィルター

@@ -4,188 +4,6 @@
 =================================== */
 
 /* --- 全体設定 --- */
-/* ===== アプリUIテーマ：エコグリーンバージョン ===== */
-:root{
-  --green-light: #d9f7e8;
-  --green: #00c48c;
-  --green-deep: #009e73;
-  --mint: #e9fff3;
-  --yellow: #ffe873;
-  --ink: #1e3932;
-  --card: #ffffff;
-  --shadow: 0 6px 18px rgba(0,0,0,.08);
-}
-
-html { scroll-behavior: smooth; }
-body {
-  background: var(--mint);
-  color: var(--ink);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  margin: 0;
-  padding-bottom: 76px;
-  font-family: "Noto Sans JP", "Helvetica Neue", sans-serif;
-}
-
-/* ▼ヘッダー */
-header, .main-header {
-  background: linear-gradient(135deg, var(--green) 0%, var(--green-deep) 100%);
-  color: #fff;
-  text-align: center;
-  padding: 26px 12px 32px;
-  font-weight: 700;
-  border-bottom-left-radius: 28px;
-  border-bottom-right-radius: 28px;
-  box-shadow: var(--shadow);
-}
-header h1, .main-header h1 {
-  margin: 0;
-  font-size: clamp(20px, 5.2vw, 28px);
-}
-
-/* ▼検索ボックス */
-#search-box, #searchArea {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 14px 16px;
-}
-#searchInput {
-  width: min(680px, 92%);
-  height: 48px;
-  border-radius: 30px;
-  border: 1px solid #cce7d6;
-  outline: none;
-  padding: 0 18px;
-  background: #fff;
-  box-shadow: var(--shadow);
-  font-size: 16px;
-}
-#searchInput:focus {
-  border-color: var(--green);
-  box-shadow: 0 0 0 4px rgba(0, 196, 140, 0.15);
-}
-
-/* ▼大ボタン */
-section#latest-rules button,
-section#favorites-entry button {
-  width: min(680px, 88%);
-  margin: 10px auto;
-  display: block;
-  background: var(--yellow);
-  color: #165c3f;
-  border: none;
-  border-radius: 28px;
-  padding: 14px 18px;
-  font-weight: 800;
-  font-size: 18px;
-  box-shadow: var(--shadow);
-  transition: transform .06s ease, filter .1s ease;
-}
-section#latest-rules button:active,
-section#favorites-entry button:active {
-  transform: translateY(1px) scale(.98);
-  filter: brightness(.97);
-}
-
-/* ▼カテゴリボタン */
-#search-sections .button-group button {
-  min-width: 160px;
-  background: var(--green);
-  color: #fff;
-  border: none;
-  border-radius: 28px;
-  padding: 12px 18px;
-  font-weight: 700;
-  box-shadow: var(--shadow);
-}
-#search-sections .search-column:last-child .button-group button {
-  background: var(--green-deep);
-}
-
-/* ▼ルール・お気に入り一覧カード */
-#ruleList, #favoritesList {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  padding: 16px;
-}
-.rule-item, .fav-item {
-  background: var(--card);
-  border-radius: 14px;
-  padding: 14px 12px;
-  border: 1px solid #e6f5ee;
-  font-size: 16px;
-  box-shadow: var(--shadow);
-  transition: transform .08s ease, box-shadow .12s ease;
-}
-.rule-item:active, .fav-item:active {
-  transform: scale(.97);
-}
-.rule-item:hover, .fav-item:hover {
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
-  background: var(--green-light);
-}
-
-/* ▼詳細カード */
-#ruleContent {
-  background: #fff;
-  margin: 16px;
-  padding: 18px;
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  border: 1px solid #d8f5e4;
-  font-size: 17px;
-}
-.back-btn {
-  display: inline-block;
-  margin: 16px;
-  text-decoration: none;
-  background: #fff;
-  color: var(--green-deep);
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 10px 14px;
-  border: 1px solid #d8f5e4;
-  box-shadow: var(--shadow);
-}
-
-/* ▼下部ナビ */
-.bottom-nav {
-  position: fixed;
-  inset: auto 0 10px 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-}
-.bottom-nav .bar {
-  pointer-events: auto;
-  width: min(640px, 94%);
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 22px;
-  box-shadow: 0 10px 24px rgba(0,0,0,.12);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 6px;
-  border: 1px solid #f0f4f8;
-}
-.bottom-nav a {
-  text-decoration: none;
-  font-size: 22px;
-  width: 54px;
-  height: 44px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  color: var(--green-deep);
-}
-.bottom-nav a.active {
-  background: var(--green-light);
-  color: var(--green);
-}
 /* ===== アプリUIテーマ（追加） ===== */
 :root{
   --teal: #18c6b0;          /* ベンチマークの主色 */
@@ -1434,13 +1252,14 @@ h2, h3 {
 }
 .category-buttons.right button:hover {
   background: #00BCA3;  /* 明るく */
-}/* 場所で探す：ヘッダーと同じグリーン */
+}
+/* 場所で探す：ヘッダーと同じグリーン */
 .by-place button,
 .by-place a,
 .by-place .chip,
 .by-place .pill,
 .by-place .menu-btn {
-  background-color: var(--green) !important; /* ←テーマ変数を使う */
+  background-color: #00bfa5 !important; /* ヘッダーの緑 */
   color: #fff !important;
   border-color: transparent !important;
 }
@@ -1451,7 +1270,7 @@ h2, h3 {
 .by-type .chip,
 .by-type .pill,
 .by-type .menu-btn {
-  background-color: var(--green-deep) !important; /* ←テーマ変数を使う */
+  background-color: #009479 !important; /* 濃い緑 */
   color: #fff !important;
   border-color: transparent !important;
 }
