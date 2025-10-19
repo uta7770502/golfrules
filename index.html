@@ -321,5 +321,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   50% { transform: scale(1.1); background-color: #14b59e; }
 }
     </script>
+  <!-- ▼ 下部ナビ（全ページ共通、</body> の直前に貼り付け） -->
+<nav class="bottom-nav" aria-label="グローバルナビ">
+  <div class="bar">
+    <a href="index.html" class="nav-home">🏠</a>
+    <a href="rules.html" class="nav-rules">📘</a>
+    <a href="favorites.html" class="nav-fav">⭐</a>
+  </div>
+</nav>
+
+<script>
+  // 今いるページに active を付与
+  (function(){
+    const p = location.pathname.split('/').pop() || 'index.html';
+    const map = { 'index.html': '.nav-home', 'rules.html': '.nav-rules', 'rule.html': '.nav-rules', 'favorites.html': '.nav-fav' };
+    const sel = map[p];
+    if(sel){ const a = document.querySelector(sel); a && a.classList.add('active'); }
+  })();
+</script>
 </body>
 </html>
