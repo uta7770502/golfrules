@@ -209,7 +209,8 @@
       const list = document.getElementById("ruleList");
       const info = document.getElementById("searchInfo");
       const res = await fetch("rules.json");
-      const rules = await res.json();
+　　　　const data = await res.json();
+　　　　const rules = Array.isArray(data) ? data : (data.rules || []);
       rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
 
       // 🔍 URLパラメータを取得
