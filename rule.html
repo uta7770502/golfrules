@@ -76,53 +76,58 @@
     }
 
     /* === ボタンエリア統一デザイン === */
-    .btn-area.compact {
-      display: flex;
-      justify-content: center;
-      align-items: stretch;
-      gap: 12px;
-      margin-top: 25px;
-      flex-wrap: wrap;
-    }
+.btn-area.compact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
 
-    .btn.main,
-    .btn.sub {
-      flex: 1 1 150px;
-      max-width: 180px;
-      text-align: center;
-      padding: 12px 0;
-      border-radius: 25px;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: 0.2s ease;
-      box-sizing: border-box;
-      height: 48px;
-      line-height: 24px;
-    }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  max-width: 180px;
+  height: 48px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+}
 
-    .btn.main {
-      background: #00bfa5;
-      color: #fff;
-    }
+/* メインボタン（詳細と処置） */
+.btn.main {
+  background: #00bfa5;
+  color: #fff;
+}
 
-    .btn.sub {
-      background: #ffd84d;
-      color: #333;
-    }
+.btn.main:hover {
+  background: #00a890;
+}
 
-    .btn.main:hover {
-      background: #00a890;
-    }
+/* サブボタン（お気に入り登録） */
+.btn.sub {
+  background: #ffd84d;
+  color: #333;
+}
 
-    .btn.sub:hover {
-      background: #ffcc33;
-    }
+.btn.sub:hover {
+  background: #ffcc33;
+}
 
-    #fav-btn.active {
-      background: #ffd000;
-    }
+/* お気に入り登録済み */
+#fav-btn.active {
+  background: #ffd000;
+}
   </style>
 </head>
 
