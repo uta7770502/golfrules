@@ -107,7 +107,57 @@
     #fav-btn.active {
       background: #ffd000;
     }
+/* === ボタンエリア統一デザイン === */
+.btn-area.compact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
 
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  max-width: 180px;
+  height: 48px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+}
+
+/* ✅ 黄色（ルール詳細へ戻る・詳細と処置方法・トップへ） */
+.btn.main {
+  background: #ffd84d;
+  color: #333;
+}
+.btn.main:hover {
+  background: #ffcc33;
+}
+
+/* ✅ 緑（お気に入り登録ボタン） */
+.btn.sub {
+  background: #00bfa5;
+  color: #fff;
+}
+.btn.sub:hover {
+  background: #00a890;
+}
+
+/* ✅ 登録済み（お気に入り済） */
+#fav-btn.active {
+  background: #00a080;
+}
   </style>
 </head>
 
