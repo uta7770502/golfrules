@@ -118,30 +118,22 @@
   <header>3タップルールズ</header>
 
   <main>
-    <div id="rule-detail" class="rule-box">
-      <h2 id="rule-title"></h2>
-      <p class="category">カテゴリ：<span id="rule-category"></span></p>
-      <p class="description" id="rule-description"></p>
+  <div class="rule-summary">
+    <h2 id="rule-title"></h2>
+    <p class="category">カテゴリ：<span id="rule-category"></span></p>
+    <p id="rule-description"></p>
+  </div>
 
-      <div class="detail-box">
-        <h3>詳細</h3>
-        <p id="rule-detail-text"></p>
-      </div>
+  <div class="rule-detail-box">
+    <p id="rule-detail-text"></p>
+    <p class="penalty"><strong>罰：</strong><span id="rule-penalty"></span></p>
+  </div>
 
-      <div class="penalty-box">
-        <h3>ペナルティ</h3>
-        <p id="rule-penalty"></p>
-      </div>
-    </div>
-
-    <button id="detail-btn" class="detail-btn">🔍 詳細を見る →</button>
-    <button id="fav-btn" class="fav-btn">⭐ お気に入り登録</button>
-
-    <div class="btn-area">
-      <a href="rules.html" class="btn">← 一覧に戻る</a>
-      <a href="index.html" class="btn">🏠 トップへ</a>
-    </div>
-  </main>
+  <div class="btn-area compact">
+    <button id="detail-btn" class="btn main">🔍 詳細と処置 →</button>
+    <button id="fav-btn" class="btn sub">⭐ お気に入り</button>
+  </div>
+</main>
 
   <nav class="bottom-nav">
     <div class="bar">
