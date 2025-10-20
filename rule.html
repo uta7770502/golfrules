@@ -201,7 +201,7 @@
           // 詳細がないルールはボタンを非表示
           detailEl.style.display = "none";
         } else {
-          detailEl.textContent = "🔍 詳細と処置 →";
+          detailEl.textContent = "詳細と処置方法 →";
           detailEl.style.display = "inline-flex";
           const url = `rule_detail.html?id=${rule.id}`;
           detailEl.addEventListener("click", () => (location.href = url));
