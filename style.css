@@ -1364,3 +1364,57 @@ h2, h3 {
   from { opacity: 0; transform: translateY(-6px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.rule-summary {
+  text-align: center;
+  padding: 10px 15px;
+}
+
+.rule-summary h2 {
+  color: #007f3b;
+  font-size: 20px;
+  margin: 0;
+}
+
+.rule-detail-box {
+  background: #f6fff6;
+  border: 1px solid #cce5cc;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 10px 15px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.penalty {
+  color: #c22;
+  margin-top: 8px;
+}
+
+.btn-area.compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn.main {
+  background: #00bfa5;
+  color: #fff;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 25px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.btn.sub {
+  background: #ffd84d;
+  color: #333;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 22px;
+  font-size: 15px;
+  cursor: pointer;
+}
