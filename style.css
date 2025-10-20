@@ -1569,3 +1569,10 @@ h2, h3 {
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15));
   margin: 0 4px; /* ← 左右に少し余白追加で圧迫感軽減 */
 }
+/* === ナビアイコンを完全フラット化 === */
+.bottom-nav img {
+  width: 52px;
+  height: auto;
+  margin: 0 4px;
+  filter: none !important; /* ← 影を完全に除去 */
+}
