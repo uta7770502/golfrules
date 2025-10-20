@@ -1584,3 +1584,11 @@ h2, h3 {
   filter: none !important;  /* 影なし */
   display: block;
 }
+/* === ナビアイコンをフラット＆1.5倍サイズに === */
+.bottom-nav img {
+  width: 63px !important;   /* ← 1.5倍サイズ */
+  height: auto !important;
+  margin: 0 6px !important;
+  filter: none !important;  /* 完全フラット（影なし） */
+  display: block;
+}
