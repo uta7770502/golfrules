@@ -10,7 +10,7 @@
       background: #f9fff9;
       font-family: "Helvetica", sans-serif;
       margin: 0;
-      padding: 0;
+      padding: 0 0 70px 0; /* ← 下ナビ分の余白追加 */
     }
 
     header,
@@ -76,7 +76,6 @@
       margin: 10px auto;
       width: 90%;
       font-size: 14px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .back-btn {
@@ -117,15 +116,15 @@
       display: none;
     }
 
-    /* 下部ナビゲーション */
+    /* ✅ 下部ナビゲーション */
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      background: #fff;
-      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
-      padding: 8px 0;
+      background: #ffffff; /* フラットな白 */
+      padding: 10px 0;
+      border-top: 1px solid #e0e0e0; /* 軽い仕切り線 */
     }
 
     .bottom-nav .bar {
@@ -135,8 +134,10 @@
     }
 
     .bottom-nav img {
-      width: 38px; /* ←アイコンのサイズ調整（お好みで） */
+      width: 57px; /* ← 1.5倍（38px → 57px） */
       height: auto;
+      box-shadow: none; /* フラット化 */
+      filter: none;     /* シャドウ効果完全OFF */
     }
 
     .bottom-nav a {
@@ -175,10 +176,6 @@
     .local-rule:hover {
       background: #fff3cd;
     }
-    .bottom-nav img {
-  width: 76px; /* ← ここを38px→76pxに変更 */
-  height: auto;
-}
   </style>
 </head>
 
