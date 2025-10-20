@@ -1522,3 +1522,43 @@ h2, h3 {
   height: auto;
   vertical-align: middle;
 }
+/* === 下部ナビゲーションのデザイン調整 === */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15); /* ← 影を強く */
+  border-top-left-radius: 20px;  /* ← 角を丸く */
+  border-top-right-radius: 20px; /* ← 角を丸く */
+  padding: 10px 0 12px 0; /* ← 少し厚みを出す */
+  display: flex;
+  justify-content: center;
+  z-index: 1000; /* ← コンテンツの上に固定 */
+}
+
+.bottom-nav .bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.bottom-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #666;
+  flex: 1;
+}
+
+.bottom-nav img {
+  width: 64px; /* ← サイズ調整OK */
+  height: auto;
+  vertical-align: middle;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15)); /* ← アイコンに軽い影 */
+}
