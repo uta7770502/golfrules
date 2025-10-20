@@ -151,38 +151,83 @@
 
   <script>
 document.addEventListener("DOMContentLoaded", async () => {
-  const params = new URLSearchParams(window.location.search);
-  const id = parseInt(params.get("id"));
-  const res = await fetch("rules.json");
-  const rules = await res.json();
+  // ▼ 旧コードと競合しないように、まず対象要素を取得
+  const $ = (id) => document.getElementById(id);
 
-  // rulesが配列か、rules.rulesオブジェクトかを判定して吸収
-  const list = Array.isArray(rules) ? rules : rules.rules;
-  const rule = list.find((r) => r.id === id);
+  try {
+    // ▼ キャッシュ対策でバージョン付与（更新が即反映）
+    const res = await fetch(`rules.json?v=${Date.now()}`);
+    const data = await res.json();
+    const rules = Array.isArray(data) ? data : data.rules;
 
-  if (!rule) {
-    document.getElementById("rule-detail").innerHTML = "<p>該当ルールが見つかりません。</p>";
-    return;
-  }
+    const params = new URLSearchParams(location.search);
+    const id = parseInt(params.get("id"), 10);
+    const rule = rules.find(r => r.id === id);
 
-  // 表示部分
-  document.getElementById("rule-title").textContent = rule.title;
-  document.getElementById("rule-detail-text").textContent = rule.detail || "詳細情報はありません。";
-  document.getElementById("rule-penalty").textContent = rule.penalty || "特に罰はありません。";
-  document.querySelector(".category span").textContent = rule.category;
+    if (!rule) {
+      $("rule-detail").innerHTML = "<p>該当ルールが見つかりません。</p>";
+      return;
+    }
 
-  // ✅ ボタン文言変更
-  const detailBtn = document.querySelector("#detail-btn");
-  if (detailBtn) detailBtn.textContent = "詳細と処置方法 →";
+    // ▼ テキスト反映（未設定はフォールバック）
+    $("rule-title")?.textContent = rule.title || "";
+    $("rule-category")?.textContent = rule.category || "";
+    $("rule-description")?.textContent = rule.description || "";
+    $("rule-detail-text")?.textContent = (rule.detail && rule.detail.trim()) ? rule.detail : "詳細情報はありません。";
+    $("rule-penalty")?.textContent = (rule.penalty && rule.penalty.trim()) ? rule.penalty : "特に罰はありません。";
 
-  // ✅ 「詳細と処置」ボタン制御（detailが空なら非表示）
-  if (!rule.detail || rule.detail.trim() === "") {
-    detailBtn.style.display = "none";
-  } else {
-    detailBtn.style.display = "block";
-    detailBtn.onclick = () => {
-      location.href = `rule_detail.html?id=${rule.id}`;
-    };
+    // ▼ 「詳細と処置」ボタンの表示/非表示と遷移
+    const detailEl = $("detail-btn");  // <button id="detail-btn"> or <a id="detail-btn">
+    if (detailEl) {
+      const hasDetail = !!(rule.detail && rule.detail.trim());
+      if (!hasDetail) {
+        detailEl.style.display = "none";         // detailが無いルールはボタン非表示
+      } else {
+        // テキスト統一
+        detailEl.textContent = "🔍 詳細と処置 →";
+        detailEl.style.display = "inline-flex";
+
+        const url = `rule_detail.html?id=${rule.id}`;
+
+        // aタグでもbuttonでもOKにする
+        if (detailEl.tagName === "A") {
+          detailEl.setAttribute("href", url);
+        } else {
+          detailEl.addEventListener("click", () => location.href = url);
+        }
+      }
+    }
+
+    // ▼ お気に入り
+    const favBtn = $("fav-btn");
+    if (favBtn) {
+      let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+      const setFavUI = (on) => {
+        if (on) {
+          favBtn.textContent = "⭐ 登録済み";
+          favBtn.classList.add("active");
+        } else {
+          favBtn.textContent = "⭐ お気に入り登録";
+          favBtn.classList.remove("active");
+        }
+      };
+      setFavUI(favorites.includes(rule.id));
+      favBtn.addEventListener("click", () => {
+        favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+        if (favorites.includes(rule.id)) {
+          favorites = favorites.filter(x => x !== rule.id);
+          setFavUI(false);
+        } else {
+          favorites.push(rule.id);
+          setFavUI(true);
+        }
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+      });
+    }
+  } catch (e) {
+    console.error(e);
+    const box = document.getElementById("rule-detail");
+    if (box) box.innerHTML = "<p>データの読み込みに失敗しました。</p>";
   }
 });
 </script>
