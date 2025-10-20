@@ -81,6 +81,21 @@
   border-bottom-right-radius: 25px;
   margin: 0;
 }
+    /* ✅ ルール一覧（2025最新版）ボタンを黄色＋緑文字に統一 */
+#latest-rules button {
+  background-color: #ffd84d !important; /* 黄色 */
+  color: #007f3b !important;            /* 緑文字 */
+  font-weight: bold;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 191, 165, 0.2);
+  transition: all 0.2s ease;
+}
+
+#latest-rules button:hover {
+  background-color: #ffcc33 !important;
+  color: #006b30 !important; /* 少し濃い緑でホバー時も自然に */
+  transform: scale(0.98);
+}
     /* お気に入り一覧ボタンをグリーン化 */
 #favorites-entry button {
   background-color: #00bfa5 !important; /* サイト基調グリーン */
