@@ -6,17 +6,20 @@
   <title>お気に入り一覧 | 3タップルールズ</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    /* —— ベース —— */
     body {
       font-family: "Helvetica", sans-serif;
       background: #f9fff9;
       margin: 0;
+      /* 下ナビに被らないように余白（iPhoneのセーフエリアも加味） */
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 74px);
     }
 
     h1 {
       background: #00bfa5;
-      color: white;
+      color: #fff;
       text-align: center;
-      padding: 12px;
+      padding: 12px 0;
       margin: 0 0 20px;
       font-size: 20px;
       font-weight: bold;
@@ -25,7 +28,7 @@
     }
 
     #favoritesList {
-      padding: 10px 15px;
+      padding: 10px 15px 20px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -40,14 +43,12 @@
       cursor: pointer;
       transition: background 0.2s ease;
     }
-
-    .fav-item:hover {
-      background: #eaf9e6;
-    }
+    .fav-item:hover { background: #eaf9e6; }
 
     .empty {
       text-align: center;
       color: #777;
+      padding: 20px 0;
     }
 
     .back-btn {
@@ -55,46 +56,55 @@
       text-align: center;
       color: #007f3b;
       text-decoration: none;
-      margin: 20px auto;
+      margin: 20px auto 10px;
       font-weight: bold;
     }
 
-    /* 下部ナビゲーション */
+    /* —— 下部ナビ（フラット／セーフエリア対応）—— */
     .bottom-nav {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #fff;
-      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+      left: 0; right: 0; bottom: 0;
+      background: #fff;                 /* 影なしフラット */
+      border-top: 1px solid #e0e0e0;    /* うっすら仕切り線 */
       padding: 8px 0;
+      padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+      border-radius: 0;                  /* 角丸なし → “カプセル化”を防止 */
+      z-index: 9999;
     }
-
     .bottom-nav .bar {
       display: flex;
       justify-content: space-around;
       align-items: center;
-    }
-
-    .bottom-nav img {
-      width: 38px; /* ←アイコンのサイズ調整 */
-      height: auto;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     .bottom-nav a {
       text-decoration: none;
       color: #666;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 6px;                 /* タップ余白（小さめ） */
+      border-radius: 8px;               /* ほんの少しだけ角を丸く */
     }
 
-    .bottom-nav a.active {
-      background: #e0f7f4;
-      border-radius: 50%;
-      padding: 4px 8px;
-    }
     .bottom-nav img {
-  width: 76px; /* ← ここを38px→76pxに変更 */
-  height: auto;
-}
+      width: 57px;          /* ← 1.5倍（38→57px） */
+      height: auto;
+      display: block;       /* ベースラインの隙間対策 */
+      box-shadow: none;     /* 完全フラット */
+      filter: none;
+    }
+
+    /* アクティブは“持ち上げ”だけ（背景色バッジをやめる） */
+    .bottom-nav a.active { transform: translateY(-2px); }
+
+    /* 小さめ端末でほんの少し調整 */
+    @media (max-width: 360px) {
+      .bottom-nav img { width: 52px; }
+    }
   </style>
 </head>
 
@@ -107,16 +117,16 @@
 
   <main id="favoritesList"></main>
 
-  <!-- ✅ 共通ナビゲーション -->
-  <nav class="bottom-nav">
+  <!-- ✅ 共通ナビゲーション（1つだけ配置） -->
+  <nav class="bottom-nav" aria-label="メインメニュー">
     <div class="bar">
-      <a href="index.html">
+      <a href="index.html" class="nav-home">
         <img src="home-icon.png" alt="ホーム" class="nav-icon">
       </a>
-      <a href="rules.html">
+      <a href="rules.html" class="nav-rules">
         <img src="book-icon.png" alt="ルール一覧" class="nav-icon">
       </a>
-      <a href="favorites.html">
+      <a href="favorites.html" class="nav-favorites">
         <img src="star-icon.png" alt="お気に入り" class="nav-icon">
       </a>
     </div>
@@ -126,60 +136,51 @@
     document.addEventListener("DOMContentLoaded", async () => {
       const listEl = document.getElementById("favoritesList");
 
-      // 🟢 localStorageからお気に入り取得
+      // お気に入り取得
       let favorites = [];
       try {
         favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-      } catch {
-        favorites = [];
-      }
+      } catch { favorites = []; }
 
-      // 🟢 rules.jsonを読み込み
+      // ルール読み込み
       let rules = [];
       try {
         const res = await fetch("rules.json");
-        rules = await res.json();
-      } catch (e) {
-        console.warn("rules.json の読み込みに失敗しました", e);
-      }
+        const data = await res.json();
+        rules = Array.isArray(data) ? data : (data.rules || []);
+      } catch (e) { console.warn("rules.json 読み込みエラー", e); }
 
-      // 🧩 ID一致でマージ
+      // ID照合して表示用に整形
       const merged = favorites
         .map(f => {
-          const match = rules.find(r => Number(r.id) === Number(f.id));
-          if (!match) return null;
-          return { id: match.id, title: match.title || f.title || "タイトル不明" };
+          const r = rules.find(x => Number(x.id) === Number(f.id));
+          return r ? { id: r.id, title: r.title || f.title || "タイトル不明" } : null;
         })
         .filter(Boolean);
 
-      // 🟡 表示
-      if (merged.length === 0) {
-        listEl.innerHTML = `<p class="empty">お気に入りはまだ登録されていません。</p>`;
-      } else {
-        listEl.innerHTML = merged
-          .map(
-            r => `
+      // 表示
+      listEl.innerHTML =
+        merged.length === 0
+          ? `<p class="empty">お気に入りはまだ登録されていません。</p>`
+          : merged.map(r => `
               <div class="fav-item" onclick="location.href='rule.html?id=${r.id}'">
                 ${r.title}
               </div>
-            `
-          )
-          .join("");
-      }
+            `).join("");
 
-      // 現在ページのアイコンをハイライト
-      const p = location.pathname.split('/').pop() || 'index.html';
+      // 現在ページをナビで強調（持ち上げのみ）
+      const page = (location.pathname.split('/').pop() || 'index.html')
+                    .replace(/\?.*$/, '');
       const map = {
-        'index.html': 'home-icon.png',
-        'rules.html': 'book-icon.png',
-        'rule.html': 'book-icon.png',
-        'favorites.html': 'star-icon.png'
+        'index.html': '.nav-home',
+        'rules.html': '.nav-rules',
+        'rule.html':  '.nav-rules',
+        'favorites.html': '.nav-favorites'
       };
-      const sel = map[p];
+      const sel = map[page];
       if (sel) {
-        document
-          .querySelectorAll(`img[src="${sel}"]`)
-          .forEach(el => el.parentElement.classList.add("active"));
+        const a = document.querySelector(sel);
+        if (a) a.classList.add('active');
       }
     });
   </script>
