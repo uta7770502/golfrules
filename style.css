@@ -25,7 +25,44 @@ body{
   text-rendering: optimizeLegibility;
   padding-bottom: 76px; /* 下部ナビ分の余白を常に確保 */
 }
+.btn-area.compact {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
 
+.btn.main,
+.btn.sub {
+  flex: 1;
+  max-width: 180px;
+  text-align: center;
+  padding: 12px 0;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn.main {
+  background: #00bfa5;
+  color: #fff;
+}
+
+.btn.sub {
+  background: #ffd84d;
+  color: #333;
+}
+
+.btn.main:hover {
+  background: #00a890;
+}
+
+.btn.sub:hover {
+  background: #ffcc33;
+}
 /* ▼ヘッダー（全ページ共通の .main-header / header を想定） */
 header, .main-header{
   background: linear-gradient(180deg, var(--teal) 0%, var(--teal-deep) 100%);
