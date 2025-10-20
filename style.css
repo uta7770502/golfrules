@@ -1455,3 +1455,9 @@ h2, h3 {
   font-size: 15px;
   cursor: pointer;
 }
+.nav-icon {
+  width: 36px;   /* ← 今より少し大きく */
+  height: 36px;  /* 縦横比を維持 */
+  margin: 4px auto;
+  display: block;
+}
