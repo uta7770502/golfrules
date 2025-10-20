@@ -153,57 +153,61 @@
 
   <script>
 document.addEventListener("DOMContentLoaded", async () => {
-  // ▼ 旧コードと競合しないように、まず対象要素を取得
   const $ = (id) => document.getElementById(id);
 
   try {
-    // ▼ キャッシュ対策でバージョン付与（更新が即反映）
+    // ✅ JSONをキャッシュせず常に最新を取得
     const res = await fetch(`rules.json?v=${Date.now()}`);
     const data = await res.json();
     const rules = Array.isArray(data) ? data : data.rules;
 
+    // ✅ URLからルールIDを取得
     const params = new URLSearchParams(location.search);
     const id = parseInt(params.get("id"), 10);
-    const rule = rules.find(r => r.id === id);
+    const rule = rules.find((r) => r.id === id);
 
     if (!rule) {
       $("rule-detail").innerHTML = "<p>該当ルールが見つかりません。</p>";
       return;
     }
 
-    // ▼ テキスト反映（未設定はフォールバック）
-    $("rule-title")?.textContent = rule.title || "";
-    $("rule-category")?.textContent = rule.category || "";
-    $("rule-description")?.textContent = rule.description || "";
-    $("rule-detail-text")?.textContent = (rule.detail && rule.detail.trim()) ? rule.detail : "詳細情報はありません。";
-    $("rule-penalty")?.textContent = (rule.penalty && rule.penalty.trim()) ? rule.penalty : "特に罰はありません。";
+    // ✅ 各項目の表示内容を反映（空欄でも自然な代替文を表示）
+    $("rule-title").textContent = rule.title || "（タイトル不明）";
+    $("rule-category").textContent = rule.category || "（カテゴリ未設定）";
+    $("rule-description").textContent = rule.description || "（説明なし）";
+    $("rule-detail-text").textContent =
+      rule.detail && rule.detail.trim()
+        ? rule.detail
+        : "詳細情報は登録されていません。";
+    $("rule-penalty").textContent =
+      rule.penalty && rule.penalty.trim()
+        ? rule.penalty
+        : "特に罰はありません。";
 
-    // ▼ 「詳細と処置」ボタンの表示/非表示と遷移
-    const detailEl = $("detail-btn");  // <button id="detail-btn"> or <a id="detail-btn">
+    // ✅ 「詳細と処置」ボタンの表示・リンク設定
+    const detailEl = $("detail-btn");
     if (detailEl) {
       const hasDetail = !!(rule.detail && rule.detail.trim());
       if (!hasDetail) {
-        detailEl.style.display = "none";         // detailが無いルールはボタン非表示
+        // 詳細がないルールはボタンを非表示
+        detailEl.style.display = "none";
       } else {
-        // テキスト統一
         detailEl.textContent = "🔍 詳細と処置 →";
         detailEl.style.display = "inline-flex";
-
         const url = `rule_detail.html?id=${rule.id}`;
-
-        // aタグでもbuttonでもOKにする
         if (detailEl.tagName === "A") {
-          detailEl.setAttribute("href", url);
+          detailEl.href = url;
         } else {
-          detailEl.addEventListener("click", () => location.href = url);
+          detailEl.addEventListener("click", () => (location.href = url));
         }
       }
     }
 
-    // ▼ お気に入り
+    // ✅ お気に入り登録機能
     const favBtn = $("fav-btn");
     if (favBtn) {
       let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
       const setFavUI = (on) => {
         if (on) {
           favBtn.textContent = "⭐ 登録済み";
@@ -213,11 +217,13 @@ document.addEventListener("DOMContentLoaded", async () => {
           favBtn.classList.remove("active");
         }
       };
+
       setFavUI(favorites.includes(rule.id));
+
       favBtn.addEventListener("click", () => {
         favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
         if (favorites.includes(rule.id)) {
-          favorites = favorites.filter(x => x !== rule.id);
+          favorites = favorites.filter((x) => x !== rule.id);
           setFavUI(false);
         } else {
           favorites.push(rule.id);
@@ -229,7 +235,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (e) {
     console.error(e);
     const box = document.getElementById("rule-detail");
-    if (box) box.innerHTML = "<p>データの読み込みに失敗しました。</p>";
+    if (box)
+      box.innerHTML = "<p>データの読み込みに失敗しました。</p>";
   }
 });
 </script>
