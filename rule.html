@@ -116,23 +116,26 @@
 
 <body>
   <header>3タップルールズ</header>
+
   <main>
-    <div id="rule-detail" class="rule-card">
+    <div id="rule-detail" class="rule-box">
       <h2 id="rule-title"></h2>
       <p class="category">カテゴリ：<span id="rule-category"></span></p>
       <p class="description" id="rule-description"></p>
+
       <div class="detail-box">
         <h3>詳細</h3>
         <p id="rule-detail-text"></p>
       </div>
+
       <div class="penalty-box">
         <h3>ペナルティ</h3>
         <p id="rule-penalty"></p>
       </div>
     </div>
-    <a href="rule_detail.html?id=" id="to-detail-btn" class="btn">🔍 詳細を見る →</a>
 
-    <button id="fav-btn">⭐ お気に入り登録</button>
+    <button id="detail-btn" class="detail-btn">🔍 詳細を見る →</button>
+    <button id="fav-btn" class="fav-btn">⭐ お気に入り登録</button>
 
     <div class="btn-area">
       <a href="rules.html" class="btn">← 一覧に戻る</a>
@@ -140,8 +143,7 @@
     </div>
   </main>
 
-  <!-- ▼ 下部ナビ -->
-  <nav class="bottom-nav" aria-label="メインメニュー">
+  <nav class="bottom-nav">
     <div class="bar">
       <a href="index.html" class="nav-home">🏠</a>
       <a href="rules.html" class="nav-rules active">📘</a>
