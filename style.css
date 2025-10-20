@@ -1576,3 +1576,11 @@ h2, h3 {
   margin: 0 4px;
   filter: none !important; /* ← 影を完全に除去 */
 }
+/* === ナビアイコンをフラット＆やや小さめに統一 === */
+.bottom-nav img {
+  width: 42px !important;   /* ← ここを小さく＆強制反映 */
+  height: auto !important;
+  margin: 0 6px !important;
+  filter: none !important;  /* 影なし */
+  display: block;
+}
