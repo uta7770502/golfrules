@@ -134,9 +134,13 @@
       align-items: center;
     }
 
+    .bottom-nav img {
+      width: 38px; /* ←アイコンのサイズ調整（お好みで） */
+      height: auto;
+    }
+
     .bottom-nav a {
       text-decoration: none;
-      font-size: 24px;
       color: #666;
     }
 
@@ -145,43 +149,32 @@
       border-radius: 50%;
       padding: 4px 8px;
     }
-    /* --- ローカルルールを視覚的に強調 --- */
-.local-badge {
-  display: inline-block;
-  background-color: #ffeaa7; /* やさしい黄色 */
-  color: #444;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 3px 8px;
-  border-radius: 10px;
-  margin-left: 6px;
-}
 
-.local-rule {
-  border-left: 4px solid #fbc531; /* 黄色ライン */
-  background-color: #fffbea;
-}
+    /* --- ローカルルール強調 --- */
+    .local-badge {
+      display: inline-block;
+      background-color: #ffeaa7;
+      color: #444;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 10px;
+      margin-left: 6px;
+    }
 
-/* --- 通常ルール --- */
-.rule-item {
-  background: #fff;
-  border-radius: 6px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
+    .local-rule {
+      border-left: 4px solid #fbc531;
+      background-color: #fffbea;
+    }
 
-.rule-item:hover {
-  background: #f2fff4;
-  transform: translateY(-2px);
-}
+    .rule-item:hover {
+      background: #f2fff4;
+      transform: translateY(-2px);
+    }
 
-/* --- ローカルルールの hover --- */
-.local-rule:hover {
-  background: #fff3cd;
-}
+    .local-rule:hover {
+      background: #fff3cd;
+    }
   </style>
 </head>
 
@@ -201,38 +194,35 @@
 
   <main id="ruleList"></main>
   <div id="localNotice"></div>
-<!-- ✅ 共通ナビゲーション -->
-<nav class="bottom-nav">
-  <div class="bar">
-    <a href="index.html">
-      <img src="home-icon.png" alt="ホーム" class="nav-icon">
-    </a>
-    <a href="rules.html">
-      <img src="book-icon.png" alt="ルール一覧" class="nav-icon">
-    </a>
-    <a href="favorites.html">
-      <img src="star-icon.png" alt="お気に入り" class="nav-icon">
-    </a>
-  </div>
-</nav>
 
-<a href="index.html" class="back-btn">トップへ戻る</a>
+  <!-- ✅ 共通ナビゲーション -->
+  <nav class="bottom-nav">
+    <div class="bar">
+      <a href="index.html">
+        <img src="home-icon.PNG" alt="ホーム" class="nav-icon">
+      </a>
+      <a href="rules.html">
+        <img src="book-icon.PNG" alt="ルール一覧" class="nav-icon">
+      </a>
+      <a href="favorites.html">
+        <img src="star-icon.PNG" alt="お気に入り" class="nav-icon">
+      </a>
+    </div>
+  </nav>
 
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
       const list = document.getElementById("ruleList");
       const info = document.getElementById("searchInfo");
       const res = await fetch("rules.json");
-　　　　const data = await res.json();
-　　　　const rules = Array.isArray(data) ? data : (data.rules || []);
+      const data = await res.json();
+      const rules = Array.isArray(data) ? data : (data.rules || []);
       rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
 
-      // 🔍 URLパラメータを取得
       const ps = new URLSearchParams(window.location.search);
       const keyword = ps.get("keyword");
       const category = ps.get("category");
 
-      // 📌 ローカルルールバナー
       const localNotice = document.getElementById("localNotice");
       if (category === "ローカルルール") {
         localNotice.innerHTML = `
@@ -241,7 +231,6 @@
           </div>`;
       }
 
-      // 🔎 絞り込み処理
       let filtered = rules;
       if (keyword) {
         filtered = rules.filter(
@@ -257,7 +246,6 @@
         info.innerHTML = `すべてのルール`;
       }
 
-      // 💛 結果を出力
       list.innerHTML = filtered
         .map(
           (r) => `
@@ -268,7 +256,6 @@
         )
         .join("");
 
-      // 🔄 検索リアルタイム対応
       const input = document.getElementById("searchInput");
       const clearButton = document.getElementById("clearButton");
 
@@ -306,14 +293,5 @@
       });
     });
   </script>
-
-  <!-- ▼ 下部ナビゲーション -->
-  <nav class="bottom-nav" aria-label="メインメニュー">
-    <div class="bar">
-      <a href="index.html" class="nav-home">🏠</a>
-      <a href="rules.html" class="nav-rules active">📘</a>
-      <a href="favorites.html" class="nav-favorites">⭐</a>
-    </div>
-  </nav>
 </body>
 </html>
