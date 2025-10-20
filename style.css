@@ -1562,3 +1562,10 @@ h2, h3 {
   vertical-align: middle;
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15)); /* ← アイコンに軽い影 */
 }
+.bottom-nav img {
+  width: 52px; /* ← ここを調整（以前64pxだった） */
+  height: auto;
+  vertical-align: middle;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15));
+  margin: 0 4px; /* ← 左右に少し余白追加で圧迫感軽減 */
+}
