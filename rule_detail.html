@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ルール処置詳細｜3タップルールズ</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>詳細と処置｜3タップルールズ</title>
+  <link rel="stylesheet" href="style.css">
+
   <style>
     body {
       background: #f9fff9;
@@ -17,7 +18,7 @@
       background: #00bfa5;
       color: #fff;
       text-align: center;
-      padding: 14px 0;
+      padding: 12px 0;
       font-size: 22px;
       font-weight: bold;
       border-bottom-left-radius: 25px;
@@ -28,65 +29,85 @@
       padding: 20px;
     }
 
-    .detail-card {
-      background: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.08);
-    }
-
     h2 {
       color: #007f3b;
       margin-bottom: 10px;
     }
 
-    .section {
-      background: #f6fff8;
+    .section-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .section-box.green {
       border-left: 5px solid #00bfa5;
-      border-radius: 6px;
-      padding: 10px 15px;
-      margin-top: 15px;
+      background: #f0fff4;
     }
 
-    .section h3 {
-      color: #007f3b;
-      margin-top: 0;
-      font-size: 17px;
-    }
-
-    .penalty-section {
+    .section-box.red {
+      border-left: 5px solid #ff5555;
       background: #fff7f7;
-      border-left-color: #ff5555;
     }
 
-    .back-buttons {
-      text-align: center;
+    .section-box h3 {
+      margin-top: 0;
+      color: #007f3b;
+      font-size: 16px;
+    }
+
+    .btn-area.compact {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
       margin-top: 25px;
+      flex-wrap: wrap;
     }
 
     .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 150px;
+      max-width: 180px;
+      height: 48px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s ease;
+      box-sizing: border-box;
+      text-align: center;
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .btn.main {
       background: #00bfa5;
       color: #fff;
-      text-decoration: none;
-      padding: 10px 25px;
-      border-radius: 25px;
-      margin: 5px;
-      font-weight: bold;
-      transition: 0.2s;
     }
 
-    .btn:hover {
-      background: #009c86;
+    .btn.main:hover {
+      background: #00a890;
     }
 
-    footer {
-      text-align: center;
-      color: #777;
-      font-size: 13px;
-      margin-top: 20px;
+    .btn.sub {
+      background: #ffd84d;
+      color: #333;
     }
+
+    .btn.sub:hover {
+      background: #ffcc33;
+    }
+
+    #fav-btn.active {
+      background: #ffd000;
+    }
+
   </style>
 </head>
 
@@ -94,59 +115,94 @@
   <header>3タップルールズ</header>
 
   <main>
-    <div class="detail-card">
-      <h2 id="rule-title"></h2>
-      <p id="rule-description" style="color:#333;margin-bottom:15px;"></p>
+    <h2 id="rule-title"></h2>
 
-      <div class="section">
-        <h3>正しい処置方法</h3>
-        <p id="rule-procedure"></p>
-      </div>
-
-      <div class="section penalty-section">
-        <h3>処置を誤った場合のペナルティ</h3>
-        <p id="rule-penalty"></p>
-      </div>
-
-      <div class="section">
-        <h3>補足・豆知識</h3>
-        <p id="rule-note"></p>
-      </div>
+    <div class="section-box green">
+      <h3>正しい処置方法</h3>
+      <p id="rule-detail"></p>
     </div>
 
-    <div class="back-buttons">
-      <a href="rule.html?id=" id="back-to-rule" class="btn">← ルール詳細へ戻る</a>
-      <a href="index.html" class="btn">🏠 トップへ</a>
+    <div class="section-box red">
+      <h3>処置を誤った場合のペナルティ</h3>
+      <p id="rule-penalty"></p>
     </div>
 
-    <footer>© 3タップルールズ</footer>
+    <div class="section-box green">
+      <h3>補足・豆知識</h3>
+      <p id="rule-extra"></p>
+    </div>
+
+    <div class="btn-area compact">
+      <button id="back-btn" class="btn main">← ルール詳細へ戻る</button>
+      <button id="fav-btn" class="btn sub">⭐ お気に入り登録</button>
+      <button id="top-btn" class="btn main">🏠 トップへ</button>
+    </div>
   </main>
 
   <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      const res = await fetch("rules.json");
-      const data = await res.json();
-      const rules = Array.isArray(data) ? data : (data.rules || []);
+  document.addEventListener("DOMContentLoaded", async () => {
+    const $ = (id) => document.getElementById(id);
 
-      const params = new URLSearchParams(window.location.search);
-      const id = parseInt(params.get("id"));
-      const rule = rules.find(r => r.id === id);
+    try {
+      const res = await fetch(`rules.json?v=${Date.now()}`);
+      const data = await res.json();
+      const rules = Array.isArray(data) ? data : data.rules;
+
+      const params = new URLSearchParams(location.search);
+      const id = parseInt(params.get("id"), 10);
+      const rule = rules.find((r) => r.id === id);
 
       if (!rule) {
-        document.querySelector("main").innerHTML = "<p>該当するルールが見つかりません。</p>";
+        $("rule-detail").textContent = "ルールが見つかりません。";
         return;
       }
 
-      document.getElementById("rule-title").textContent = rule.title;
-      document.getElementById("rule-description").textContent = rule.description || "";
-      document.getElementById("rule-procedure").textContent = rule.procedure || "現在、このルールの処置情報は準備中です。";
-      document.getElementById("rule-penalty").textContent = rule.mistakePenalty || "特別な罰則はありません。";
-      document.getElementById("rule-note").textContent = rule.note || "補足情報はありません。";
+      $("rule-title").textContent = rule.title || "（ルール名不明）";
+      $("rule-detail").textContent = rule.detail || "詳細情報は登録されていません。";
+      $("rule-penalty").textContent = rule.penalty || "特に罰はありません。";
+      $("rule-extra").textContent = rule.extra || "補足情報はありません。";
 
-      // 「ルール詳細へ戻る」リンクを動的に修正
-      const backBtn = document.getElementById("back-to-rule");
-      backBtn.href = `rule.html?id=${id}`;
-    });
+      // 戻るボタン
+      $("back-btn").addEventListener("click", () => history.back());
+
+      // トップへ
+      $("top-btn").addEventListener("click", () => (location.href = "index.html"));
+
+      // お気に入り登録
+      const favBtn = $("fav-btn");
+      if (favBtn) {
+        let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+        const setFavUI = (on) => {
+          if (on) {
+            favBtn.textContent = "⭐ 登録済み";
+            favBtn.classList.add("active");
+          } else {
+            favBtn.textContent = "⭐ お気に入り登録";
+            favBtn.classList.remove("active");
+          }
+        };
+
+        setFavUI(favorites.includes(rule.id));
+
+        favBtn.addEventListener("click", () => {
+          favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+          if (favorites.includes(rule.id)) {
+            favorites = favorites.filter((x) => x !== rule.id);
+            setFavUI(false);
+          } else {
+            favorites.push(rule.id);
+            setFavUI(true);
+          }
+          localStorage.setItem("favorites", JSON.stringify(favorites));
+        });
+      }
+
+    } catch (e) {
+      console.error(e);
+      $("rule-detail").textContent = "データ読み込みエラー。";
+    }
+  });
   </script>
 </body>
 </html>
