@@ -11,8 +11,7 @@
       background: #f9fff9;
       font-family: "Helvetica", sans-serif;
       margin: 0;
-      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 90px); /* 下ナビ分の余白 */
-      box-sizing: border-box;
+      padding: 0;
     }
 
     header {
@@ -77,88 +76,60 @@
     }
 
     /* === ボタンエリア統一デザイン === */
-    .btn-area.compact {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      margin-top: 25px;
-      flex-wrap: wrap;
-    }
+.btn-area.compact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 150px;
-      max-width: 180px;
-      height: 48px;
-      border-radius: 25px;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: 0.2s ease;
-      box-sizing: border-box;
-      text-align: center;
-      text-decoration: none;
-      line-height: 1;
-    }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  max-width: 180px;
+  height: 48px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+}
 
-    /* ✅ 黄色ボタン（詳細や戻る） */
-    .btn.main {
-      background: #ffd84d;
-      color: #333;
-    }
-    .btn.main:hover {
-      background: #ffcc33;
-    }
+/* ✅ 黄色（ルール詳細へ戻る・詳細と処置方法・トップへ） */
+.btn.main {
+  background: #ffd84d;
+  color: #333;
+}
+.btn.main:hover {
+  background: #ffcc33;
+}
 
-    /* ✅ 緑ボタン（お気に入り） */
-    .btn.sub {
-      background: #00bfa5;
-      color: #fff;
-    }
-    .btn.sub:hover {
-      background: #00a890;
-    }
+/* ✅ 緑（お気に入り登録ボタン） */
+.btn.sub {
+  background: #00bfa5;
+  color: #fff;
+}
+.btn.sub:hover {
+  background: #00a890;
+}
 
-    /* ✅ 登録済み */
-    #fav-btn.active {
-      background: #00a080;
-    }
-
-    /* ✅ 下ナビ：1本固定＋安全に重複削除 */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 80px;
-      background: #fff;
-      border-top: 1px solid #e0e0e0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
-      z-index: 9999;
-    }
-
-    .bottom-nav .bar {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      width: 100%;
-      max-width: 900px;
-    }
-
+/* ✅ 登録済み（お気に入り済） */
+#fav-btn.active {
+  background: #00a080;
+}
     .bottom-nav img {
-      width: 57px;
-      height: auto;
-      display: block;
-      box-shadow: none;
-      filter: none;
-    }
+  width: 76px; /* ← ここを38px→76pxに変更 */
+  height: auto;
+}
   </style>
 </head>
 
@@ -183,20 +154,31 @@
     </div>
   </main>
 
+  <nav class="bottom-nav">
+  <div class="bar">
+    <a href="index.html">
+      <img src="home-icon.png" alt="ホーム" class="nav-icon">
+    </a>
+    <a href="rules.html">
+      <img src="book-icon.png" alt="ルール一覧" class="nav-icon">
+    </a>
+    <a href="favorites.html">
+      <img src="star-icon.png" alt="お気に入り" class="nav-icon">
+    </a>
+  </div>
+</nav>
+
   <script>
   document.addEventListener("DOMContentLoaded", async () => {
     const $ = (id) => document.getElementById(id);
 
-    // ✅ 万一別JSでナビが重複生成された場合 → 2個目以降を削除
-    document.querySelectorAll('.bottom-nav').forEach((n, i) => {
-      if (i > 0) n.remove();
-    });
-
     try {
+      // ✅ JSONをキャッシュせず常に最新を取得
       const res = await fetch(`rules.json?v=${Date.now()}`);
       const data = await res.json();
       const rules = Array.isArray(data) ? data : data.rules;
 
+      // ✅ URLからルールIDを取得
       const params = new URLSearchParams(location.search);
       const id = parseInt(params.get("id"), 10);
       const rule = rules.find((r) => r.id === id);
@@ -206,6 +188,7 @@
         return;
       }
 
+      // ✅ 各項目の表示内容を反映（空欄でも自然な代替文を表示）
       $("rule-title").textContent = rule.title || "（タイトル不明）";
       $("rule-category").textContent = rule.category || "（カテゴリ未設定）";
       $("rule-description").textContent = rule.description || "（説明なし）";
@@ -218,21 +201,22 @@
           ? rule.penalty
           : "特に罰はありません。";
 
-      // ✅ 詳細ページボタン
+      // ✅ 「詳細と処置」ボタンの表示・リンク設定
       const detailEl = $("detail-btn");
       if (detailEl) {
         const hasDetail = !!(rule.detail && rule.detail.trim());
         if (!hasDetail) {
+          // 詳細がないルールはボタンを非表示
           detailEl.style.display = "none";
         } else {
           detailEl.textContent = "詳細と処置方法 →";
-          detailEl.addEventListener("click", () => {
-            location.href = `rule_detail.html?id=${rule.id}`;
-          });
+          detailEl.style.display = "inline-flex";
+          const url = `rule_detail.html?id=${rule.id}`;
+          detailEl.addEventListener("click", () => (location.href = url));
         }
       }
 
-      // ✅ お気に入り登録
+      // ✅ お気に入り登録機能
       const favBtn = $("fav-btn");
       if (favBtn) {
         let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
@@ -268,7 +252,6 @@
         box.innerHTML = "<p>データの読み込みに失敗しました。</p>";
     }
   });
-    document.querySelectorAll('.bottom-nav').forEach((n, i) => { if (i > 0) n.remove(); });
   </script>
 </body>
 </html>
