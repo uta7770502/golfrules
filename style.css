@@ -1620,3 +1620,40 @@ h2, h3 {
 body{
   padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 110px);
 }
+/* ルール一覧の親 */
+#ruleList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr)); /* 常に2列 */
+  gap: 12px;                                           /* 均等な隙間 */
+  padding: 10px 15px 110px;                            /* 下ナビ分の余白 */
+  box-sizing: border-box;
+  align-items: stretch;                                 /* 各セルを同じ高さへ伸ばす */
+}
+
+/* 各カード（ボタン） */
+.rule-item {
+  display: flex;                  /* 中身を中央に */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px;
+  min-height: 88px;               /* 高さを揃える（必要に応じて微調整） */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform .2s, background .2s;
+}
+.rule-item:hover { background:#eaf9e6; transform: translateY(-2px); }
+
+/* “ローカル”バッジが載っても高さが崩れないよう小さめに */
+.local-badge {
+  display: inline-block;
+  margin-left: 6px;
+  background: #ffeaa7;
+  color: #444;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
