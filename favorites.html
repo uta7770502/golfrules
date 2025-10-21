@@ -105,6 +105,10 @@
     @media (max-width: 360px) {
       .bottom-nav img { width: 52px; }
     }
+    body {
+  /* すでにある内容の下にこれを追加 */
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 90px);
+}
   </style>
 </head>
 
