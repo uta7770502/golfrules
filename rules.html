@@ -110,6 +110,49 @@
     .bottom-nav a.active {
       transform: translateY(-2px);
     }
+    /* ✅ ルール一覧のカード整列修正版 */
+#rule-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 10px;
+  padding: 10px 0 90px; /* 下ナビ分の余白 */
+  box-sizing: border-box;
+}
+
+/* ✅ 各カード（ボタン）の見た目 */
+.rule-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  padding: 12px 16px;
+  width: 42%; /* ← スマホで2列表示になるよう調整 */
+  min-width: 140px;
+  max-width: 200px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #333;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.rule-card:hover {
+  background: #f7fff7;
+  transform: translateY(-2px);
+}
+
+/* ✅ ローカルルール用のバッジ */
+.local-badge {
+  background: #ffd84d;
+  color: #007f3b;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 2px 6px;
+  display: inline-block;
+  margin-top: 4px;
+}
   </style>
 </head>
 
