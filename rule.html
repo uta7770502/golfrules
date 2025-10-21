@@ -183,21 +183,6 @@
     </div>
   </main>
 
-  <!-- ✅ ナビバー（この1つだけ残す） -->
-  <nav class="bottom-nav">
-    <div class="bar">
-      <a href="index.html">
-        <img src="home-icon.png" alt="ホーム">
-      </a>
-      <a href="rules.html">
-        <img src="book-icon.png" alt="ルール一覧">
-      </a>
-      <a href="favorites.html">
-        <img src="star-icon.png" alt="お気に入り">
-      </a>
-    </div>
-  </nav>
-
   <script>
   document.addEventListener("DOMContentLoaded", async () => {
     const $ = (id) => document.getElementById(id);
@@ -283,6 +268,7 @@
         box.innerHTML = "<p>データの読み込みに失敗しました。</p>";
     }
   });
+    document.querySelectorAll('.bottom-nav').forEach((n, i) => { if (i > 0) n.remove(); });
   </script>
 </body>
 </html>
