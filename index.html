@@ -5,298 +5,134 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>世界一使いやすいゴルフルール</title>
   <link rel="stylesheet" href="style.css?v=4" />
- <style>
-/* ✅ 人気キーワード完全修正版（HTML内直書きバージョン） */
-#keyword-container {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  justify-content: center !important;
-  gap: 6px 8px !important;
-  margin-top: 10px !important;
-}
-
-#keyword-container a,
-#keyword-container button {
-  all: unset !important;
-  display: inline-block !important;
-  background-color: #f4f4f4 !important;
-  color: #333 !important;
-  border-radius: 20px !important;
-  padding: 6px 14px !important;
-  font-size: 14px !important;
-  line-height: 1.2 !important;
-  text-decoration: none !important;
-  cursor: pointer !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-  transition: all 0.2s ease !important;
-}
-
-#keyword-container a:hover,
-#keyword-container button:hover {
-  background-color: #e0f8e0 !important;
-  color: #007f3b !important;
-  transform: scale(1.03) !important;
-}
-</style>
   <style>
-    /* 🔍 検索結果ボックス */
-    #search-results {
-      width: 90%;
-      max-width: 600px;
-      margin: 8px auto 0 auto;
-    }
-    .result-card {
-      background: #ffffff;
-      border: 1px solid #d8f7d8;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-      padding: 10px 12px;
-      margin-bottom: 6px;
-      transition: 0.2s;
-    }
-    .result-card:hover {
-      background: #f4fff4;
-      transform: translateY(-1px);
-      cursor: pointer;
-    }
-    .result-card h3 {
-      font-size: 15px;
-      color: #006400;
-      margin: 0 0 3px 0;
-    }
-    .result-card p {
-      font-size: 13px;
-      color: #333;
+    body {
+      font-family: "Helvetica", sans-serif;
+      background: #f9fff9;
       margin: 0;
+      padding: 0 0 80px 0; /* 下ナビ分の余白 */
+      text-align: center;
     }
-    /* ✅ トップページのヘッダーを他ページと統一 */
-.main-header {
-  background: #00bfa5;
-  color: #fff;
-  text-align: center;
-  padding: 16px 0;
-  font-size: 22px;
-  font-weight: bold;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
-  margin: 0;
-}
-    /* ✅ ルール一覧（2025最新版）ボタンを黄色＋緑文字に統一 */
-#latest-rules button {
-  background-color: #ffd84d !important; /* 黄色 */
-  color: #007f3b !important;            /* 緑文字 */
-  font-weight: bold;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 191, 165, 0.2);
-  transition: all 0.2s ease;
-}
 
-#latest-rules button:hover {
-  background-color: #ffcc33 !important;
-  color: #006b30 !important; /* 少し濃い緑でホバー時も自然に */
-  transform: scale(0.98);
-}
-    /* お気に入り一覧ボタンをグリーン化 */
-#favorites-entry button {
-  background-color: #00bfa5 !important; /* サイト基調グリーン */
-  color: #fff !important;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 191, 165, 0.3);
-  transition: all 0.2s ease;
-}
+    header {
+      background: #00bfa5;
+      color: #fff;
+      text-align: center;
+      padding: 16px 0;
+      font-size: 22px;
+      font-weight: bold;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+    }
 
-#favorites-entry button:hover {
-  background-color: #009e8f !important; /* 濃いグリーンで押下感 */
-  transform: scale(0.98);
-}
+    section {
+      margin: 25px auto;
+    }
+
+    button {
+      display: block;
+      width: 80%;
+      max-width: 340px;
+      margin: 15px auto;
+      padding: 14px 0;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(0.98);
+    }
+
+    /* 黄色ボタン */
+    #latest-rules button {
+      background-color: #ffd84d;
+      color: #007f3b;
+    }
+
+    /* 緑ボタン */
+    #favorites-entry button {
+      background-color: #00bfa5;
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      margin-top: 40px;
+      padding-bottom: 20px;
+    }
+
+    /* 下部ナビバー */
     .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  background: #fff;
-  padding: 10px 0;
-  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
-}
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      z-index: 9999;
+    }
 
-.nav-icon {
-  width: 36px;  /* 同じサイズで統一 */
-  height: 36px;
-}
     .bottom-nav img {
-  width: 76px; /* ← ここを38px→76pxに変更 */
-  height: auto;
-}
+      width: 56px;
+      height: auto;
+      display: block;
+    }
+
+    .bottom-nav a.active {
+      transform: translateY(-2px);
+    }
   </style>
 </head>
+
 <body>
-<header class="main-header">
-  <h1>3タップルールズ</h1>
-</header>
-  <!-- 🔍 検索ボックス -->
-  <section id="search-box">
-  <div id="search-suggestions"></div>
-  <input type="text" id="searchInput" placeholder="ルールを検索…" />
-</section>
-  
-<!-- 🔽 候補リスト -->
-<ul id="suggestions"></ul>
+  <header>3タップルールズ</header>
 
-  <!-- 検索結果表示エリア -->
-  <div id="search-results"></div>
-
-  <!-- 📋 ルール一覧 -->
+  <!-- ルール一覧 -->
   <section id="latest-rules">
-    <button onclick="window.location.href='rules.html'">ルール一覧（2025 最新ver.）</button>
+    <button onclick="location.href='rules.html'">ルール一覧（2025最新版）</button>
   </section>
 
-  <!-- ⭐ お気に入り一覧 -->
+  <!-- お気に入り一覧 -->
   <section id="favorites-entry">
-    <button onclick="window.location.href='favorites.html'">⭐ お気に入り一覧</button>
+    <button onclick="location.href='favorites.html'">⭐ お気に入り一覧</button>
   </section>
 
-  <!-- 🏆 人気のキーワード -->
-<section id="popular-keywords">
-  <h2>人気のキーワード</h2>
-  <div id="keyword-container">
-    <a href="rules.html?keyword=OB">OB</a>
-    <a href="rules.html?keyword=暫定球">暫定球</a>
-    <a href="rules.html?keyword=赤杭">赤杭</a>
-    <a href="rules.html?keyword=黄杭">黄杭</a>
-    <a href="rules.html?keyword=白杭">白杭</a>
-    <a href="rules.html?keyword=青杭">青杭</a>
-    <a href="rules.html?keyword=アンプレ">アンプレ</a>
-    <a href="rules.html?keyword=ドロップ">ドロップ</a>
-    <a href="rules.html?keyword=池ポチャ">池ポチャ</a>
-    <a href="rules.html?keyword=空振り">空振り</a>
-    <a href="rules.html?keyword=%E7%89%B9%E8%A8%AD%E3%83%86%E3%82%A3%EF%BC%88%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%EF%BC%89">特設ティ（ローカル）</a>
-    <a href="rules.html?keyword=ディボット">ディボット</a>
-    <a href="rules.html?keyword=誤球">誤球</a>
-    <a href="rules.html?keyword=救済">救済</a>
-    <a href="rules.html?keyword=ペナルティ">ペナルティ</a>
-  </div>
-</section>
+  <footer>© 2025 世界一使いやすいゴルフルール</footer>
 
-  <!-- 📍 場所で探す・種類で探す -->
-  <section id="search-sections">
-    <div class="search-column by-place">
-      <h2>場所で探す</h2>
-      <div class="button-group">
-        <button onclick="window.location.href='rules.html?category=ティー'">ティー</button>
-        <button onclick="window.location.href='rules.html?category=フェアウェイ'">フェアウェイ</button>
-        <button onclick="window.location.href='rules.html?category=ラフ'">ラフ</button>
-        <button onclick="window.location.href='rules.html?category=バンカー'">バンカー</button>
-        <button onclick="window.location.href='rules.html?category=グリーン上'">グリーン上</button>
-      </div>
-    </div>
+  <!-- 下部ナビバー -->
+  <nav class="bottom-nav">
+    <a href="index.html"><img src="home-icon.png" alt="ホーム"></a>
+    <a href="rules.html"><img src="book-icon.png" alt="ルール一覧"></a>
+    <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
+  </nav>
 
-    <div class="search-column by-place">
-      <h2>種類で探す</h2>
-      <div class="search-column right by-type">
-        <div class="button-group">
-          <button class="local-rule-btn" onclick="window.location.href='rules.html?category=ローカルルール'">ローカルルール</button>
-          <button onclick="window.location.href='rules.html?category=ペナルティ'">ペナルティ</button>
-          <button onclick="window.location.href='rules.html?category=救済'">救済</button>
-          <button onclick="window.location.href='rules.html?category=マナー'">マナー</button>
-          <button onclick="window.location.href='rules.html?category=ルール全般'">ルール全般</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <p>© 2025 世界一使いやすいゴルフルール</p>
-  </footer>
-
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const input = document.getElementById("searchInput");
-  const results = document.getElementById("search-results");
-
-  const res = await fetch("rules.json");
-  const rules = await res.json();
-
-  input.addEventListener("input", (e) => {
-    const val = e.target.value.trim().toLowerCase();
-    if (!val) {
-      results.innerHTML = "";
-      return;
-    }
-
-    const matched = rules.filter((r) =>
-      r.title.toLowerCase().includes(val)
-    ).slice(0, 5);
-
-    results.innerHTML = matched.length
-      ? matched.map((r) => `
-          <div class="result-card" onclick="location.href='rule.html?id=${r.id}'">
-            <h3>${r.title}</h3>
-          </div>`).join("")
-      : `<p>該当するルールが見つかりません</p>`;
-  });
-});
-  // 🎤 音声入力機能
-const voiceButton = document.getElementById("voiceButton");
-const searchInput = document.getElementById("searchInput");
-
-if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = new SpeechRecognition();
-
-  recognition.lang = "ja-JP";
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-
-  voiceButton && voiceButton.addEventListener("click", () => {
-    voiceButton.style.background = "#00bfa5";
-    voiceButton.textContent = "🎙️";
-    recognition.start();
-  });
-
-  recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    searchInput.value = transcript;
-    const inputEvent = new Event("input");
-    searchInput.dispatchEvent(inputEvent);
-  };
-
-  recognition.onend = () => {
-    if (voiceButton) {
-      voiceButton.style.background = "#ffcc00";
-      voiceButton.textContent = "🎤";
-    }
-  };
-} else {
-  voiceButton && voiceButton.addEventListener("click", () => {
-    alert("お使いのブラウザでは音声入力に対応していません。");
-  });
-}
-</script>
-<script>
-    // 🔍 リアルタイム検索
-    async function setupSearch() {
-      const input = document.getElementById("searchInput");
-      const results = document.getElementById("search-results");
-      let rules = [];
-
-      try {
-        const res = await fetch("rules.json");
-        rules = await res.json();
-      } catch {
-        results.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
-        return;
+  <script>
+    // 現在ページを強調表示（任意）
+    (function(){
+      const p = location.pathname.split('/').pop() || 'index.html';
+      const map = {
+        'index.html': 0,
+        'rules.html': 1,
+        'favorites.html': 2
+      };
+      const links = document.querySelectorAll('.bottom-nav a');
+      if (map[p] !== undefined) {
+        links[map[p]].style.transform = 'translateY(-2px)';
       }
-
-      input.addEventListener("input", (e) => {
-        const val = e.target.value.trim().toLowerCase();
-        if (!val) {
-          results.innerHTML = "";
-          return;
-        }
-
-        const matched = rules.filter(r =>
-          r.title.toLowerCase().includes(val) ||
-          (r.description || '').toLowerCase().includes(val)
-        ).slice(0
+    })();
+  </script>
+</body>
+</html>
