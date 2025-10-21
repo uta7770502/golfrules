@@ -195,5 +195,9 @@
       }
     });
   </script>
+  <script>
+  // 二重ナビバー防止：2つ目以降のnavを削除
+  document.querySelectorAll('.bottom-nav').forEach((nav, i) => { if (i > 0) nav.remove(); });
+</script>
 </body>
 </html>
