@@ -1,64 +1,52 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ルール一覧 | 3タップルールズ</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3タップルールズ｜ルール一覧</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
+    /* === ベース設定 === */
     body {
-      font-family: "Helvetica", sans-serif;
       background: #f9fff9;
+      font-family: "Helvetica", sans-serif;
       margin: 0;
-      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 90px);
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); /* 下ナビ分の余白 */
     }
 
     header {
       background: #00bfa5;
       color: #fff;
       text-align: center;
-      padding: 16px 0;
+      padding: 12px 0;
       font-size: 22px;
       font-weight: bold;
       border-bottom-left-radius: 25px;
       border-bottom-right-radius: 25px;
-      margin: 0 0 15px 0;
     }
 
-    #searchArea {
+    #searchInfo {
       text-align: center;
-      margin: 10px 0 20px;
-    }
-
-    #searchInput {
-      width: 80%;
-      max-width: 380px;
-      padding: 8px 12px;
-      font-size: 16px;
-      border-radius: 25px;
-      border: 1px solid #ccc;
-      outline: none;
+      font-size: 15px;
+      color: #444;
+      margin: 10px 0;
     }
 
     #ruleList {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      padding: 10px 15px;
+      flex-direction: column;
+      gap: 6px;
+      padding: 15px;
     }
 
     .rule-item {
       background: #fff;
+      border-radius: 6px;
+      padding: 10px;
       border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 10px 12px;
-      width: 45%;
-      font-size: 15px;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      font-size: 16px;
       cursor: pointer;
-      transition: 0.2s;
+      transition: background 0.2s ease, transform 0.2s ease;
     }
 
     .rule-item:hover {
@@ -66,9 +54,18 @@
       transform: translateY(-2px);
     }
 
+    .local-rule {
+      border-left: 4px solid #fbc531;
+      background-color: #fffbea;
+    }
+
+    .local-rule:hover {
+      background: #fff3cd;
+    }
+
     .local-badge {
       display: inline-block;
-      background: #ffeaa7;
+      background-color: #ffeaa7;
       color: #444;
       font-size: 12px;
       font-weight: bold;
@@ -77,92 +74,230 @@
       margin-left: 6px;
     }
 
-    footer {
+    .local-banner {
+      background: #fff8e1;
+      color: #795548;
+      padding: 10px;
       text-align: center;
-      font-size: 13px;
-      color: #777;
-      padding: 20px 0 10px;
+      border-radius: 6px;
+      margin: 10px auto;
+      width: 90%;
+      font-size: 14px;
     }
 
-    /* ✅ ナビゲーション固定バー */
+    .back-btn {
+      display: block;
+      text-align: center;
+      color: #007f3b;
+      margin: 20px auto;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #searchArea {
+      text-align: center;
+      margin: 15px 0;
+      position: relative;
+    }
+
+    #searchInput {
+      width: 80%;
+      max-width: 400px;
+      padding: 8px 12px;
+      font-size: 16px;
+      border-radius: 25px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    #clearButton {
+      position: absolute;
+      right: calc(10% + 15px);
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #888;
+      display: none;
+    }
+
+    /* === 下部ナビゲーション（統一版）=== */
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 80px;
+      height: 80px; /* ← 高さ明示でズレ防止 */
       background: #fff;
       border-top: 1px solid #e0e0e0;
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       align-items: center;
-      box-shadow: 0 -3px 10px rgba(0,0,0,0.05);
       padding-bottom: env(safe-area-inset-bottom, 0px);
+      box-sizing: border-box;
       z-index: 9999;
     }
 
-    .bottom-nav img {
-      width: 56px;
-      height: auto;
-      display: block;
+    .bottom-nav .bar {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
     }
 
+    .bottom-nav a {
+      text-decoration: none;
+      color: #666;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 6px;
+      border-radius: 8px;
+    }
+
+    .bottom-nav img {
+      width: 57px;
+      height: auto;
+      display: block;
+      box-shadow: none;
+      filter: none;
+    }
+
+    /* アクティブページの視覚効果 */
     .bottom-nav a.active {
       transform: translateY(-2px);
+    }
+
+    @media (max-width: 360px) {
+      .bottom-nav img {
+        width: 52px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <header>ルール一覧</header>
+  <header>
+    <h1>ルール一覧</h1>
+  </header>
 
+  <a href="index.html" class="back-btn">トップへ戻る</a>
+
+  <!-- 🔍 検索エリア -->
   <div id="searchArea">
+    <span id="searchInfo"></span>
     <input id="searchInput" type="text" placeholder="ルールを検索..." />
+    <button id="clearButton">×</button>
   </div>
 
   <main id="ruleList"></main>
+  <div id="localNotice"></div>
 
-  <footer>© 2025 世界一使いやすいゴルフルール</footer>
+  <!-- ✅ 下部ナビゲーション（1つだけ配置） -->
+  <nav class="bottom-nav">
+    <div class="bar">
+      <a href="index.html" class="nav-home">
+        <img src="home-icon.png" alt="ホーム" class="nav-icon">
+      </a>
+      <a href="rules.html" class="nav-rules">
+        <img src="book-icon.png" alt="ルール一覧" class="nav-icon">
+      </a>
+      <a href="favorites.html" class="nav-favorites">
+        <img src="star-icon.png" alt="お気に入り" class="nav-icon">
+      </a>
+    </div>
+  </nav>
 
-  <!-- ✅ ナビ自動追加 -->
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    if (!document.querySelector(".bottom-nav")) {
-      const nav = document.createElement("nav");
-      nav.className = "bottom-nav";
-      nav.innerHTML = `
-        <a href="index.html"><img src="home-icon.png" alt="ホーム"></a>
-        <a href="rules.html"><img src="book-icon.png" alt="ルール一覧"></a>
-        <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
-      `;
-      document.body.appendChild(nav);
-    }
-  });
-  </script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const list = document.getElementById("ruleList");
+      const info = document.getElementById("searchInfo");
+      const res = await fetch("rules.json");
+      const data = await res.json();
+      const rules = Array.isArray(data) ? data : (data.rules || []);
+      rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
 
-  <!-- ✅ JS：ルール一覧表示 -->
+      const ps = new URLSearchParams(window.location.search);
+      const keyword = ps.get("keyword");
+      const category = ps.get("category");
+
+      const localNotice = document.getElementById("localNotice");
+      if (category === "ローカルルール") {
+        localNotice.innerHTML = `
+          <div class="local-banner">
+            🏁 ローカルルール（ゴルフ場ごとに異なる特別ルールです）
+          </div>`;
+      }
+
+      let filtered = rules;
+      if (keyword) {
+        filtered = rules.filter(
+          (r) =>
+            r.title.includes(keyword) ||
+            (r.description && r.description.includes(keyword))
+        );
+        info.innerHTML = `「${keyword}」に関するルール`;
+      } else if (category) {
+        filtered = rules.filter((r) => r.category === category);
+        info.innerHTML = `${category}`;
+      } else {
+        info.innerHTML = `すべてのルール`;
+      }
+
+      list.innerHTML = filtered
+        .map(
+          (r) => `
+        <div class="rule-item${r.isLocal ? ' local-rule' : ''}" onclick="location.href='rule.html?id=${r.id}'">
+          ${r.title}
+          ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ""}
+        </div>`
+        )
+        .join("");
+
+      const input = document.getElementById("searchInput");
+      const clearButton = document.getElementById("clearButton");
+
+      input.addEventListener("input", (e) => {
+        const q = e.target.value.trim();
+        clearButton.style.display = q ? "block" : "none";
+        const liveFiltered = filtered.filter(
+          (r) =>
+            r.title.includes(q) ||
+            (r.description && r.description.includes(q))
+        );
+        list.innerHTML = liveFiltered
+          .map(
+            (r) => `
+          <div class="rule-item${r.isLocal ? ' local-rule' : ''}" onclick="location.href='rule.html?id=${r.id}'">
+            ${r.title}
+            ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ""}
+          </div>`
+          )
+          .join("");
+      });
+
+      clearButton.addEventListener("click", () => {
+        input.value = "";
+        clearButton.style.display = "none";
+        list.innerHTML = filtered
+          .map(
+            (r) => `
+          <div class="rule-item${r.isLocal ? ' local-rule' : ''}" onclick="location.href='rule.html?id=${r.id}'">
+            ${r.title}
+            ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ""}
+          </div>`
+          )
+          .join("");
+      });
+    });
+  </script>
   <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const list = document.getElementById("ruleList");
-    const res = await fetch("rules.json");
-    const rules = await res.json();
-
-    const input = document.getElementById("searchInput");
-
-    const render = (keyword = "") => {
-      const filtered = rules.filter(r =>
-        r.title.includes(keyword) || (r.description && r.description.includes(keyword))
-      );
-      list.innerHTML = filtered.map(r => `
-        <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
-          ${r.title}${r.isLocal ? '<span class="local-badge">ローカル</span>' : ''}
-        </div>
-      `).join("");
-    };
-
-    input.addEventListener("input", e => render(e.target.value.trim()));
-    render();
-  });
-  </script>
+  // 二重ナビバー防止：2つ目以降のnavを削除
+  document.querySelectorAll('.bottom-nav').forEach((nav, i) => { if (i > 0) nav.remove(); });
+</script>
 </body>
 </html>
