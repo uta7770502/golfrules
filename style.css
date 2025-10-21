@@ -1471,18 +1471,6 @@ h2, h3 {
 .nav-icon:hover {
   transform: scale(1.12);
 }
-/* 下部ナビゲーションの位置修正 */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #fff;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
-  padding: 8px 0;
-  display: flex;
-  justify-content: center;
-}
 
 .bottom-nav .bar {
   display: flex;
