@@ -391,24 +391,35 @@ button:hover, .btn:hover, .back-btn:hover {
   .bottom-nav img { width: 46px; }
 }
 /* ===============================
-   ✅ 3タップルールズ 下部ナビ 完全安定版
+   ✅ 3タップルールズ 下部ナビ 完全安定・最新版
 ================================ */
+body {
+  margin: 0;
+  background: var(--bg);
+  font-family: "Noto Sans JP", sans-serif;
+  color: var(--ink);
+  padding-bottom: 74px; /* ← 下ナビの高さと完全一致させる */
+  box-sizing: border-box;
+}
+
+/* 下部ナビ本体 */
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 74px; /* ← 正しい高さ */
+  height: 74px; /* ← 高さを固定（body余白と一致） */
   background: #ffffff;
   border-top: 1px solid #e0e0e0;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
   z-index: 9999;
+  box-sizing: border-box;
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+/* ナビ内バー */
 .bottom-nav .bar {
   display: flex;
   justify-content: space-around;
@@ -418,6 +429,7 @@ button:hover, .btn:hover, .back-btn:hover {
   margin: 0 auto;
 }
 
+/* ナビのリンク */
 .bottom-nav a {
   text-decoration: none;
   color: #666;
@@ -427,6 +439,7 @@ button:hover, .btn:hover, .back-btn:hover {
   flex: 1;
 }
 
+/* アイコン */
 .bottom-nav img {
   width: 48px;
   height: auto;
@@ -434,4 +447,9 @@ button:hover, .btn:hover, .back-btn:hover {
   margin: 0 4px;
   box-shadow: none;
   filter: none;
+  transition: transform 0.2s ease;
+}
+
+.bottom-nav img:hover {
+  transform: scale(1.1);
 }
