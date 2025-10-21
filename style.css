@@ -217,3 +217,48 @@ button:hover, .btn:hover, .back-btn:hover {
   width: 100%;
   max-width: 900px;
 }
+/* ===============================
+   ✅ 3タップルールズ 下部ナビ 完全安定版
+================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 74px; /* 高さを固定して被りを防ぐ */
+  background: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 9999;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.bottom-nav .bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.bottom-nav a {
+  text-decoration: none;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.bottom-nav img {
+  width: 48px; /* ← 適正サイズ（スマホでも収まる） */
+  height: auto;
+  display: block;
+  margin: 0 4px;
+  box-shadow: none;
+  filter: none;
+}
