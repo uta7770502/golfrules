@@ -1592,3 +1592,31 @@ h2, h3 {
   filter: none !important;  /* 完全フラット（影なし） */
   display: block;
 }
+/* 下ナビ：フラット&下端から少し上に浮かせる */
+.bottom-nav{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 10px); /* ← Safariのバーより少し上 */
+  height: 64px;                                         /* 好みで 60–72px */
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  border-radius: 0;             /* カプセル形をやめる → ブラウザUIと似せない */
+  box-shadow: none;             /* 影も無しでフラットに */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* アイコンはそのまま */
+.bottom-nav img{
+  width: 56px;
+  height: auto;
+  display: block;
+}
+
+/* 本文が隠れないように下余白（ナビ＋浮かせた分） */
+body{
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 110px);
+}
