@@ -182,43 +182,6 @@ button:hover, .btn:hover, .back-btn:hover {
 .by-place button { background-color: var(--teal); color: #fff; }
 .by-type button { background-color: var(--teal-deep); color: #fff; }
 .by-place button:hover, .by-type button:hover { filter: brightness(0.96); }
-
-/* --- 下部ナビゲーション（完全統一） --- */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #ffffff;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  padding: 10px 0 12px 0;
-  display: flex;
-  justify-content: center;
-  z-index: 1000;
-}
-.bottom-nav .bar {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-}
-.bottom-nav a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  text-decoration: none;
-  color: #666;
-  transition: transform 0.2s ease, color 0.2s ease;
-}
-.bottom-nav a.active {
-  color: var(--teal);
-  transform: translateY(-2px);
-}
 .bottom-nav img {
   width: 52px;
   height: auto;
