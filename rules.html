@@ -132,7 +132,8 @@
       // JSON 読み込み
       const res = await fetch("rules.json");
       const rules = await res.json();
-
+　　　　rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
+      
       // 初期一覧
       renderList(rules);
 
