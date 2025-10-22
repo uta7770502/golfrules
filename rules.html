@@ -130,7 +130,7 @@
   const results = document.getElementById("search-results");
 
   try {
-    const res = await fetch("rules.json");
+    const res = await fetch("./rules.json");
     const rules = await res.json();
 
     // 🔠 あいうえお順ソート（タイトル順）
