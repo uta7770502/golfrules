@@ -193,6 +193,57 @@
       justify-content: center;
     }
     .bottom-nav a.active { transform: translateY(-2px); }
+    /* === 📱スマホでも2列を維持する修正版 === */
+#search-sections {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px 10px 60px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.search-column {
+  flex: 1 1 45%; /* ← これで常に2列を維持 */
+  max-width: 380px;
+  min-width: 260px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .search-column {
+    flex: 1 1 48%; /* 幅をやや調整して隙間を作る */
+  }
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.button-group button {
+  width: 100%;
+  background: #00bfa5;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 40px;
+  padding: 14px 0;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.button-group button:hover {
+  background: #00a890;
+  transform: translateY(-2px);
+}
   </style>
 </head>
 
