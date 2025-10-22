@@ -295,6 +295,44 @@ footer {
     max-width: 340px;
   }
 }
+  /* === 強制2カラムレイアウト（上書き用）=== */
+#search-sections {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  flex-wrap: wrap !important;
+  gap: 36px !important;
+  padding: 20px 10px 90px !important;
+}
+
+.search-column {
+  width: 45% !important;
+  min-width: 240px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.button-group {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 14px !important;
+  width: 100% !important;
+}
+
+/* スマホでは1列に戻す */
+@media (max-width: 600px) {
+  #search-sections {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 28px !important;
+  }
+  .search-column {
+    width: 100% !important;
+    max-width: 340px !important;
+  }
+}
 </style>
 </head>
 <body>
