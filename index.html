@@ -333,6 +333,79 @@ footer {
     max-width: 340px !important;
   }
 }
+  /* === 🔧 2カラムレイアウト修正版 === */
+
+/* 親：2カラム配置 */
+#search-sections {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 40px !important;
+  margin: 30px auto !important;
+  max-width: 900px !important;
+}
+
+/* 各カラム */
+#search-sections .search-column {
+  flex: 1 1 320px !important; /* 幅320pxで自動調整 */
+  max-width: 400px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+/* 見出し */
+#search-sections h2 {
+  font-size: 20px !important;
+  color: #006b52 !important;
+  font-weight: 700 !important;
+  margin-bottom: 14px !important;
+}
+
+/* ボタン群 */
+#search-sections .button-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  width: 100% !important;
+  align-items: center !important;
+}
+
+/* ボタン自体 */
+#search-sections .button-group button {
+  width: 100% !important;
+  max-width: 260px !important;
+  background: #00bfa5 !important;
+  color: #fff !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  border: none !important;
+  border-radius: 40px !important;
+  padding: 14px 0 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+  transition: 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+/* ホバー */
+#search-sections .button-group button:hover {
+  background: #00a890 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 📱 スマホは1列表示 */
+@media (max-width: 600px) {
+  #search-sections {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  #search-sections .search-column {
+    width: 100% !important;
+    max-width: 340px !important;
+  }
+}
 </style>
 </head>
 <body>
