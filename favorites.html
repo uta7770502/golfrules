@@ -6,211 +6,128 @@
   <title>お気に入り一覧 | 3タップルールズ</title>
   <link rel="stylesheet" href="style.css">
   <style>
-body {
-  font-family: "Helvetica", sans-serif;
-  background: #f9fff9;
-  margin: 0;
-  padding-bottom: 80px; /* ナビ被り防止のみ残す */
-}
+    body {
+      font-family: "Helvetica", sans-serif;
+      background: #f9fff9;
+      margin: 0;
+      padding-bottom: 80px; /* ナビ分の余白 */
+    }
 
-/* --- ヘッダー --- */
-header, .main-header {
-  background: #00bfa5;
-  color: #fff;
-  text-align: center;
-  padding: 16px 0;
-  font-size: 28px;
-  font-weight: bold;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
+    /* ✅ ヘッダー：統一デザイン */
+    header {
+      background: #00bfa5;
+      color: #fff;
+      text-align: center;
+      padding: 16px 0; /* 高さをトップページと統一 */
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+    }
 
-header + * {
-  margin-top: 15px;
-}
+    #favoritesList {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-/* --- ボタン --- */
-button, .main-btn, .back-btn {
-  display: block;
-  width: 80%;
-  max-width: 350px;
-  margin: 20px auto;
-  padding: 14px 0;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 40px;
-  text-align: center;
-  cursor: pointer;
-  text-decoration: none;
-  transition: 0.2s ease;
-}
+    .fav-item {
+      background: #fff;
+      border-radius: 6px;
+      padding: 12px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .fav-item:hover { background: #eaf9e6; }
 
-.main-btn {
-  background: #ffda44;
-  color: #007f3b;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.main-btn:hover { background: #ffe55e; }
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 20px 0;
+    }
 
-.back-btn {
-  background: #00bfa5;
-  color: #fff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.back-btn:hover { background: #00d1b1; }
+    /* ✅ トップへ戻るボタン：黄色 */
+    .back-btn {
+      display: block;
+      width: 220px;
+      text-align: center;
+      background: #FFD84D;
+      color: #333;
+      text-decoration: none;
+      margin: 20px auto;
+      font-weight: bold;
+      padding: 10px 0;
+      border-radius: 40px;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+      transition: 0.2s;
+    }
+    .back-btn:hover {
+      background: #ffcc33;
+      transform: translateY(-2px);
+    }
 
-/* --- 検索欄 --- */
-#searchArea {
-  text-align: center;
-  margin: 10px 0 20px;
-}
-
-#searchInput {
-  width: 80%;
-  max-width: 400px;
-  padding: 10px 14px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 30px;
-  outline: none;
-}
-
-/* --- キーワード・カテゴリー --- */
-#keyword-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 25px;
-}
-
-#keyword-container a,
-#keyword-container button {
-  background: #fff;
-  color: #333;
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 14px;
-  text-decoration: none;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: 0.2s ease;
-}
-#keyword-container a:hover {
-  background: #e0f7f4;
-  transform: scale(1.05);
-}
-
-/* --- 検索結果リスト --- */
-#ruleList, #favoritesList {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.rule-item, .fav-item {
-  background: #fff;
-  border-radius: 12px;
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-.rule-item:hover, .fav-item:hover {
-  background: #f2fff4;
-  transform: translateY(-2px);
-}
-
-/* --- 下ナビ --- */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #fff;
-  border-top: 1px solid #ddd;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 80px;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-  z-index: 999;
-}
-.bottom-nav img {
-  width: 57px;
-  height: auto;
-  display: block;
-  box-shadow: none;
-  filter: none;
-}
-.bottom-nav a {
-  text-decoration: none;
-  color: #666;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.bottom-nav a.active {
-  transform: translateY(-2px);
-}
-
-/* --- コピーライト --- */
-footer {
-  text-align: center;
-  color: #888;
-  font-size: 13px;
-  margin: 20px 0 90px;
-}
-</style>
+    /* 下部ナビ */
+    .bottom-nav {
+      position: fixed;
+      left: 0; bottom: 0;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 70px;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+    }
+    .bottom-nav img {
+      width: 50px;
+      height: auto;
+      display: block;
+    }
+    .bottom-nav a.active {
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
-
 <body>
-  <header>
-    <h1>⭐ お気に入り一覧</h1>
-  </header>
+  <header>⭐ お気に入り一覧</header>
 
   <a href="index.html" class="back-btn">トップへ戻る</a>
 
   <main id="favoritesList"></main>
 
-  <!-- ✅ 下部ナビ（重複なし） -->
-  <nav class="bottom-nav" aria-label="メインメニュー">
-    <div class="bar">
-      <a href="index.html" class="nav-home">
-        <img src="home-icon.png" alt="ホーム" class="nav-icon">
-      </a>
-      <a href="rules.html" class="nav-rules">
-        <img src="book-icon.png" alt="ルール一覧" class="nav-icon">
-      </a>
-      <a href="favorites.html" class="nav-favorites">
-        <img src="star-icon.png" alt="お気に入り" class="nav-icon">
-      </a>
-    </div>
+  <nav class="bottom-nav">
+    <a href="index.html">
+      <img src="home-icon.png" alt="ホーム" class="nav-icon">
+    </a>
+    <a href="rules.html">
+      <img src="book-icon.png" alt="ルール一覧" class="nav-icon">
+    </a>
+    <a href="favorites.html">
+      <img src="star-icon.png" alt="お気に入り" class="nav-icon">
+    </a>
   </nav>
 
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
       const listEl = document.getElementById("favoritesList");
 
-      // お気に入り取得
       let favorites = [];
       try {
         favorites = JSON.parse(localStorage.getItem("favorites")) || [];
       } catch { favorites = []; }
 
-      // ルール読み込み
       let rules = [];
       try {
         const res = await fetch("rules.json");
-        const data = await res.json();
-        rules = Array.isArray(data) ? data : (data.rules || []);
-      } catch (e) { console.warn("rules.json 読み込みエラー", e); }
+        rules = await res.json();
+      } catch (e) {
+        console.warn("rules.jsonの読み込みに失敗しました", e);
+      }
 
-      // ID照合して表示用に整形
       const merged = favorites
         .map(f => {
           const r = rules.find(x => Number(x.id) === Number(f.id));
@@ -218,7 +135,6 @@ footer {
         })
         .filter(Boolean);
 
-      // 表示
       listEl.innerHTML =
         merged.length === 0
           ? `<p class="empty">お気に入りはまだ登録されていません。</p>`
@@ -227,21 +143,6 @@ footer {
                 ${r.title}
               </div>
             `).join("");
-
-      // 現在ページをナビで強調（持ち上げのみ）
-      const page = (location.pathname.split('/').pop() || 'index.html')
-                    .replace(/\?.*$/, '');
-      const map = {
-        'index.html': '.nav-home',
-        'rules.html': '.nav-rules',
-        'rule.html':  '.nav-rules',
-        'favorites.html': '.nav-favorites'
-      };
-      const sel = map[page];
-      if (sel) {
-        const a = document.querySelector(sel);
-        if (a) a.classList.add('active');
-      }
     });
   </script>
 </body>
