@@ -210,6 +210,26 @@ header {
 header h1 {
   font-size: 1.6em !important; /* 他ページと揃える */
 }
+  /* ===============================
+   🔧 下部ナビゲーションの高さ統一のみ
+================================ */
+.bottom-nav {
+  height: 74px !important; /* 全ページで同じ高さ */
+  background: #fff;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  z-index: 9999;
+}
+
+.bottom-nav img {
+  width: 50px !important; /* アイコンサイズ統一 */
+  height: auto;
+  display: block;
+}
 </style>
 
 <script>
