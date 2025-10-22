@@ -6,137 +6,96 @@
   <title>世界一使いやすいゴルフルール</title>
   <link rel="stylesheet" href="style.css?v=4" />
  <style>
-/* ✅ 人気キーワード完全修正版（HTML内直書きバージョン） */
-#keyword-container {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  justify-content: center !important;
-  gap: 6px 8px !important;
-  margin-top: 10px !important;
+/* === 全体（元の見た目に戻す） === */
+body {
+  background: #f9fff9;
+  font-family: "Helvetica", sans-serif;
+  margin: 0;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); /* ← ナビの被り防止だけ残す */
 }
 
-#keyword-container a,
-#keyword-container button {
-  all: unset !important;
-  display: inline-block !important;
-  background-color: #f4f4f4 !important;
-  color: #333 !important;
-  border-radius: 20px !important;
-  padding: 6px 14px !important;
-  font-size: 14px !important;
-  line-height: 1.2 !important;
-  text-decoration: none !important;
-  cursor: pointer !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-  transition: all 0.2s ease !important;
-}
-
-#keyword-container a:hover,
-#keyword-container button:hover {
-  background-color: #e0f8e0 !important;
-  color: #007f3b !important;
-  transform: scale(1.03) !important;
-}
-</style>
-  <style>
-    /* 🔍 検索結果ボックス */
-    #search-results {
-      width: 90%;
-      max-width: 600px;
-      margin: 8px auto 0 auto;
-    }
-    .result-card {
-      background: #ffffff;
-      border: 1px solid #d8f7d8;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-      padding: 10px 12px;
-      margin-bottom: 6px;
-      transition: 0.2s;
-    }
-    .result-card:hover {
-      background: #f4fff4;
-      transform: translateY(-1px);
-      cursor: pointer;
-    }
-    .result-card h3 {
-      font-size: 15px;
-      color: #006400;
-      margin: 0 0 3px 0;
-    }
-    .result-card p {
-      font-size: 13px;
-      color: #333;
-      margin: 0;
-    }
-    /* ✅ トップページのヘッダーを他ページと統一 */
+header,
 .main-header {
   background: #00bfa5;
   color: #fff;
   text-align: center;
-  padding: 16px 0;
+  padding: 12px 0;
   font-size: 22px;
   font-weight: bold;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
-  margin: 0;
-}
-    /* ✅ ルール一覧（2025最新版）ボタンを黄色＋緑文字に統一 */
-#latest-rules button {
-  background-color: #ffd84d !important; /* 黄色 */
-  color: #007f3b !important;            /* 緑文字 */
-  font-weight: bold;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 191, 165, 0.2);
-  transition: all 0.2s ease;
 }
 
-#latest-rules button:hover {
-  background-color: #ffcc33 !important;
-  color: #006b30 !important; /* 少し濃い緑でホバー時も自然に */
-  transform: scale(0.98);
-}
-    /* お気に入り一覧ボタンをグリーン化 */
-#favorites-entry button {
-  background-color: #00bfa5 !important; /* サイト基調グリーン */
-  color: #fff !important;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 191, 165, 0.3);
-  transition: all 0.2s ease;
+header + * {
+  margin-top: 15px;
 }
 
-#favorites-entry button:hover {
-  background-color: #009e8f !important; /* 濃いグリーンで押下感 */
-  transform: scale(0.98);
+#searchInfo {
+  text-align: center;
+  font-size: 15px;
+  color: #444;
+  margin-bottom: 10px;
 }
-    .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+
+#ruleList {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  gap: 6px;
+  padding: 15px;
+}
+
+.rule-item {
   background: #fff;
-  padding: 10px 0;
-  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-.nav-icon {
-  width: 36px;  /* 同じサイズで統一 */
-  height: 36px;
+.rule-item:hover {
+  background: #eaf9e6;
 }
-    .bottom-nav img {
-  width: 76px; /* ← ここを38px→76pxに変更 */
-  height: auto;
-}
-   /* === iPhone Chrome/Safari 両対応：下部ナビの被り防止 === */
 
-/* フッターナビ全体 */
+.local-badge {
+  display: inline-block;
+  background-color: #ffeaa7;
+  color: #444;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+
+.local-banner {
+  background: #fff8e1;
+  color: #795548;
+  padding: 10px;
+  text-align: center;
+  border-radius: 6px;
+  margin: 10px auto;
+  width: 90%;
+  font-size: 14px;
+}
+
+.back-btn {
+  display: block;
+  text-align: center;
+  color: #007f3b;
+  margin: 20px auto;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* === ナビゲーションは現状維持（安定版） === */
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 80px; /* ← 高さを確定しておくことが重要 */
+  height: 80px;
   background: #fff;
   border-top: 1px solid #e0e0e0;
   display: flex;
@@ -146,17 +105,14 @@
   z-index: 9999;
 }
 
-/* ナビ内部の配置 */
 .bottom-nav .bar {
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 100%;
   max-width: 900px;
-  margin: 0 auto;
 }
 
-/* アイコン設定 */
 .bottom-nav img {
   width: 57px;
   height: auto;
@@ -165,27 +121,15 @@
   filter: none;
 }
 
-/* ====== ここが最重要 ====== */
-/* ページ下にナビ分の余白を常に取る（本文がかぶらないように） */
-main,
-#ruleList,
-#favoritesList,
-body {
-  padding-bottom: 110px; /* ← ナビ高さ80px + 余白分（調整済み） */
+.bottom-nav a {
+  text-decoration: none;
+  color: #666;
 }
 
-/* iOSのセーフエリア対応も追加（Chromeでも有効） */
-body {
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 110px);
+.bottom-nav a.active {
+  transform: translateY(-2px);
 }
-
-/* 背景やフォントも上書きしておく */
-body {
-  background: #f9fff9;
-  font-family: "Helvetica", sans-serif;
-  margin: 0;
-} 
-  </style>
+</style>
 </head>
 <body>
 <header class="main-header">
