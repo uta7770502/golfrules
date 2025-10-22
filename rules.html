@@ -126,61 +126,47 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
-      const input = document.getElementById("searchInput");
-      const results = document.getElementById("search-results");
+  const input = document.getElementById("searchInput");
+  const results = document.getElementById("search-results");
 
-      // JSON 読み込み
-      const res = await fetch("rules.json");
-      const rules = await res.json();
-　　　　rules.sort((a, b) => a.title.localeCompare(b.title, "// ✅ URLパラメータでカテゴリーを取得して自動フィルタ
-const params = new URLSearchParams(window.location.search);
-const category = params.get("category");
+  try {
+    const res = await fetch("rules.json");
+    const rules = await res.json();
 
-if (category) {
-  const filtered = rules.filter(r =>
-    r.category && r.category.includes(category)
-  );
-  renderList(filtered);
-} else {
-  renderList(rules);
-}
-      
-      // 初期一覧
-      renderList(rules);
+    // 🔠 あいうえお順ソート（タイトル順）
+    rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
 
-      // 入力検索
-      input.addEventListener("input", () => {
-        const q = input.value.trim();
-        const filtered = q
-          ? rules.filter(r =>
-              (r.title && r.title.includes(q)) ||
-              (r.description && r.description.includes(q))
-            )
-          : rules;
-        renderList(filtered);
-      });
+    // ✅ URLパラメータでカテゴリー取得
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
 
-      function renderList(list) {
-        results.innerHTML = list.length
-          ? list.map(r => `
-              <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
-                ${r.title}
-                ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ""}
-              </div>
-            `).join("")
-          : "<p style='text-align:center;color:#777;'>該当するルールがありません。</p>";
-      }
+    let displayRules = rules;
+
+    if (category) {
+      // 一致カテゴリーのルールだけに絞り込み
+      displayRules = rules.filter(
+        (r) => r.category && r.category.includes(category)
+      );
+    }
+
+    // 一覧描画（絞り込み or 全件）
+    renderList(displayRules);
+
+    // 🔍 入力検索
+    input.addEventListener("input", (e) => {
+      const val = e.target.value.trim().toLowerCase();
+      const filtered = displayRules.filter(
+        (r) =>
+          r.title.toLowerCase().includes(val) ||
+          r.description.toLowerCase().includes(val)
+      );
+      renderList(filtered);
     });
-    // ✅ URLのパラメータを取得して、自動フィルタ表示
-const params = new URLSearchParams(window.location.search);
-const category = params.get("category");
-
-if (category) {
-  const filtered = rules.filter(r => r.category === category);
-  renderList(filtered);
-} else {
-  renderList(rules);
-}
+  } catch (err) {
+    console.error("ルールデータの読み込みに失敗:", err);
+    results.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
+  }
+});
   </script>
 </body>
 </html>
