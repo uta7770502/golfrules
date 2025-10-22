@@ -189,6 +189,40 @@ footer {
   .section-buttons button {
     width: 90%;
   }
+  /* --- 場所で探す／種類で探す ボタン群（横2列レイアウト） --- */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin: 10px auto 40px;
+  max-width: 600px;
+}
+
+.button-group button {
+  background: #00bfa5;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 40px;
+  width: 45%; /* ✅ 横2列に並ぶポイント */
+  padding: 14px 0;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.button-group button:hover {
+  background: #00a890;
+  transform: translateY(-2px);
+}
+
+/* 小さい端末では1列表示 */
+@media (max-width: 420px) {
+  .button-group button {
+    width: 90%;
+  }
 }
 </style>
 </head>
