@@ -7,64 +7,63 @@
   <link rel="stylesheet" href="style.css?v=4" />
  <style>
 body {
-  font-family: "Helvetica", sans-serif;
   background: #f9fff9;
+  font-family: "Helvetica", sans-serif;
   margin: 0;
-  padding-bottom: 80px; /* ナビ被り防止のみ残す */
+  padding: 0 0 80px 0; /* ナビ分だけ余白確保 */
 }
 
 /* --- ヘッダー --- */
-header, .main-header {
+header {
   background: #00bfa5;
   color: #fff;
   text-align: center;
-  padding: 16px 0;
+  padding: 18px 0 22px;
   font-size: 28px;
   font-weight: bold;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-header + * {
-  margin-top: 15px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* --- ボタン --- */
-button, .main-btn, .back-btn {
+button,
+.btn {
   display: block;
   width: 80%;
-  max-width: 350px;
-  margin: 20px auto;
+  max-width: 360px;
+  margin: 18px auto;
   padding: 14px 0;
+  border-radius: 40px;
   font-size: 18px;
   font-weight: bold;
   border: none;
-  border-radius: 40px;
-  text-align: center;
   cursor: pointer;
-  text-decoration: none;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
   transition: 0.2s ease;
 }
 
-.main-btn {
-  background: #ffda44;
-  color: #007f3b;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.btn.main {
+  background: #ffd84d;
+  color: #333;
 }
-.main-btn:hover { background: #ffe55e; }
+.btn.main:hover {
+  background: #ffcc33;
+}
 
-.back-btn {
+.btn.sub {
   background: #00bfa5;
   color: #fff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-.back-btn:hover { background: #00d1b1; }
+.btn.sub:hover {
+  background: #00a890;
+}
 
 /* --- 検索欄 --- */
 #searchArea {
   text-align: center;
-  margin: 10px 0 20px;
+  margin-top: 12px;
 }
 
 #searchInput {
@@ -74,16 +73,17 @@ button, .main-btn, .back-btn {
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   outline: none;
 }
 
-/* --- キーワード・カテゴリー --- */
+/* --- 人気キーワード --- */
 #keyword-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 25px;
+  padding: 15px 10px 30px;
 }
 
 #keyword-container a,
@@ -91,41 +91,30 @@ button, .main-btn, .back-btn {
   background: #fff;
   color: #333;
   border-radius: 20px;
-  padding: 6px 14px;
+  padding: 8px 16px;
   font-size: 14px;
+  line-height: 1.2;
   text-decoration: none;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
   transition: 0.2s ease;
 }
-#keyword-container a:hover {
+#keyword-container a:hover,
+#keyword-container button:hover {
   background: #e0f7f4;
   transform: scale(1.05);
 }
 
-/* --- 検索結果リスト --- */
-#ruleList, #favoritesList {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+/* --- セクション見出し --- */
+h2 {
+  color: #007f3b;
+  text-align: center;
+  margin: 15px 0 10px;
+  font-size: 20px;
 }
 
-.rule-item, .fav-item {
-  background: #fff;
-  border-radius: 12px;
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-.rule-item:hover, .fav-item:hover {
-  background: #f2fff4;
-  transform: translateY(-2px);
-}
-
-/* --- 下ナビ --- */
+/* --- 下ナビ（今のまま維持）--- */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -144,8 +133,6 @@ button, .main-btn, .back-btn {
   width: 57px;
   height: auto;
   display: block;
-  box-shadow: none;
-  filter: none;
 }
 .bottom-nav a {
   text-decoration: none;
@@ -158,7 +145,7 @@ button, .main-btn, .back-btn {
   transform: translateY(-2px);
 }
 
-/* --- コピーライト --- */
+/* --- コピーライトなど --- */
 footer {
   text-align: center;
   color: #888;
