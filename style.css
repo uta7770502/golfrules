@@ -320,3 +320,70 @@ button:hover, .btn:hover, .back-btn:hover {
     max-width: 340px;
   }
 }
+/* === 「場所で探す」「種類で探す」2カラム安定レイアウト === */
+#search-sections {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 36px;
+  flex-wrap: wrap;
+  padding: 20px 10px 80px;
+  box-sizing: border-box;
+}
+
+.search-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45%;
+  min-width: 240px;
+}
+
+.search-column h2 {
+  color: #007f3b;
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.button-group button {
+  background: #00bfa5;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 40px;
+  width: 100%;
+  max-width: 220px;
+  padding: 14px 0;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.button-group button:hover {
+  background: #00a890;
+  transform: translateY(-2px);
+}
+
+/* 小さい端末では1列 */
+@media (max-width: 600px) {
+  #search-sections {
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+  .search-column {
+    width: 100%;
+    max-width: 340px;
+  }
+}
