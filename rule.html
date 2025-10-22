@@ -253,5 +253,75 @@
     }
   });
   </script>
+  <!-- ✅ 共通ナビゲーション -->
+<nav class="bottom-nav">
+  <div class="bar">
+    <a href="index.html">
+      <img src="home-icon.png" alt="ホーム" class="nav-icon">
+    </a>
+    <a href="rules.html">
+      <img src="book-icon.png" alt="ルール一覧" class="nav-icon">
+    </a>
+    <a href="favorites.html">
+      <img src="star-icon.png" alt="お気に入り" class="nav-icon">
+    </a>
+  </div>
+</nav>
+
+<style>
+  /* ✅ 共通ナビゲーションスタイル（全ページ統一） */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    padding: 8px 0;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+  }
+
+  .bottom-nav .bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .bottom-nav img {
+    width: 57px; /* ← 1.5倍の統一サイズ */
+    height: auto;
+    display: block;
+    box-shadow: none;
+  }
+
+  .bottom-nav a {
+    text-decoration: none;
+    color: #666;
+  }
+
+  .bottom-nav a.active {
+    transform: translateY(-2px);
+  }
+</style>
+
+<script>
+  // ✅ 現在ページのアイコンを少し上に持ち上げる
+  (function(){
+    const p = location.pathname.split('/').pop() || 'index.html';
+    const map = {
+      'index.html': 'home-icon.png',
+      'rules.html': 'book-icon.png',
+      'rule.html':  'book-icon.png',
+      'favorites.html': 'star-icon.png'
+    };
+    const sel = map[p];
+    if (sel) {
+      document
+        .querySelectorAll(`img[src="${sel}"]`)
+        .forEach(el => el.parentElement.classList.add("active"));
+    }
+  })();
+</script>
 </body>
 </html>
