@@ -4,461 +4,243 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>世界一使いやすいゴルフルール</title>
-  <link rel="stylesheet" href="style.css?v=4" />
- <style>
-body {
-  background: #f9fff9;
-  font-family: "Helvetica", sans-serif;
-  margin: 0;
-  padding: 0 0 80px 0; /* ナビ分だけ余白確保 */
-}
+  <link rel="stylesheet" href="style.css?v=5" />
+  <style>
+    body {
+      background: #f9fff9;
+      font-family: "Helvetica", sans-serif;
+      margin: 0;
+      padding: 0 0 80px 0; /* 下ナビ分の余白 */
+    }
 
-/* --- ヘッダー --- */
-header {
-  background: #00bfa5;
-  color: #fff;
-  text-align: center;
-  padding: 18px 0 22px;
-  font-size: 28px;
-  font-weight: bold;
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
+    /* --- ヘッダー --- */
+    header {
+      background: #00bfa5;
+      color: #fff;
+      text-align: center;
+      padding: 18px 0 22px;
+      font-size: 28px;
+      font-weight: bold;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
 
-/* --- ボタン --- */
-button,
-.btn {
-  display: block;
-  width: 80%;
-  max-width: 360px;
-  margin: 18px auto;
-  padding: 14px 0;
-  border-radius: 40px;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
-  text-align: center;
-  transition: 0.2s ease;
-}
+    /* --- ボタン共通 --- */
+    button, .btn {
+      display: block;
+      width: 80%;
+      max-width: 360px;
+      margin: 18px auto;
+      padding: 14px 0;
+      border-radius: 40px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      transition: 0.2s ease;
+    }
 
-.btn.main {
-  background: #ffd84d;
-  color: #333;
-}
-.btn.main:hover {
-  background: #ffcc33;
-}
+    .btn.main { background: #ffd84d; color: #333; }
+    .btn.main:hover { background: #ffcc33; }
+    .btn.sub { background: #00bfa5; color: #fff; }
+    .btn.sub:hover { background: #00a890; }
 
-.btn.sub {
-  background: #00bfa5;
-  color: #fff;
-}
-.btn.sub:hover {
-  background: #00a890;
-}
+    /* --- 検索欄 --- */
+    #searchArea {
+      text-align: center;
+      margin-top: 12px;
+    }
+    #searchInput {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px 14px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
 
-/* --- 検索欄 --- */
-#searchArea {
-  text-align: center;
-  margin-top: 12px;
-}
+    /* --- 人気キーワード --- */
+    #keyword-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px 10px 30px;
+    }
+    #keyword-container a {
+      background: #fff;
+      color: #333;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 14px;
+      line-height: 1.2;
+      text-decoration: none;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border: none;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    #keyword-container a:hover {
+      background: #e0f7f4;
+      transform: scale(1.05);
+    }
 
-#searchInput {
-  width: 80%;
-  max-width: 400px;
-  padding: 10px 14px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 30px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  outline: none;
-}
+    /* --- セクション見出し --- */
+    h2 {
+      color: #007f3b;
+      text-align: center;
+      margin: 15px 0 10px;
+      font-size: 20px;
+    }
 
-/* --- 人気キーワード --- */
-#keyword-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  padding: 15px 10px 30px;
-}
+    /* --- 場所で探す／種類で探す 2カラム --- */
+    #search-sections {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      padding: 20px 10px 60px;
+      box-sizing: border-box;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .search-column {
+      flex: 1 1 320px;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      align-items: center;
+    }
+    .button-group button {
+      width: 100%;
+      max-width: 260px;
+      background: #00bfa5;
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 40px;
+      padding: 14px 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: 0.2s ease;
+      cursor: pointer;
+    }
+    .button-group button:hover {
+      background: #00a890;
+      transform: translateY(-2px);
+    }
 
-#keyword-container a,
-#keyword-container button {
-  background: #fff;
-  color: #333;
-  border-radius: 20px;
-  padding: 8px 16px;
-  font-size: 14px;
-  line-height: 1.2;
-  text-decoration: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border: none;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-#keyword-container a:hover,
-#keyword-container button:hover {
-  background: #e0f7f4;
-  transform: scale(1.05);
-}
+    /* スマホは1列表示 */
+    @media (max-width: 600px) {
+      #search-sections {
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+      }
+      .search-column {
+        width: 100%;
+        max-width: 340px;
+      }
+    }
 
-/* --- セクション見出し --- */
-h2 {
-  color: #007f3b;
-  text-align: center;
-  margin: 15px 0 10px;
-  font-size: 20px;
-}
+    /* --- フッター --- */
+    footer {
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      margin: 20px 0 90px;
+    }
 
-/* --- 下ナビ（今のまま維持）--- */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #fff;
-  border-top: 1px solid #ddd;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 80px;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-  z-index: 999;
-}
-.bottom-nav img {
-  width: 57px;
-  height: auto;
-  display: block;
-}
-.bottom-nav a {
-  text-decoration: none;
-  color: #666;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.bottom-nav a.active {
-  transform: translateY(-2px);
-}
-
-/* --- コピーライトなど --- */
-footer {
-  text-align: center;
-  color: #888;
-  font-size: 13px;
-  margin: 20px 0 90px;
-}
-   /* --- ボタンリスト（場所で探す／種類で探す） --- */
-.section-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  padding: 15px 10px 40px;
-}
-
-.section-buttons a,
-.section-buttons button {
-  background: #00bfa5;
-  color: #fff;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 40px;
-  width: 45%; /* ← 横2列にする */
-  padding: 14px 0;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
-  text-decoration: none;
-  transition: 0.2s ease;
-}
-
-.section-buttons a:hover,
-.section-buttons button:hover {
-  background: #00a890;
-  transform: translateY(-2px);
-}
-
-/* 小さい端末で1列になるよう対応 */
-@media (max-width: 420px) {
-  .section-buttons a,
-  .section-buttons button {
-    width: 90%;
-  }
-  /* --- 場所で探す／種類で探す ボタン群（横2列レイアウト） --- */
-.button-group {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  margin: 10px auto 40px;
-  max-width: 600px;
-}
-
-.button-group button {
-  background: #00bfa5;
-  color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 40px;
-  width: 45%; /* ✅ 横2列に並ぶポイント */
-  padding: 14px 0;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.button-group button:hover {
-  background: #00a890;
-  transform: translateY(-2px);
-}
-
-/* 小さい端末では1列表示 */
-@media (max-width: 420px) {
-  .button-group button {
-    width: 90%;
-  }
-}
-  /* === 「場所で探す」「種類から探す」2カラムレイアウト === */
-#search-sections {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  flex-wrap: wrap;
-  padding: 20px 10px 80px;
-  box-sizing: border-box;
-}
-
-/* 各カラム */
-.search-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 45%;
-  min-width: 260px;
-}
-
-/* タイトル */
-.search-column h2 {
-  color: #006b52;
-  font-weight: 700;
-  font-size: 20px;
-  text-align: center;
-  margin-bottom: 14px;
-}
-
-/* ボタン群 */
-.button-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-}
-
-/* 各ボタン */
-.button-group button {
-  background: #00bfa5;
-  color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 40px;
-  width: 100%;
-  max-width: 220px;
-  padding: 14px 0;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.button-group button:hover {
-  background: #00a890;
-  transform: translateY(-2px);
-}
-
-/* 小さい端末では1列に */
-@media (max-width: 600px) {
-  #search-sections {
-    flex-direction: column;
-    align-items: center;
-    gap: 28px;
-  }
-  .search-column {
-    width: 100%;
-    max-width: 340px;
-  }
-}
-  /* === 強制2カラムレイアウト（上書き用）=== */
-#search-sections {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: flex-start !important;
-  flex-wrap: wrap !important;
-  gap: 36px !important;
-  padding: 20px 10px 90px !important;
-}
-
-.search-column {
-  width: 45% !important;
-  min-width: 240px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-}
-
-.button-group {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  gap: 14px !important;
-  width: 100% !important;
-}
-
-/* スマホでは1列に戻す */
-@media (max-width: 600px) {
-  #search-sections {
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 28px !important;
-  }
-  .search-column {
-    width: 100% !important;
-    max-width: 340px !important;
-  }
-}
-  /* === 🔧 2カラムレイアウト修正版 === */
-
-/* 親：2カラム配置 */
-#search-sections {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  justify-content: center !important;
-  align-items: flex-start !important;
-  gap: 40px !important;
-  margin: 30px auto !important;
-  max-width: 900px !important;
-}
-
-/* 各カラム */
-#search-sections .search-column {
-  flex: 1 1 320px !important; /* 幅320pxで自動調整 */
-  max-width: 400px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  text-align: center !important;
-}
-
-/* 見出し */
-#search-sections h2 {
-  font-size: 20px !important;
-  color: #006b52 !important;
-  font-weight: 700 !important;
-  margin-bottom: 14px !important;
-}
-
-/* ボタン群 */
-#search-sections .button-group {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 14px !important;
-  width: 100% !important;
-  align-items: center !important;
-}
-
-/* ボタン自体 */
-#search-sections .button-group button {
-  width: 100% !important;
-  max-width: 260px !important;
-  background: #00bfa5 !important;
-  color: #fff !important;
-  font-size: 18px !important;
-  font-weight: bold !important;
-  border: none !important;
-  border-radius: 40px !important;
-  padding: 14px 0 !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
-  transition: 0.2s ease !important;
-  cursor: pointer !important;
-}
-
-/* ホバー */
-#search-sections .button-group button:hover {
-  background: #00a890 !important;
-  transform: translateY(-2px) !important;
-}
-
-/* 📱 スマホは1列表示 */
-@media (max-width: 600px) {
-  #search-sections {
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-  #search-sections .search-column {
-    width: 100% !important;
-    max-width: 340px !important;
-  }
-}
-</style>
+    /* --- 下部ナビ --- */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 80px;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+      z-index: 999;
+    }
+    .bottom-nav img {
+      width: 57px;
+      height: auto;
+      display: block;
+    }
+    .bottom-nav a {
+      text-decoration: none;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bottom-nav a.active { transform: translateY(-2px); }
+  </style>
 </head>
-<body>
-<header class="main-header">
-  <h1>3タップルールズ</h1>
-</header>
-  <!-- 🔍 検索ボックス -->
-  <section id="search-box">
-  <div id="search-suggestions"></div>
-  <input type="text" id="searchInput" placeholder="ルールを検索…" />
-</section>
-  
-<!-- 🔽 候補リスト -->
-<ul id="suggestions"></ul>
 
-  <!-- 検索結果表示エリア -->
-  <div id="search-results"></div>
+<body>
+  <header>
+    <h1>3タップルールズ</h1>
+  </header>
+
+  <!-- 🔍 検索 -->
+  <section id="search-box">
+    <input type="text" id="searchInput" placeholder="ルールを検索…" />
+  </section>
 
   <!-- 📋 ルール一覧 -->
   <section id="latest-rules">
     <button onclick="window.location.href='rules.html'">ルール一覧（2025 最新ver.）</button>
   </section>
 
-  <!-- ⭐ お気に入り一覧 -->
+  <!-- ⭐ お気に入り -->
   <section id="favorites-entry">
     <button onclick="window.location.href='favorites.html'">⭐ お気に入り一覧</button>
   </section>
 
-  <!-- 🏆 人気のキーワード -->
-<section id="popular-keywords">
-  <h2>人気のキーワード</h2>
-  <div id="keyword-container">
-    <a href="rules.html?keyword=OB">OB</a>
-    <a href="rules.html?keyword=暫定球">暫定球</a>
-    <a href="rules.html?keyword=赤杭">赤杭</a>
-    <a href="rules.html?keyword=黄杭">黄杭</a>
-    <a href="rules.html?keyword=白杭">白杭</a>
-    <a href="rules.html?keyword=青杭">青杭</a>
-    <a href="rules.html?keyword=アンプレ">アンプレ</a>
-    <a href="rules.html?keyword=ドロップ">ドロップ</a>
-    <a href="rules.html?keyword=池ポチャ">池ポチャ</a>
-    <a href="rules.html?keyword=空振り">空振り</a>
-    <a href="rules.html?keyword=%E7%89%B9%E8%A8%AD%E3%83%86%E3%82%A3%EF%BC%88%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%EF%BC%89">特設ティ（ローカル）</a>
-    <a href="rules.html?keyword=ディボット">ディボット</a>
-    <a href="rules.html?keyword=誤球">誤球</a>
-    <a href="rules.html?keyword=救済">救済</a>
-    <a href="rules.html?keyword=ペナルティ">ペナルティ</a>
-  </div>
-</section>
+  <!-- 🏆 人気キーワード -->
+  <section id="popular-keywords">
+    <h2>人気のキーワード</h2>
+    <div id="keyword-container">
+      <a href="rules.html?keyword=OB">OB</a>
+      <a href="rules.html?keyword=暫定球">暫定球</a>
+      <a href="rules.html?keyword=赤杭">赤杭</a>
+      <a href="rules.html?keyword=黄杭">黄杭</a>
+      <a href="rules.html?keyword=白杭">白杭</a>
+      <a href="rules.html?keyword=青杭">青杭</a>
+      <a href="rules.html?keyword=アンプレ">アンプレ</a>
+      <a href="rules.html?keyword=ドロップ">ドロップ</a>
+      <a href="rules.html?keyword=池ポチャ">池ポチャ</a>
+      <a href="rules.html?keyword=空振り">空振り</a>
+      <a href="rules.html?keyword=特設ティ（ローカル）">特設ティ（ローカル）</a>
+      <a href="rules.html?keyword=ディボット">ディボット</a>
+      <a href="rules.html?keyword=誤球">誤球</a>
+      <a href="rules.html?keyword=救済">救済</a>
+      <a href="rules.html?keyword=ペナルティ">ペナルティ</a>
+    </div>
+  </section>
 
   <!-- 📍 場所で探す・種類で探す -->
   <section id="search-sections">
-    <div class="search-column by-place">
+    <div class="search-column">
       <h2>場所で探す</h2>
       <div class="button-group">
         <button onclick="window.location.href='rules.html?category=ティー'">ティー</button>
@@ -469,204 +251,27 @@ footer {
       </div>
     </div>
 
-    <div class="search-column by-place">
+    <div class="search-column">
       <h2>種類で探す</h2>
-      <!-- 🔹 種類で探す -->
-<div class="search-column right by-type">
-  <div class="button-group">
-    <!-- ✅ 差し替え：「その他」→「ローカルルール」 -->
-    <button class="local-rule-btn" onclick="window.location.href='rules.html?category=ローカルルール'">ローカルルール</button>
-    <button onclick="window.location.href='rules.html?category=ペナルティ'">ペナルティ</button>
-    <button onclick="window.location.href='rules.html?category=救済'">救済</button>
-    <button onclick="window.location.href='rules.html?category=マナー'">マナー</button>
-    <button onclick="window.location.href='rules.html?category=ルール全般'">ルール全般</button>
-  </div>
-</div>
+      <div class="button-group">
+        <button onclick="window.location.href='rules.html?category=ローカルルール'">ローカルルール</button>
+        <button onclick="window.location.href='rules.html?category=ペナルティ'">ペナルティ</button>
+        <button onclick="window.location.href='rules.html?category=救済'">救済</button>
+        <button onclick="window.location.href='rules.html?category=マナー'">マナー</button>
+        <button onclick="window.location.href='rules.html?category=ルール全般'">ルール全般</button>
+      </div>
+    </div>
   </section>
 
   <footer>
     <p>© 2025 世界一使いやすいゴルフルール</p>
   </footer>
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const input = document.getElementById("searchInput");
-  const results = document.getElementById("search-results");
 
-  // ルールデータを読み込み
-  const res = await fetch("rules.json");
-  const rules = await res.json();
-
-  // 入力時にリアルタイム表示
-  input.addEventListener("input", (e) => {
-    const val = e.target.value.trim().toLowerCase();
-    if (!val) {
-      results.innerHTML = "";
-      return;
-    }
-
-    const matched = rules.filter((r) =>
-      r.title.toLowerCase().includes(val)
-    ).slice(0, 5); // 最大5件表示
-
-    results.innerHTML = matched.length
-      ? matched
-          .map(
-            (r) => `
-          <div class="result-card" onclick="location.href='rule.html?id=${r.id}'">
-            <h3>${r.title}</h3>
-          </div>`
-          )
-          .join("")
-      : `<p>該当するルールが見つかりません</p>`;
-  });
-});
-  // 🎤 音声入力機能
-const voiceButton = document.getElementById("voiceButton");
-const searchInput = document.getElementById("searchInput");
-
-if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = new SpeechRecognition();
-
-  recognition.lang = "ja-JP";
-  recognition.interimResults = false; // 途中経過を非表示
-  recognition.maxAlternatives = 1; // 最も確信度の高い候補のみ
-
-  voiceButton.addEventListener("click", () => {
-    // 録音開始時のUI
-    voiceButton.style.background = "#00bfa5";
-    voiceButton.textContent = "🎙️";
-    recognition.start();
-  });
-
-  recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    searchInput.value = transcript;
-
-    // イベントをトリガーして検索を実行
-    const inputEvent = new Event("input");
-    searchInput.dispatchEvent(inputEvent);
-  };
-
-  recognition.onend = () => {
-    // 終了時に元の見た目に戻す
-    voiceButton.style.background = "#ffcc00";
-    voiceButton.textContent = "🎤";
-  };
-} else {
-  // ブラウザ非対応時
-  voiceButton.addEventListener("click", () => {
-    alert("お使いのブラウザでは音声入力に対応していません。");
-  });
-}
-</script>
-  <script>
-    // 🔍 リアルタイム検索
-    async function setupSearch() {
-      const input = document.getElementById("searchInput");
-      const results = document.getElementById("search-results");
-      let rules = [];
-
-      try {
-        const res = await fetch("rules.json");
-        rules = await res.json();
-      } catch {
-        results.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
-        return;
-      }
-
-      input.addEventListener("input", (e) => {
-        const val = e.target.value.trim().toLowerCase();
-        if (!val) {
-          results.innerHTML = "";
-          return;
-        }
-
-        const matched = rules.filter(r =>
-          r.title.toLowerCase().includes(val) ||
-          r.description.toLowerCase().includes(val)
-        ).slice(0, 5);
-
-        results.innerHTML = matched.length
-          ? matched.map(r => `
-              <div class="result-card" onclick="window.location.href='rules.html?id=${r.id}'">
-                <h3>${r.title}</h3>
-                <p>${r.description}</p>
-              </div>
-            `).join("")
-          : "<p>該当するルールがありません。</p>";
-      });
-    }
-    setupSearch();
-  </script>
-  <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const input = document.getElementById("searchInput");
-  const suggestions = document.getElementById("search-suggestions");
-
-  // rules.json 読み込み
-  const res = await fetch("rules.json");
-  const rules = await res.json();
-
-  // 入力イベント
-  input.addEventListener("input", (e) => {
-    const val = e.target.value.trim().toLowerCase();
-    if (!val) {
-      suggestions.innerHTML = "";
-      return;
-    }
-
-    // タイトルに部分一致する候補を取得（最大6件）
-    const matched = rules
-      .filter((r) => r.title.toLowerCase().includes(val))
-      .slice(0, 6);
-
-    // 結果を描画
-    suggestions.innerHTML = matched.length
-      ? matched
-          .map(
-            (r) => `
-              <div class="suggestion-item" 
-                onclick="location.href='rule.html?id=${r.id}'">
-                ${r.title}
-              </div>`
-          )
-          .join("")
-      : `<div class="suggestion-item empty">該当するルールがありません</div>`;
-  });
-});
-  .recording {
-  animation: pulse 1s infinite;
-}
-@keyframes pulse {
-  0%, 100% { transform: scale(1); background-color: #00bfa5; }
-  50% { transform: scale(1.1); background-color: #14b59e; }
-}
-    </script>
-  <!-- 下部ナビゲーション -->
-<nav class="bottom-nav">
-  <a href="index.html">
-  <img src="home-icon.png" alt="ホーム" class="nav-icon">
-</a>
-
-<a href="rules.html">
-  <img src="book-icon.png" alt="ルール一覧" class="nav-icon">
-</a>
-
-<a href="favorites.html">
-  <img src="star-icon.png" alt="お気に入り" class="nav-icon">
-</a>
-</nav>
-
-<script>
-  // 今いるページに active を付与
-  (function(){
-    const p = location.pathname.split('/').pop() || 'index.html';
-    const map = { 'index.html': '.nav-home', 'rules.html': '.nav-rules', 'rule.html': '.nav-rules', 'favorites.html': '.nav-fav' };
-    const sel = map[p];
-    if(sel){ const a = document.querySelector(sel); a && a.classList.add('active'); }
-  })();
-</script>
+  <!-- 🔻 ナビ -->
+  <nav class="bottom-nav">
+    <a href="index.html"><img src="home-icon.png" alt="ホーム"></a>
+    <a href="rules.html"><img src="book-icon.png" alt="ルール一覧"></a>
+    <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
+  </nav>
 </body>
 </html>
