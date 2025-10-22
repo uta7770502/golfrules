@@ -259,31 +259,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     </div>
   </section>
 
-  <section id="search-sections">
-    <div class="search-column">
-    <!-- 場所で探す -->
-<div class="search-column by-place">
-  <h2>場所で探す</h2>
-  <div class="button-group">
-    <button onclick="window.location.href='rules.html?category=ティー'">ティー</button>
-    <button onclick="window.location.href='rules.html?category=フェアウェイ'">フェアウェイ</button>
-    <button onclick="window.location.href='rules.html?category=ラフ'">ラフ</button>
-    <button onclick="window.location.href='rules.html?category=バンカー'">バンカー</button>
-    <button onclick="window.location.href='rules.html?category=グリーン上'">グリーン上</button>
-  </div>
-</div>
-
-    <div class="search-column">
-      <h2>種類で探す</h2>
-      <div class="button-group">
-        <button>ローカルルール</button>
-        <button>ペナルティ</button>
-        <button>救済</button>
-        <button>マナー</button>
-        <button>ルール全般</button>
-      </div>
+  <!-- 📍 場所で探す・種類で探す -->
+<section id="search-sections">
+  <div class="search-column by-place">
+    <h2>場所で探す</h2>
+    <div class="button-group">
+      <button onclick="location.href='rules.html?category=ティー'">ティー</button>
+      <button onclick="location.href='rules.html?category=フェアウェイ'">フェアウェイ</button>
+      <button onclick="location.href='rules.html?category=ラフ'">ラフ</button>
+      <button onclick="location.href='rules.html?category=バンカー'">バンカー</button>
+      <button onclick="location.href='rules.html?category=グリーン上'">グリーン上</button>
     </div>
-  </section>
+  </div>
+
+  <div class="search-column by-type">
+    <h2>種類で探す</h2>
+    <div class="button-group">
+      <button onclick="location.href='rules.html?category=ローカルルール'">ローカルルール</button>
+      <button onclick="location.href='rules.html?category=ペナルティ'">ペナルティ</button>
+      <button onclick="location.href='rules.html?category=救済'">救済</button>
+      <button onclick="location.href='rules.html?category=マナー'">マナー</button>
+      <button onclick="location.href='rules.html?category=ルール全般'">ルール全般</button>
+    </div>
+  </div>
+</section>
 
   <footer style="text-align:center; color:#888; font-size:13px; margin:40px 0 100px;">
     © 2025 世界一使いやすいゴルフルール
