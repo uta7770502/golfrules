@@ -155,9 +155,51 @@
 <body>
   <header>3タップルールズ</header>
 
-  <div id="searchArea">
-    <input id="searchInput" type="text" placeholder="ルールを検索…" />
-  </div>
+  <!-- 🔍 検索ボックス -->
+<div id="searchArea">
+  <input id="searchInput" type="text" placeholder="ルールを検索..." />
+</div>
+
+<!-- 🔍 検索結果表示エリア -->
+<div id="search-results"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const input = document.getElementById("searchInput");
+  const results = document.getElementById("search-results");
+
+  // ルールデータを読み込み
+  let rules = [];
+  try {
+    const res = await fetch("rules.json");
+    rules = await res.json();
+  } catch (e) {
+    console.warn("rules.jsonの読み込みに失敗しました:", e);
+  }
+
+  // 入力イベントでリアルタイム検索
+  input.addEventListener("input", () => {
+    const q = input.value.trim();
+    if (q === "") {
+      results.innerHTML = "";
+      return;
+    }
+
+    const filtered = rules.filter(r =>
+      (r.title && r.title.includes(q)) ||
+      (r.description && r.description.includes(q))
+    );
+
+    results.innerHTML = filtered.length
+      ? filtered.map(r => `
+          <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+            ${r.title}
+          </div>
+        `).join("")
+      : `<p style="text-align:center; color:#777;">該当するルールがありません。</p>`;
+  });
+});
+</script>
 
   <button class="btn main" onclick="window.location.href='rules.html'">ルール一覧（2025 最新ver.）</button>
   <button class="btn sub" onclick="window.location.href='favorites.html'">⭐ お気に入り一覧</button>
