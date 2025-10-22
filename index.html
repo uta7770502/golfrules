@@ -12,7 +12,6 @@
       padding-bottom: 90px;
     }
 
-    /* ヘッダー */
     header {
       background: #00bfa5;
       color: #fff;
@@ -23,6 +22,50 @@
       border-bottom-left-radius: 30px;
       border-bottom-right-radius: 30px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* 検索欄 */
+    #searchArea {
+      text-align: center;
+      margin: 20px auto;
+    }
+
+    #searchInput {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px 14px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      outline: none;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ボタン */
+    .btn {
+      display: block;
+      width: 80%;
+      max-width: 360px;
+      margin: 18px auto;
+      padding: 14px 0;
+      border-radius: 40px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      transition: 0.2s ease;
+    }
+
+    .btn.main { background: #ffd84d; color: #333; }
+    .btn.sub { background: #00bfa5; color: #fff; }
+
+    h2 {
+      color: #007f3b;
+      text-align: center;
+      margin: 20px 0 10px;
+      font-size: 20px;
     }
 
     /* 人気キーワード */
@@ -41,21 +84,10 @@
       font-size: 14px;
       text-decoration: none;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: 0.2s;
-    }
-    #keyword-container a:hover {
-      background: #e0f7f4;
-      transform: scale(1.05);
+      transition: 0.2s ease;
     }
 
-    h2 {
-      color: #007f3b;
-      text-align: center;
-      margin: 20px 0 10px;
-      font-size: 20px;
-    }
-
-    /* === 📍 場所で探す・種類で探す（2カラムレイアウト） === */
+    /* 2カラムレイアウト */
     #search-sections {
       display: flex;
       flex-wrap: wrap;
@@ -70,7 +102,6 @@
     .search-column {
       flex: 1 1 40%;
       max-width: 380px;
-      background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -96,40 +127,10 @@
       padding: 14px 0;
       box-shadow: 0 5px 12px rgba(0,0,0,0.15);
       cursor: pointer;
-      transition: 0.2s;
+      transition: 0.2s ease;
     }
 
-    .button-group button:hover {
-      background: #00a890;
-      transform: translateY(-2px);
-    }
-
-    /* スマホ対応 */
-    @media (max-width: 480px) {
-      #search-sections {
-        flex-direction: row;
-        justify-content: space-around;
-        gap: 16px;
-      }
-      .search-column {
-        flex: 1 1 45%;
-        max-width: none;
-      }
-      .button-group button {
-        font-size: 16px;
-        padding: 12px 0;
-      }
-    }
-
-    /* フッター */
-    footer {
-      text-align: center;
-      color: #888;
-      font-size: 13px;
-      margin: 40px 0 100px;
-    }
-
-    /* ナビゲーション */
+    /* ナビ */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -142,18 +143,11 @@
       align-items: center;
       height: 80px;
       box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-      z-index: 100;
+      z-index: 999;
     }
     .bottom-nav img {
       width: 57px;
       height: auto;
-    }
-    .bottom-nav a {
-      text-decoration: none;
-      color: #666;
-    }
-    .bottom-nav a.active {
-      transform: translateY(-2px);
     }
   </style>
 </head>
@@ -161,7 +155,14 @@
 <body>
   <header>3タップルールズ</header>
 
-  <section id="popular-keywords">
+  <div id="searchArea">
+    <input id="searchInput" type="text" placeholder="ルールを検索…" />
+  </div>
+
+  <button class="btn main" onclick="window.location.href='rules.html'">ルール一覧（2025 最新ver.）</button>
+  <button class="btn sub" onclick="window.location.href='favorites.html'">⭐ お気に入り一覧</button>
+
+  <section>
     <h2>人気のキーワード</h2>
     <div id="keyword-container">
       <a href="#">OB</a>
@@ -176,7 +177,6 @@
     </div>
   </section>
 
-  <!-- 📍 場所で探す・種類で探す -->
   <section id="search-sections">
     <div class="search-column">
       <h2>場所で探す</h2>
@@ -201,12 +201,14 @@
     </div>
   </section>
 
-  <footer>© 2025 世界一使いやすいゴルフルール</footer>
+  <footer style="text-align:center; color:#888; font-size:13px; margin:40px 0 100px;">
+    © 2025 世界一使いやすいゴルフルール
+  </footer>
 
   <nav class="bottom-nav">
-    <a href="#"><img src="home-icon.png" alt="ホーム"></a>
-    <a href="#"><img src="book-icon.png" alt="ルール一覧"></a>
-    <a href="#"><img src="star-icon.png" alt="お気に入り"></a>
+    <a href="index.html"><img src="home-icon.png" alt="ホーム" /></a>
+    <a href="rules.html"><img src="book-icon.png" alt="ルール一覧" /></a>
+    <a href="favorites.html"><img src="star-icon.png" alt="お気に入り" /></a>
   </nav>
 </body>
 </html>
