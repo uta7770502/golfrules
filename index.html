@@ -155,52 +155,47 @@
 <body>
   <header>3タップルールズ</header>
 
-  <!-- 🔍 検索ボックス -->
+  <!-- 🔍 検索エリア -->
 <div id="searchArea">
   <input id="searchInput" type="text" placeholder="ルールを検索..." />
 </div>
 
-<!-- 🔍 検索ボックス -->
-<div id="searchArea">
-  <input id="searchInput" type="text" placeholder="ルールを検索..." />
-</div>
-
-<!-- 検索結果を出す場所 -->
+<!-- 検索結果エリア -->
 <div id="search-results"></div>
 
 <style>
-  /* ✅ 検索結果デザイン統一 */
+  /* ✅ 検索結果エリアのデザイン（少し小さめに調整） */
   #search-results {
-    margin: 15px auto 25px;
-    width: 90%;
-    max-width: 420px;
+    margin: 10px auto 25px;
+    width: 88%;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
   }
 
   .search-result-item {
     background: #fff;
     border: 1px solid #ddd;
-    border-radius: 25px;
-    padding: 12px 16px;
-    font-size: 16px;
+    border-radius: 18px;
+    padding: 10px 12px;
+    font-size: 15px;
     text-align: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
     transition: 0.2s;
     cursor: pointer;
   }
 
   .search-result-item:hover {
     background: #eaf9e6;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
 
   .search-result-empty {
     text-align: center;
     color: #777;
-    font-size: 15px;
-    margin-top: 10px;
+    font-size: 14px;
+    margin-top: 5px;
   }
 </style>
 
@@ -209,16 +204,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   const input = document.getElementById("searchInput");
   const results = document.getElementById("search-results");
 
-  // rules.json 読み込み
+  // ✅ 不要な二重検索ボックス削除（再描画防止）
+  const dup = document.querySelectorAll("#searchArea input");
+  if (dup.length > 1) dup[1].remove();
+
+  // ✅ rules.json 読み込み
   let rules = [];
   try {
     const res = await fetch("rules.json");
     rules = await res.json();
   } catch (e) {
-    console.warn("rules.jsonの読み込み失敗:", e);
+    console.warn("rules.json 読み込みエラー:", e);
   }
 
-  // 入力イベント
+  // ✅ 入力イベント（リアルタイム検索）
   input.addEventListener("input", () => {
     const q = input.value.trim();
     if (q === "") {
