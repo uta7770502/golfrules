@@ -3,74 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>世界一使いやすいゴルフルール</title>
-  <link rel="stylesheet" href="style.css?v=5" />
+  <title>3タップルールズ</title>
   <style>
     body {
       background: #f9fff9;
       font-family: "Helvetica", sans-serif;
       margin: 0;
-      padding: 0 0 80px 0; /* 下ナビ分の余白 */
+      padding-bottom: 90px;
     }
 
-    /* --- ヘッダー --- */
+    /* ヘッダー */
     header {
       background: #00bfa5;
       color: #fff;
       text-align: center;
-      padding: 18px 0 22px;
-      font-size: 28px;
+      padding: 18px 0;
+      font-size: 26px;
       font-weight: bold;
-      border-bottom-left-radius: 40px;
-      border-bottom-right-radius: 40px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    /* --- ボタン共通 --- */
-    button, .btn {
-      display: block;
-      width: 80%;
-      max-width: 360px;
-      margin: 18px auto;
-      padding: 14px 0;
-      border-radius: 40px;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
-      text-align: center;
-      transition: 0.2s ease;
-    }
-
-    .btn.main { background: #ffd84d; color: #333; }
-    .btn.main:hover { background: #ffcc33; }
-    .btn.sub { background: #00bfa5; color: #fff; }
-    .btn.sub:hover { background: #00a890; }
-
-    /* --- 検索欄 --- */
-    #searchArea {
-      text-align: center;
-      margin-top: 12px;
-    }
-    #searchInput {
-      width: 80%;
-      max-width: 400px;
-      padding: 10px 14px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 30px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      outline: none;
-    }
-
-    /* --- 人気キーワード --- */
+    /* 人気キーワード */
     #keyword-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-      padding: 15px 10px 30px;
+      padding: 15px;
     }
     #keyword-container a {
       background: #fff;
@@ -78,46 +39,43 @@
       border-radius: 20px;
       padding: 8px 16px;
       font-size: 14px;
-      line-height: 1.2;
       text-decoration: none;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      border: none;
-      cursor: pointer;
-      transition: 0.2s ease;
+      transition: 0.2s;
     }
     #keyword-container a:hover {
       background: #e0f7f4;
       transform: scale(1.05);
     }
 
-    /* --- セクション見出し --- */
     h2 {
       color: #007f3b;
       text-align: center;
-      margin: 15px 0 10px;
+      margin: 20px 0 10px;
       font-size: 20px;
     }
 
-    /* --- 場所で探す／種類で探す 2カラム --- */
+    /* === 📍 場所で探す・種類で探す（2カラムレイアウト） === */
     #search-sections {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       align-items: flex-start;
-      gap: 40px;
-      padding: 20px 10px 60px;
-      box-sizing: border-box;
+      gap: 30px;
+      padding: 20px;
       max-width: 900px;
       margin: 0 auto;
     }
+
     .search-column {
-      flex: 1 1 320px;
-      max-width: 400px;
+      flex: 1 1 40%;
+      max-width: 380px;
+      background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-align: center;
     }
+
     .button-group {
       display: flex;
       flex-direction: column;
@@ -125,47 +83,53 @@
       width: 100%;
       align-items: center;
     }
+
     .button-group button {
-      width: 100%;
-      max-width: 260px;
       background: #00bfa5;
       color: #fff;
       font-size: 18px;
       font-weight: bold;
       border: none;
       border-radius: 40px;
+      width: 100%;
+      max-width: 260px;
       padding: 14px 0;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      transition: 0.2s ease;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.15);
       cursor: pointer;
+      transition: 0.2s;
     }
+
     .button-group button:hover {
       background: #00a890;
       transform: translateY(-2px);
     }
 
-    /* スマホは1列表示 */
-    @media (max-width: 600px) {
+    /* スマホ対応 */
+    @media (max-width: 480px) {
       #search-sections {
-        flex-direction: column;
-        align-items: center;
-        gap: 28px;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 16px;
       }
       .search-column {
-        width: 100%;
-        max-width: 340px;
+        flex: 1 1 45%;
+        max-width: none;
+      }
+      .button-group button {
+        font-size: 16px;
+        padding: 12px 0;
       }
     }
 
-    /* --- フッター --- */
+    /* フッター */
     footer {
       text-align: center;
       color: #888;
       font-size: 13px;
-      margin: 20px 0 90px;
+      margin: 40px 0 100px;
     }
 
-    /* --- 下部ナビ --- */
+    /* ナビゲーション */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -178,114 +142,37 @@
       align-items: center;
       height: 80px;
       box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-      z-index: 999;
+      z-index: 100;
     }
     .bottom-nav img {
       width: 57px;
       height: auto;
-      display: block;
     }
     .bottom-nav a {
       text-decoration: none;
       color: #666;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    .bottom-nav a.active { transform: translateY(-2px); }
-    /* === 📱スマホでも2列を維持する修正版 === */
-#search-sections {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 20px 10px 60px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.search-column {
-  flex: 1 1 45%; /* ← これで常に2列を維持 */
-  max-width: 380px;
-  min-width: 260px;
-  box-sizing: border-box;
-}
-
-@media (max-width: 480px) {
-  .search-column {
-    flex: 1 1 48%; /* 幅をやや調整して隙間を作る */
-  }
-}
-
-.button-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-}
-
-.button-group button {
-  width: 100%;
-  background: #00bfa5;
-  color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 40px;
-  padding: 14px 0;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.button-group button:hover {
-  background: #00a890;
-  transform: translateY(-2px);
-}
+    .bottom-nav a.active {
+      transform: translateY(-2px);
+    }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>3タップルールズ</h1>
-  </header>
+  <header>3タップルールズ</header>
 
-  <!-- 🔍 検索 -->
-  <section id="search-box">
-    <input type="text" id="searchInput" placeholder="ルールを検索…" />
-  </section>
-
-  <!-- 📋 ルール一覧 -->
-  <section id="latest-rules">
-    <button onclick="window.location.href='rules.html'">ルール一覧（2025 最新ver.）</button>
-  </section>
-
-  <!-- ⭐ お気に入り -->
-  <section id="favorites-entry">
-    <button onclick="window.location.href='favorites.html'">⭐ お気に入り一覧</button>
-  </section>
-
-  <!-- 🏆 人気キーワード -->
   <section id="popular-keywords">
     <h2>人気のキーワード</h2>
     <div id="keyword-container">
-      <a href="rules.html?keyword=OB">OB</a>
-      <a href="rules.html?keyword=暫定球">暫定球</a>
-      <a href="rules.html?keyword=赤杭">赤杭</a>
-      <a href="rules.html?keyword=黄杭">黄杭</a>
-      <a href="rules.html?keyword=白杭">白杭</a>
-      <a href="rules.html?keyword=青杭">青杭</a>
-      <a href="rules.html?keyword=アンプレ">アンプレ</a>
-      <a href="rules.html?keyword=ドロップ">ドロップ</a>
-      <a href="rules.html?keyword=池ポチャ">池ポチャ</a>
-      <a href="rules.html?keyword=空振り">空振り</a>
-      <a href="rules.html?keyword=特設ティ（ローカル）">特設ティ（ローカル）</a>
-      <a href="rules.html?keyword=ディボット">ディボット</a>
-      <a href="rules.html?keyword=誤球">誤球</a>
-      <a href="rules.html?keyword=救済">救済</a>
-      <a href="rules.html?keyword=ペナルティ">ペナルティ</a>
+      <a href="#">OB</a>
+      <a href="#">暫定球</a>
+      <a href="#">赤杭</a>
+      <a href="#">黄杭</a>
+      <a href="#">白杭</a>
+      <a href="#">アンプレ</a>
+      <a href="#">ドロップ</a>
+      <a href="#">救済</a>
+      <a href="#">ペナルティ</a>
     </div>
   </section>
 
@@ -294,35 +181,32 @@
     <div class="search-column">
       <h2>場所で探す</h2>
       <div class="button-group">
-        <button onclick="window.location.href='rules.html?category=ティー'">ティー</button>
-        <button onclick="window.location.href='rules.html?category=フェアウェイ'">フェアウェイ</button>
-        <button onclick="window.location.href='rules.html?category=ラフ'">ラフ</button>
-        <button onclick="window.location.href='rules.html?category=バンカー'">バンカー</button>
-        <button onclick="window.location.href='rules.html?category=グリーン上'">グリーン上</button>
+        <button>ティー</button>
+        <button>フェアウェイ</button>
+        <button>ラフ</button>
+        <button>バンカー</button>
+        <button>グリーン上</button>
       </div>
     </div>
 
     <div class="search-column">
       <h2>種類で探す</h2>
       <div class="button-group">
-        <button onclick="window.location.href='rules.html?category=ローカルルール'">ローカルルール</button>
-        <button onclick="window.location.href='rules.html?category=ペナルティ'">ペナルティ</button>
-        <button onclick="window.location.href='rules.html?category=救済'">救済</button>
-        <button onclick="window.location.href='rules.html?category=マナー'">マナー</button>
-        <button onclick="window.location.href='rules.html?category=ルール全般'">ルール全般</button>
+        <button>ローカルルール</button>
+        <button>ペナルティ</button>
+        <button>救済</button>
+        <button>マナー</button>
+        <button>ルール全般</button>
       </div>
     </div>
   </section>
 
-  <footer>
-    <p>© 2025 世界一使いやすいゴルフルール</p>
-  </footer>
+  <footer>© 2025 世界一使いやすいゴルフルール</footer>
 
-  <!-- 🔻 ナビ -->
   <nav class="bottom-nav">
-    <a href="index.html"><img src="home-icon.png" alt="ホーム"></a>
-    <a href="rules.html"><img src="book-icon.png" alt="ルール一覧"></a>
-    <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
+    <a href="#"><img src="home-icon.png" alt="ホーム"></a>
+    <a href="#"><img src="book-icon.png" alt="ルール一覧"></a>
+    <a href="#"><img src="star-icon.png" alt="お気に入り"></a>
   </nav>
 </body>
 </html>
