@@ -24,14 +24,25 @@
       border-bottom-right-radius: 25px;
     }
 
-    .back-btn {
-      display: block;
-      text-align: center;
-      color: #007f3b;
-      text-decoration: none;
-      font-weight: bold;
-      margin: 20px 0;
-    }
+    /* ✅ トップへ戻るボタン（お気に入りページと統一） */
+.back-btn {
+  display: block;
+  width: 220px;
+  text-align: center;
+  background: #FFD84D;
+  color: #333;
+  text-decoration: none;
+  margin: 20px auto;
+  font-weight: bold;
+  padding: 10px 0;
+  border-radius: 40px;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+  transition: 0.2s;
+}
+.back-btn:hover {
+  background: #ffcc33;
+  transform: translateY(-2px);
+}
 
     #searchArea {
       text-align: center;
