@@ -160,6 +160,16 @@
           : "<p style='text-align:center;color:#777;'>該当するルールがありません。</p>";
       }
     });
+    // ✅ URLのパラメータを取得して、自動フィルタ表示
+const params = new URLSearchParams(window.location.search);
+const category = params.get("category");
+
+if (category) {
+  const filtered = rules.filter(r => r.category === category);
+  renderList(filtered);
+} else {
+  renderList(rules);
+}
   </script>
 </body>
 </html>
