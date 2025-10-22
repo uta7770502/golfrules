@@ -261,14 +261,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   <section id="search-sections">
     <div class="search-column">
-      <h2>場所で探す</h2>
-      <div class="button-group">
-        <button>ティー</button>
-        <button>フェアウェイ</button>
-        <button>ラフ</button>
-        <button>バンカー</button>
-        <button>グリーン上</button>
-      </div>
+      <!-- 場所で探す -->
+<section id="search-sections">
+  <div class="search-column by-place">
+    <h2>場所で探す</h2>
+    <div class="button-group">
+      <button onclick="window.location.href='rules.html?category=ティー'">ティー</button>
+      <button onclick="window.location.href='rules.html?category=フェアウェイ'">フェアウェイ</button>
+      <button onclick="window.location.href='rules.html?category=ラフ'">ラフ</button>
+      <button onclick="window.location.href='rules.html?category=バンカー'">バンカー</button>
+      <button onclick="window.location.href='rules.html?category=グリーン上'">グリーン上</button>
+    </div>
+  </div>
     </div>
 
     <div class="search-column">
