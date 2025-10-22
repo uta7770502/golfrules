@@ -133,6 +133,18 @@
       const res = await fetch("rules.json");
       const rules = await res.json();
 　　　　rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
+      // ✅ URLパラメータでカテゴリーを取得して自動フィルタ
+const params = new URLSearchParams(window.location.search);
+const category = params.get("category");
+
+if (category) {
+  // カテゴリー一致のルールだけ表示
+  const filtered = rules.filter(r => r.category === category);
+  renderList(filtered);
+} else {
+  // 通常は全件
+  renderList(rules);
+}
       
       // 初期一覧
       renderList(rules);
