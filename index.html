@@ -6,113 +6,140 @@
   <title>世界一使いやすいゴルフルール</title>
   <link rel="stylesheet" href="style.css?v=4" />
  <style>
-/* === 全体（元の見た目に戻す） === */
 body {
-  background: #f9fff9;
   font-family: "Helvetica", sans-serif;
+  background: #f9fff9;
   margin: 0;
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 100px); /* ← ナビの被り防止だけ残す */
+  padding-bottom: 80px; /* ナビ被り防止のみ残す */
 }
 
-header,
-.main-header {
+/* --- ヘッダー --- */
+header, .main-header {
   background: #00bfa5;
   color: #fff;
   text-align: center;
-  padding: 12px 0;
-  font-size: 22px;
+  padding: 16px 0;
+  font-size: 28px;
   font-weight: bold;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 header + * {
   margin-top: 15px;
 }
 
-#searchInfo {
-  text-align: center;
-  font-size: 15px;
-  color: #444;
-  margin-bottom: 10px;
-}
-
-#ruleList {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 15px;
-}
-
-.rule-item {
-  background: #fff;
-  border-radius: 6px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.rule-item:hover {
-  background: #eaf9e6;
-}
-
-.local-badge {
-  display: inline-block;
-  background-color: #ffeaa7;
-  color: #444;
-  font-size: 12px;
+/* --- ボタン --- */
+button, .main-btn, .back-btn {
+  display: block;
+  width: 80%;
+  max-width: 350px;
+  margin: 20px auto;
+  padding: 14px 0;
+  font-size: 18px;
   font-weight: bold;
-  padding: 3px 8px;
-  border-radius: 10px;
-  margin-left: 6px;
+  border: none;
+  border-radius: 40px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.2s ease;
 }
 
-.local-banner {
-  background: #fff8e1;
-  color: #795548;
-  padding: 10px;
-  text-align: center;
-  border-radius: 6px;
-  margin: 10px auto;
-  width: 90%;
-  font-size: 14px;
+.main-btn {
+  background: #ffda44;
+  color: #007f3b;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+.main-btn:hover { background: #ffe55e; }
 
 .back-btn {
-  display: block;
+  background: #00bfa5;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.back-btn:hover { background: #00d1b1; }
+
+/* --- 検索欄 --- */
+#searchArea {
   text-align: center;
-  color: #007f3b;
-  margin: 20px auto;
-  text-decoration: none;
-  font-weight: bold;
+  margin: 10px 0 20px;
 }
 
-/* === ナビゲーションは現状維持（安定版） === */
+#searchInput {
+  width: 80%;
+  max-width: 400px;
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  outline: none;
+}
+
+/* --- キーワード・カテゴリー --- */
+#keyword-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+#keyword-container a,
+#keyword-container button {
+  background: #fff;
+  color: #333;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: 0.2s ease;
+}
+#keyword-container a:hover {
+  background: #e0f7f4;
+  transform: scale(1.05);
+}
+
+/* --- 検索結果リスト --- */
+#ruleList, #favoritesList {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rule-item, .fav-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.rule-item:hover, .fav-item:hover {
+  background: #f2fff4;
+  transform: translateY(-2px);
+}
+
+/* --- 下ナビ --- */
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 80px;
   background: #fff;
-  border-top: 1px solid #e0e0e0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  z-index: 9999;
-}
-
-.bottom-nav .bar {
+  border-top: 1px solid #ddd;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
-  max-width: 900px;
+  height: 80px;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+  z-index: 999;
 }
-
 .bottom-nav img {
   width: 57px;
   height: auto;
@@ -120,14 +147,23 @@ header + * {
   box-shadow: none;
   filter: none;
 }
-
 .bottom-nav a {
   text-decoration: none;
   color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 .bottom-nav a.active {
   transform: translateY(-2px);
+}
+
+/* --- コピーライト --- */
+footer {
+  text-align: center;
+  color: #888;
+  font-size: 13px;
+  margin: 20px 0 90px;
 }
 </style>
 </head>
