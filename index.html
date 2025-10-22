@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3タップルールズ</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ルール一覧 | 3タップルールズ</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       background: #f9fff9;
       font-family: "Helvetica", sans-serif;
       margin: 0;
-      padding-bottom: 90px;
+      padding-bottom: 80px;
     }
 
     header {
       background: #00bfa5;
       color: #fff;
       text-align: center;
-      padding: 18px 0;
-      font-size: 26px;
+      padding: 16px 0;
+      font-size: 24px;
       font-weight: bold;
-      border-bottom-left-radius: 30px;
-      border-bottom-right-radius: 30px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
     }
 
-    /* 検索欄 */
+    .back-btn {
+      display: block;
+      text-align: center;
+      color: #007f3b;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
     #searchArea {
       text-align: center;
-      margin: 20px auto;
+      margin: 10px auto 20px;
     }
 
     #searchInput {
@@ -35,180 +43,111 @@
       max-width: 400px;
       padding: 10px 14px;
       font-size: 16px;
+      border-radius: 25px;
       border: 1px solid #ccc;
-      border-radius: 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       outline: none;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
-    /* ボタン */
-    .btn {
-      display: block;
-      width: 80%;
-      max-width: 360px;
-      margin: 18px auto;
-      padding: 14px 0;
-      border-radius: 40px;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
-      text-align: center;
-      transition: 0.2s ease;
+    #search-results {
+      padding: 0 20px;
     }
 
-    .btn.main { background: #ffd84d; color: #333; }
-    .btn.sub { background: #00bfa5; color: #fff; }
-
-    h2 {
-      color: #007f3b;
-      text-align: center;
-      margin: 20px 0 10px;
-      font-size: 20px;
-    }
-
-    /* 人気キーワード */
-    #keyword-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      padding: 15px;
-    }
-    #keyword-container a {
+    .rule-item {
       background: #fff;
-      color: #333;
-      border-radius: 20px;
-      padding: 8px 16px;
-      font-size: 14px;
-      text-decoration: none;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: 0.2s ease;
-    }
-
-    /* 2カラムレイアウト */
-    #search-sections {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 30px;
-      padding: 20px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .search-column {
-      flex: 1 1 40%;
-      max-width: 380px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      width: 100%;
-      align-items: center;
-    }
-
-    .button-group button {
-      background: #00bfa5;
-      color: #fff;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 40px;
-      width: 100%;
-      max-width: 260px;
-      padding: 14px 0;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+      border-radius: 6px;
+      padding: 12px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      margin-bottom: 10px;
       cursor: pointer;
       transition: 0.2s ease;
+    }
+    .rule-item:hover {
+      background: #eaf9e6;
+    }
+
+    .local-badge {
+      display: inline-block;
+      background-color: #ffeaa7;
+      color: #444;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 10px;
+      margin-left: 6px;
     }
 
     /* ナビ */
     .bottom-nav {
       position: fixed;
-      bottom: 0;
-      left: 0;
+      bottom: 0; left: 0;
       width: 100%;
       background: #fff;
       border-top: 1px solid #ddd;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      height: 80px;
+      height: 70px;
       box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-      z-index: 999;
     }
     .bottom-nav img {
-      width: 57px;
+      width: 50px;
       height: auto;
     }
   </style>
 </head>
-
 <body>
-  <header>3タップルールズ</header>
+  <header>ルール一覧</header>
+  <a href="index.html" class="back-btn">トップへ戻る</a>
 
   <div id="searchArea">
-    <input id="searchInput" type="text" placeholder="ルールを検索…" />
+    <input id="searchInput" type="text" placeholder="ルールを検索..." />
   </div>
 
-  <button class="btn main" onclick="window.location.href='rules.html'">ルール一覧（2025 最新ver.）</button>
-  <button class="btn sub" onclick="window.location.href='favorites.html'">⭐ お気に入り一覧</button>
-
-  <section>
-    <h2>人気のキーワード</h2>
-    <div id="keyword-container">
-      <a href="#">OB</a>
-      <a href="#">暫定球</a>
-      <a href="#">赤杭</a>
-      <a href="#">黄杭</a>
-      <a href="#">白杭</a>
-      <a href="#">アンプレ</a>
-      <a href="#">ドロップ</a>
-      <a href="#">救済</a>
-      <a href="#">ペナルティ</a>
-    </div>
-  </section>
-
-  <section id="search-sections">
-    <div class="search-column">
-      <h2>場所で探す</h2>
-      <div class="button-group">
-        <button>ティー</button>
-        <button>フェアウェイ</button>
-        <button>ラフ</button>
-        <button>バンカー</button>
-        <button>グリーン上</button>
-      </div>
-    </div>
-
-    <div class="search-column">
-      <h2>種類で探す</h2>
-      <div class="button-group">
-        <button>ローカルルール</button>
-        <button>ペナルティ</button>
-        <button>救済</button>
-        <button>マナー</button>
-        <button>ルール全般</button>
-      </div>
-    </div>
-  </section>
-
-  <footer style="text-align:center; color:#888; font-size:13px; margin:40px 0 100px;">
-    © 2025 世界一使いやすいゴルフルール
-  </footer>
+  <main id="search-results"></main>
 
   <nav class="bottom-nav">
     <a href="index.html"><img src="home-icon.png" alt="ホーム" /></a>
     <a href="rules.html"><img src="book-icon.png" alt="ルール一覧" /></a>
     <a href="favorites.html"><img src="star-icon.png" alt="お気に入り" /></a>
   </nav>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const input = document.getElementById("searchInput");
+      const results = document.getElementById("search-results");
+
+      // JSON 読み込み
+      const res = await fetch("rules.json");
+      const rules = await res.json();
+
+      // 初期一覧
+      renderList(rules);
+
+      // 入力検索
+      input.addEventListener("input", () => {
+        const q = input.value.trim();
+        const filtered = q
+          ? rules.filter(r =>
+              (r.title && r.title.includes(q)) ||
+              (r.description && r.description.includes(q))
+            )
+          : rules;
+        renderList(filtered);
+      });
+
+      function renderList(list) {
+        results.innerHTML = list.length
+          ? list.map(r => `
+              <div class="rule-item" onclick="location.href='rule.html?id=${r.id}'">
+                ${r.title}
+                ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ""}
+              </div>
+            `).join("")
+          : "<p style='text-align:center;color:#777;'>該当するルールがありません。</p>";
+      }
+    });
+  </script>
 </body>
 </html>
