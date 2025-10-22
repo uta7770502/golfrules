@@ -143,11 +143,12 @@
     let displayRules = rules;
 
     if (category) {
-      // 一致カテゴリーのルールだけに絞り込み
-      displayRules = rules.filter(
-        (r) => r.category && r.category.includes(category)
-      );
-    }
+  // 一致カテゴリーのルールだけに絞り込み（全角・半角・改行対応）
+  const normalized = category.trim();
+  displayRules = rules.filter(
+    (r) => (r.category || "").trim() === normalized
+  );
+}
 
     // 一覧描画（絞り込み or 全件）
     renderList(displayRules);
