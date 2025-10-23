@@ -290,20 +290,18 @@ header {
   font-weight: bold !important;
   line-height: 1.2 !important;
 }
-  /* ✅ ルール一覧ページと完全に同じ見た目に統一 */
+/* ✅ ルール一覧ページと完全一致（高さぴったりに戻す） */
 header {
   background: #00bfa5;
   color: #fff;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 70px;
+  padding: 16px 0; /* ← これがルール一覧と同じ高さ */
   font-size: 24px;
   font-weight: bold;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
   margin: 0;
+  line-height: 1.2; /* 行の高さを安定させる */
 }
 </style>
 
