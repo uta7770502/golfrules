@@ -366,5 +366,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  // 「人気のキーワード」のチップをすべて取得
+  document.querySelectorAll(".chip.kw-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      const keyword = chip.dataset.q || chip.textContent.trim();
+      // クリックでルール一覧ページへ遷移
+      window.location.href = "rules.html?q=" + encodeURIComponent(keyword);
+    });
+  });
+});
+</script>
 </body>
 </html>
