@@ -152,6 +152,25 @@
       transform: translateY(-2px);
     }
   </style>
+  /* 🔁 人気キーワードのチップボタン（再適用） */
+.chip {
+  display: inline-block;
+  background: #fff;
+  color: #333;
+  font-weight: 600;
+  border-radius: 25px;
+  padding: 8px 16px;
+  margin: 6px;
+  font-size: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.chip:hover {
+  background: #eaf9e6;
+  transform: translateY(-2px);
+}
 </head>
 
 <body>
@@ -373,6 +392,16 @@ document.addEventListener("DOMContentLoaded", () => {
     chip.addEventListener("click", () => {
       const keyword = chip.dataset.q || chip.textContent.trim();
       // クリックでルール一覧ページへ遷移
+      window.location.href = "rules.html?q=" + encodeURIComponent(keyword);
+    });
+  });
+});
+</script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".chip.kw-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      const keyword = chip.dataset.q || chip.textContent.trim();
       window.location.href = "rules.html?q=" + encodeURIComponent(keyword);
     });
   });
