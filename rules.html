@@ -133,7 +133,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     const res = await fetch(basePath + "rules.json?v=" + Date.now());
     if (!res.ok) throw new Error("HTTP status " + res.status);
     const rules = await res.json();
+    // ←★ここに追加
+    const params = new URLSearchParams(location.search);
+    const q = params.get("q");
+    const category = params.get("category");
 
+    let displayRules = rules;
+
+    if (category) {
+      displayRules = rules.filter(r => r.category && r.category.includes(category));
+    } else if (q) {
+      const low = q.toLowerCase();
+      displayRules = rules.filter(r =>
+        (r.title + " " + r.description).toLowerCase().includes(low)
+      );
+      const input = document.getElementById("searchInput");
+      if (input) input.value = q;
+    }
     // ソート
     rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
 
