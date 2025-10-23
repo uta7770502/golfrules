@@ -354,5 +354,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  // 既存の丸いキーワードボタンを全部取得
+  document.querySelectorAll(".chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const keyword = btn.textContent.trim();
+      // ページ遷移（ルール一覧へ）
+      location.href = "rules.html?q=" + encodeURIComponent(keyword);
+    });
+  });
+});
+</script>
 </body>
 </html>
