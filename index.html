@@ -13,16 +13,15 @@
     }
 
     header {
-  background: #00bfa5;
-  color: #fff;
-  text-align: center;
-  padding: 16px 0; /* ← 高さをルール一覧と完全一致 */
-  margin: 0;
-  font-size: 24px; /* ← 数値も完全に揃える */
-  font-weight: bold;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
-}
+      background: #00bfa5;
+      color: #fff;
+      text-align: center;
+      padding: 16px 0;
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+    }
     
     /* 検索欄 */
     #searchArea {
@@ -237,18 +236,6 @@ section:nth-of-type(1) {
     margin-top: 5px;
   }
   /* --- トップページのヘッダー調整 --- */
-header.main-header,
-header {
-  padding: 10px 0 !important; /* ← 16pxから10pxに */
-  font-size: 20px !important; /* 少し小さめに統一 */
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
-}
-
-/* ページ見出し（h1）サイズも統一 */
-header h1 {
-  font-size: 1.6em !important; /* 他ページと揃える */
-}
   .keywords a {
   display: inline-block;
   background: #fff;
@@ -283,15 +270,7 @@ header h1 {
   background: #f0f0f0;
   transform: translateY(-2px);
 }
-  /* ✅ ヘッダーをルール一覧ページと完全一致させる強制指定 */
-header {
-  padding: 16px 0 !important;
-  font-size: 24px !important;
-  font-weight: bold !important;
-  line-height: 1.2 !important;
-}
-/* ✅ ルール一覧ページと完全一致（高さぴったりに戻す） */
-header {
+  header {
       background: #00bfa5;
       color: #fff;
       text-align: center;
