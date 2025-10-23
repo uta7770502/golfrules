@@ -295,19 +295,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   <section>
     <h2>人気のキーワード</h2>
-    <div class="keywords">
-  <a href="rules.html?keyword=OB" class="keyword-link">OB</a>
-  <a href="rules.html?keyword=暫定球" class="keyword-link">暫定球</a>
-  <a href="rules.html?keyword=赤杭" class="keyword-link">赤杭</a>
-  <a href="rules.html?keyword=黄杭" class="keyword-link">黄杭</a>
-  <a href="rules.html?keyword=白杭" class="keyword-link">白杭</a>
-  <a href="rules.html?keyword=アンプレ" class="keyword-link">アンプレ</a>
-  <a href="rules.html?keyword=ドロップ" class="keyword-link">ドロップ</a>
-  <a href="rules.html?keyword=救済" class="keyword-link">救済</a>
-  <a href="rules.html?keyword=ペナルティ" class="keyword-link">ペナルティ</a>
-  <a href="rules.html?keyword=特設" class="keyword-link">特設</a>
-  <a href="rules.html?keyword=前進" class="keyword-link">前進</a>
-</div>
+    <!-- 例：既存のチップ要素に追記 -->
+<div class="chip kw-chip" data-q="OB">OB</div>
+<div class="chip kw-chip" data-q="暫定球">暫定球</div>
+<div class="chip kw-chip" data-q="赤杭">赤杭</div>
+<div class="chip kw-chip" data-q="黄杭">黄杭</div>
+<div class="chip kw-chip" data-q="白杭">白杭</div>
+<div class="chip kw-chip" data-q="アンプレ">アンプレ</div>
+<div class="chip kw-chip" data-q="ドロップ">ドロップ</div>
+<div class="chip kw-chip" data-q="救済">救済</div>
+<div class="chip kw-chip" data-q="ペナルティ">ペナルティ</div>
+<div class="chip kw-chip" data-q="特設">特設</div>
+<div class="chip kw-chip" data-q="前進">前進</div>
   </section>
 
   <!-- 📍 場所で探す・種類で探す -->
@@ -344,5 +343,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     <a href="rules.html"><img src="book-icon.png" alt="ルール一覧" /></a>
     <a href="favorites.html"><img src="star-icon.png" alt="お気に入り" /></a>
   </nav>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.kw-chip[data-q]').forEach(el => {
+    el.addEventListener('click', () => {
+      const q = el.getAttribute('data-q') || '';
+      // デザイン変更なしで遷移だけ行う
+      location.href = 'rules.html?q=' + encodeURIComponent(q);
+    });
+  });
+});
+</script>
 </body>
 </html>
