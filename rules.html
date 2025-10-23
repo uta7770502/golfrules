@@ -169,6 +169,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     `).join("");
   }
 });
+    const params = new URLSearchParams(window.location.search);
+const category = params.get("category");
+const keyword = params.get("keyword"); // ← 追加
+let displayRules = rules;
+
+if (category) {
+  displayRules = rules.filter(r => r.category && r.category.includes(category));
+}
+
+// ✅ キーワードでフィルターする
+if (keyword) {
+  const q = keyword.toLowerCase();
+  displayRules = rules.filter(r =>
+    r.title.toLowerCase().includes(q) ||
+    r.description.toLowerCase().includes(q) ||
+    r.detail.toLowerCase().includes(q)
+  );
+}
   </script>
 </body>
 </html>
