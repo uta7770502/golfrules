@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
 
     // 表示
-    renderList(rules);
+    renderList(displayRules);
 
     // 検索機能
     input.addEventListener("input", (e) => {
