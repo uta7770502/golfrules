@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     // ✅ fetch パスを絶対URLに（GitHub Pages でも確実に動く）
-    const res = await fetch(window.location.origin + "/rules.json");
+    const res = await fetch(window.location.origin + "/data/rules.json");
     if (!res.ok) throw new Error("HTTP status " + res.status);
     const rules = await res.json();
 
