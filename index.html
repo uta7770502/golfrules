@@ -133,21 +133,23 @@
     /* ナビ */
     .bottom-nav {
       position: fixed;
-      bottom: 0;
-      left: 0;
+      left: 0; bottom: 0;
       width: 100%;
       background: #fff;
       border-top: 1px solid #ddd;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      height: 80px;
+      height: 70px;
       box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-      z-index: 999;
     }
     .bottom-nav img {
       width: 50px;
       height: auto;
+      display: block;
+    }
+    .bottom-nav a.active {
+      transform: translateY(-2px);
     }
   </style>
 </head>
