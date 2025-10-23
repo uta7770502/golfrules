@@ -165,8 +165,48 @@
     });
   } catch (err) {
     console.error("ルールデータの読み込みに失敗:", err);
+    results.innerHTML = "<p>ルールデータを読み込めませんでした。</
+    <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const input = document.getElementById("searchInput");
+  const results = document.getElementById("search-results");
+
+  try {
+    // ✅ fetch パスを絶対URLに（GitHub Pages でも確実に動く）
+    const res = await fetch(window.location.origin + "/rules.json");
+    if (!res.ok) throw new Error("HTTP status " + res.status);
+    const rules = await res.json();
+
+    // ソート
+    rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
+
+    // URLパラメータによるカテゴリ絞り込み
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
+    let displayRules = rules;
+
+    if (category) {
+      displayRules = rules.filter(r => r.category && r.category.includes(category));
+    }
+
+    // 表示
+    renderList(displayRules);
+
+    // 検索機能
+    input.addEventListener("input", (e) => {
+      const q = e.target.value.trim().toLowerCase();
+      const filtered = displayRules.filter(r =>
+        r.title.toLowerCase().includes(q) ||
+        r.description.toLowerCase().includes(q)
+      );
+      renderList(filtered);
+    });
+
+  } catch (err) {
+    console.error("読み込みエラー:", err);
     results.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
   }
 });
+</script>
 </body>
 </html>
