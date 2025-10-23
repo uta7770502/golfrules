@@ -165,6 +165,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     results.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
   }
 });
+    try {
+  console.log("✅ fetch開始:", window.location.href);
+  const res = await fetch("./rules.json?v=" + Date.now());
+  console.log("📡 fetch結果:", res.status, res.ok);
+
+  if (!res.ok) throw new Error("HTTP status " + res.status);
+  const rules = await res.json();
 </script>
 </body>
 </html>
