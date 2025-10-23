@@ -125,48 +125,6 @@
   </nav>
 
   <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-  const input = document.getElementById("searchInput");
-  const results = document.getElementById("search-results");
-
-  try {
-    const res = await fetch("js/rules.json");
-    const rules = await res.json();
-
-    // 🔠 あいうえお順ソート（タイトル順）
-    rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
-
-    // ✅ URLパラメータでカテゴリー取得
-    const params = new URLSearchParams(window.location.search);
-    const category = params.get("category");
-
-    let displayRules = rules;
-
-    if (category) {
-  // 一致カテゴリーのルールだけに絞り込み（全角・半角・改行対応）
-  const normalized = category.trim();
-  displayRules = rules.filter(
-    (r) => (r.category || "").trim() === normalized
-  );
-}
-
-    // 一覧描画（絞り込み or 全件）
-    renderList(displayRules);
-
-    // 🔍 入力検索
-    input.addEventListener("input", (e) => {
-      const val = e.target.value.trim().toLowerCase();
-      const filtered = displayRules.filter(
-        (r) =>
-          r.title.toLowerCase().includes(val) ||
-          r.description.toLowerCase().includes(val)
-      );
-      renderList(filtered);
-    });
-  } catch (err) {
-    console.error("ルールデータの読み込みに失敗:", err);
-    results.innerHTML = "<p>ルールデータを読み込めませんでした。</
-    <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const input = document.getElementById("searchInput");
   const results = document.getElementById("search-results");
