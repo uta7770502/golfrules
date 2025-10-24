@@ -130,34 +130,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     // ✅ GitHub Pages対応: サブフォルダに対応した安全な取得パス
     const basePath = window.location.pathname.replace(/\/[^\/]*$/, "/");
-    // ✅ GitHub Pages でも確実に動く相対パス指定
-　　　const res = await fetch("rules.json?v=" + Date.now());
+    const res = await fetch(basePath + "rules.json?v=" + Date.now());
     if (!res.ok) throw new Error("HTTP status " + res.status);
     const rules = await res.json();
-    // ←★ここに追加
-    // URLパラメータでカテゴリを取得
-const params = new URLSearchParams(window.location.search);
-const category = params.get("category");
 
-// カテゴリに該当するルールだけを抽出
-let displayRules = rules;
-if (category) {
-  displayRules = rules.filter(r => r.category && r.category.includes(category));
-}
-    
-    } else if (q) {
-      const low = q.toLowerCase();
-      displayRules = rules.filter(r =>
-        (r.title + " " + r.description).toLowerCase().includes(low)
-      );
-      const input = document.getElementById("searchInput");
-      if (input) input.value = q;
-    }
     // ソート
     rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
 
     // 表示
-    renderList(displayRules);
+    renderList(rules);
 
     // 検索機能
     input.addEventListener("input", (e) => {
@@ -188,24 +169,6 @@ if (category) {
     `).join("");
   }
 });
-    const params = new URLSearchParams(window.location.search);
-　　　const category = params.get("category");
-　　　const keyword = params.get("keyword"); // ← 追加
-　　　let displayRules = rules;
-
-if (category) {
-  displayRules = rules.filter(r => r.category && r.category.includes(category));
-}
-
-// ✅ キーワードでフィルターする
-if (keyword) {
-  const q = keyword.toLowerCase();
-  displayRules = rules.filter(r =>
-    r.title.toLowerCase().includes(q) ||
-    r.description.toLowerCase().includes(q) ||
-    r.detail.toLowerCase().includes(q)
-  );
-}
   </script>
 </body>
 </html>
