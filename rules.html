@@ -6,21 +6,24 @@
   <title>ルール一覧 | 3タップルールズ</title>
   <link rel="stylesheet" href="style.css">
   <style>
-   /* ✅ 下ナビと余白の最終調整 */
+   /* ✅ 下ナビ最終安定版（ズレ・余白両方解消） */
 body {
   background: #f9fff9;
   font-family: "Helvetica", sans-serif;
   margin: 0;
-  /* ← 下ナビ分の余白は完全に削除 */
-  padding-bottom: 0;
+  padding: 0; /* ← Safe Areaを二重に取らない */
 }
 
-/* ✅ ナビを固定（iPhoneズレ防止＋余白最適化） */
+main {
+  padding-bottom: 90px; /* ← ナビ分の余白をここで確保 */
+}
+
+/* ✅ ナビ固定（iPhone対応・ズレ防止） */
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   height: 70px;
   background: #fff;
   border-top: 1px solid #ddd;
@@ -29,12 +32,12 @@ body {
   align-items: center;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
   z-index: 9999;
-  transform: translateZ(0);
+  transform: translateZ(0); /* ← Safariの再描画ズレ防止 */
   will-change: transform;
   backface-visibility: hidden;
 }
 
-/* ✅ ナビ内アイコン配置 */
+/* ✅ ナビ内アイコンを中央揃え */
 .bottom-nav a {
   flex: 1;
   height: 100%;
@@ -51,7 +54,6 @@ body {
   -webkit-user-drag: none;
   user-select: none;
 }
-
     header{
       background:#00bfa5;color:#fff;text-align:center;
       padding:16px 0;font-size:24px;font-weight:bold;
