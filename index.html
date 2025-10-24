@@ -429,5 +429,24 @@ document.querySelectorAll('.type-button').forEach(button => {
   });
 });
 </script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  // ✅ 人気のキーワードボタン
+  document.querySelectorAll(".chip, .kw-chip, .keyword-link").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const keyword = btn.dataset.q || btn.textContent.trim();
+      location.href = "rules.html?q=" + encodeURIComponent(keyword);
+    });
+  });
+
+  // ✅ 「場所で探す」「種類で探す」ボタン
+  document.querySelectorAll("#search-sections button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const category = btn.textContent.trim();
+      location.href = "rules.html?category=" + encodeURIComponent(category);
+    });
+  });
+});
+</script>
 </body>
 </html>
