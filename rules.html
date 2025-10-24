@@ -6,13 +6,46 @@
   <title>ルール一覧 | 3タップルールズ</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    body{
-      background:#f9fff9;
-      font-family:"Helvetica",sans-serif;
-      margin:0;
-      /* ⬇︎ 下ナビ高さ(70)＋iPhone安全領域を常に確保 */
-      padding-bottom:calc(70px + env(safe-area-inset-bottom));
-    }
+    /* 既存の body はこれでOK：下ナビの分だけ余白を確保 */
+body{
+  background:#f9fff9;
+  font-family:"Helvetica",sans-serif;
+  margin:0;
+  padding-bottom: calc(70px + env(safe-area-inset-bottom));
+}
+
+/* 下ナビ：高さに安全領域を含める（← ココがポイント） */
+.bottom-nav{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: calc(70px + env(safe-area-inset-bottom)); /* ← これで帯の“見た目の高さ”に揃う */
+  padding-bottom: 0;                                  /* ← padding は使わない */
+  box-sizing: border-box;                             /* 枠線も高さに含める */
+  background: #fff;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;                                /* 高さの中央にアイコンを配置 */
+  box-shadow: 0 -2px 8px rgba(0,0,0,.05);
+  z-index: 1000;
+}
+
+/* a タグを帯の高さにフィットさせて完全中央化 */
+.bottom-nav a{
+  height: 100%;
+  width: 33.3333%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* 画像はベースラインの影響を受けないようにする */
+.bottom-nav img{
+  width: 50px;
+  height: auto;
+  display: block;
+}
 
     header{
       background:#00bfa5;color:#fff;text-align:center;
