@@ -10,7 +10,7 @@
       background: #f9fff9;
       font-family: "Helvetica", sans-serif;
       margin: 0;
-      padding-bottom: 90px; /* ✅ 下ナビ分の余白を確保 */
+      padding-bottom: calc(100px + env(safe-area-inset-bottom)); /* ✅ ナビ高さ＋iPhone安全領域対応 */
     }
 
     header {
@@ -38,7 +38,6 @@
       box-shadow: 0 5px 12px rgba(0,0,0,0.15);
       transition: 0.2s;
     }
-
     .back-btn:hover {
       background: #ffcc33;
       transform: translateY(-2px);
@@ -74,7 +73,6 @@
       cursor: pointer;
       transition: 0.2s ease;
     }
-
     .rule-item:hover {
       background: #eaf9e6;
     }
@@ -90,7 +88,7 @@
       margin-left: 6px;
     }
 
-    /* ✅ 下ナビを常に固定＋ズレ防止 */
+    /* ✅ 下ナビを常に固定＋安全領域対応 */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -101,17 +99,21 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      height: 70px;
+      height: 80px; /* ← iPhoneでも隠れない高さ */
       box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
       z-index: 1000;
+      padding-bottom: env(safe-area-inset-bottom); /* ✅ iPhoneのホームバー分の余白 */
     }
 
     .bottom-nav img {
-      width: 50px;
+      width: 48px;
       height: auto;
+      display: block;
+      vertical-align: middle; /* ✅ アイコン中央揃え */
     }
   </style>
 </head>
+
 <body>
   <header>ルール一覧</header>
   <a href="index.html" class="back-btn">トップへ戻る</a>
@@ -134,7 +136,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const results = document.getElementById("search-results");
 
   try {
-    // ✅ GitHub Pages対応: サブフォルダに対応した安全な取得パス
+    // ✅ GitHub Pages対応: サブフォルダ対応
     const basePath = window.location.pathname.replace(/\/[^\/]*$/, "/");
     const res = await fetch(basePath + "rules.json?v=" + Date.now());
     if (!res.ok) throw new Error("HTTP status " + res.status);
