@@ -87,24 +87,15 @@
       border-radius: 10px;
       margin-left: 6px;
     }
+  /* ✅ 追加ここから */
+  body {
+    padding-bottom: 90px; /* ← 下ナビ分の余白を確保 */
+  }
 
-    .bottom-nav {
-      position: fixed;
-      bottom: 0; left: 0;
-      width: 100%;
-      background: #fff;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      height: 70px;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-    }
-    .bottom-nav img {
-      width: 50px;
-      height: auto;
-    }
-    /* ✅ 下ナビゲーションのズレ防止 */
+  .bottom-nav {
+    z-index: 1000; /* ← 常に最前面で固定 */
+  }
+  /* ✅ 追加ここまで */
 body {
   padding-bottom: 90px; /* ← ナビの高さ分を確保 */
 }
