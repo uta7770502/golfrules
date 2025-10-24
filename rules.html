@@ -130,7 +130,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     // ✅ GitHub Pages対応: サブフォルダに対応した安全な取得パス
     const basePath = window.location.pathname.replace(/\/[^\/]*$/, "/");
-    const res = await fetch(basePath + "rules.json?v=" + Date.now());
+    // ✅ GitHub Pages でも確実に動く相対パス指定
+const res = await fetch("rules.json?v=" + Date.now());
     if (!res.ok) throw new Error("HTTP status " + res.status);
     const rules = await res.json();
     // ←★ここに追加
