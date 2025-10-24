@@ -6,38 +6,44 @@
   <title>ルール一覧 | 3タップルールズ</title>
   <link rel="stylesheet" href="style.css">
   <style>
-   /* ✅ 下ナビ最終安定版（ズレ・余白両方解消） */
+   /* ✅ Safari完全対応：ズレ・余白・白帯すべて解消 */
 body {
   background: #f9fff9;
   font-family: "Helvetica", sans-serif;
   margin: 0;
-  padding: 0; /* ← Safe Areaを二重に取らない */
+  padding: 0;
+  height: 100%;
+  overscroll-behavior-y: none;
 }
 
+/* ✅ コンテンツがナビと重ならないよう調整 */
 main {
-  padding-bottom: 90px; /* ← ナビ分の余白をここで確保 */
+  padding-bottom: 90px; /* ← ナビ分の余白確保 */
 }
 
-/* ✅ ナビ固定（iPhone対応・ズレ防止） */
+/* ✅ 下ナビ固定・iPhone安全領域対応 */
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   height: 70px;
-  background: #fff;
+  background: #ffffff;
   border-top: 1px solid #ddd;
   display: flex;
   justify-content: space-around;
   align-items: center;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
   z-index: 9999;
-  transform: translateZ(0); /* ← Safariの再描画ズレ防止 */
+
+  /* 💡 Safariのズレ・白帯防止 */
+  padding-bottom: env(safe-area-inset-bottom);
+  transform: translate3d(0, 0, 0);
   will-change: transform;
   backface-visibility: hidden;
 }
 
-/* ✅ ナビ内アイコンを中央揃え */
+/* ✅ ナビのリンクとアイコン配置 */
 .bottom-nav a {
   flex: 1;
   height: 100%;
@@ -48,11 +54,12 @@ main {
 }
 
 .bottom-nav img {
-  width: 50px;
+  width: 48px;
   height: auto;
   display: block;
   -webkit-user-drag: none;
   user-select: none;
+  vertical-align: middle;
 }
     header{
       background:#00bfa5;color:#fff;text-align:center;
