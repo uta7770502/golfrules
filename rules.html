@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ルール一覧 | 3タップルールズ</title>
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: "Helvetica", sans-serif;
+    body {
       background: #f9fff9;
+      font-family: "Helvetica", sans-serif;
+      margin: 0;
+      padding-bottom: 90px; /* ← トップページと同じに */
       -webkit-text-size-adjust: 100%;
     }
 
@@ -61,11 +60,8 @@
       outline: none;
     }
 
-    main {
-      flex: 1;
-      overflow-y: auto;
-      padding: 0 20px 100px; /* ← ナビ分の余白確保 */
-      box-sizing: border-box;
+    #search-results {
+      padding: 0 20px;
     }
 
     .rule-item {
@@ -94,44 +90,32 @@
       margin-left: 6px;
     }
 
-    /* ✅ 下ナビ（完全固定） */
+    /* ✅ トップページと同じナビ設計 */
     .bottom-nav {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 70px;
+      left: 0; bottom: 0;
+      width: 100%;
       background: #fff;
       border-top: 1px solid #ddd;
       display: flex;
       justify-content: space-around;
       align-items: center;
+      height: 70px;
       box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-      z-index: 9999;
+      z-index: 1000;
       padding-bottom: env(safe-area-inset-bottom);
       transform: translateZ(0);
-      backface-visibility: hidden;
     }
-
-    .bottom-nav a {
-      flex: 1;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-    }
-
     .bottom-nav img {
       width: 50px;
       height: auto;
       display: block;
-      -webkit-user-drag: none;
-      user-select: none;
+    }
+    .bottom-nav a.active {
+      transform: translateY(-2px);
     }
   </style>
 </head>
-
 <body>
   <header>ルール一覧</header>
   <a href="index.html" class="back-btn">トップへ戻る</a>
@@ -140,7 +124,7 @@
     <input id="searchInput" type="text" placeholder="ルールを検索..." />
   </div>
 
-  <main id="search-results"></main>
+  <div id="search-results"></div>
 
   <nav class="bottom-nav">
     <a href="index.html"><img src="home-icon.png" alt="ホーム" /></a>
