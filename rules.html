@@ -10,7 +10,7 @@
       background: #f9fff9;
       font-family: "Helvetica", sans-serif;
       margin: 0;
-      padding-bottom: 80px;
+      padding-bottom: 90px; /* ✅ 下ナビ分の余白を確保 */
     }
 
     header {
@@ -38,6 +38,7 @@
       box-shadow: 0 5px 12px rgba(0,0,0,0.15);
       transition: 0.2s;
     }
+
     .back-btn:hover {
       background: #ffcc33;
       transform: translateY(-2px);
@@ -73,6 +74,7 @@
       cursor: pointer;
       transition: 0.2s ease;
     }
+
     .rule-item:hover {
       background: #eaf9e6;
     }
@@ -87,34 +89,27 @@
       border-radius: 10px;
       margin-left: 6px;
     }
-  /* ✅ 追加ここから */
-  body {
-    padding-bottom: 90px; /* ← 下ナビ分の余白を確保 */
-  }
 
-  .bottom-nav {
-    z-index: 1000; /* ← 常に最前面で固定 */
-  }
-  /* ✅ 追加ここまで */
-body {
-  padding-bottom: 90px; /* ← ナビの高さ分を確保 */
-}
+    /* ✅ 下ナビを常に固定＋ズレ防止 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 70px;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+      z-index: 1000;
+    }
 
-/* ✅ 下ナビを常に固定 */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #fff;
-  border-top: 1px solid #ddd;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 70px;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
-  z-index: 1000; /* ← これで重なりズレ防止 */
-}
+    .bottom-nav img {
+      width: 50px;
+      height: auto;
+    }
   </style>
 </head>
 <body>
@@ -150,23 +145,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // 表示
     renderList(rules);
-    // ✅ URLパラメータで絞り込み
-const params = new URLSearchParams(window.location.search);
-const q = (params.get("q") || "").toLowerCase();
-const category = (params.get("category") || "").toLowerCase();
 
-if (q || category) {
-  const filtered = rules.filter(r =>
-    (q && (
-      (r.title && r.title.toLowerCase().includes(q)) ||
-      (r.description && r.description.toLowerCase().includes(q))
-    )) ||
-    (category && (
-      (r.category && r.category.toLowerCase().includes(category))
-    ))
-  );
-  renderList(filtered);
-}
+    // ✅ URLパラメータで絞り込み
+    const params = new URLSearchParams(window.location.search);
+    const q = (params.get("q") || "").toLowerCase();
+    const category = (params.get("category") || "").toLowerCase();
+
+    if (q || category) {
+      const filtered = rules.filter(r =>
+        (q && (
+          (r.title && r.title.toLowerCase().includes(q)) ||
+          (r.description && r.description.toLowerCase().includes(q))
+        )) ||
+        (category && (
+          (r.category && r.category.toLowerCase().includes(category))
+        ))
+      );
+      renderList(filtered);
+    }
 
     // 検索機能
     input.addEventListener("input", (e) => {
@@ -197,18 +193,6 @@ if (q || category) {
     `).join("");
   }
 });
-    // ✅ URLパラメータを読み取って自動フィルタ
-const params = new URLSearchParams(window.location.search);
-const q = (params.get("q") || "").toLowerCase();
-const category = (params.get("category") || "").toLowerCase();
-
-if (q || category) {
-  const filtered = rules.filter(r =>
-    (q && (r.title.toLowerCase().includes(q) || r.description.toLowerCase().includes(q))) ||
-    (category && r.category.toLowerCase().includes(category))
-  );
-  renderList(filtered);
-}
   </script>
 </body>
 </html>
