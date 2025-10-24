@@ -102,6 +102,43 @@ body {
     .bottom-nav img{
       width:50px;height:auto;display:block; /* ⬅︎ baselineずれ防止 */
     }
+    /* ✅ 下ナビ固定のズレ完全防止（iPhone Safari対策） */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: calc(70px + env(safe-area-inset-bottom));
+  background: #fff;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+  z-index: 9999;
+  /* ⬇ Safariでズレないように別レイヤー化 */
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* ✅ アイコン中央揃え・行間ズレ除去 */
+.bottom-nav a {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.bottom-nav img {
+  width: 50px;
+  height: auto;
+  display: block;
+  -webkit-user-drag: none;
+  user-select: none;
+}
   </style>
 </head>
 <body>
