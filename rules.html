@@ -6,114 +6,65 @@
   <title>ルール一覧 | 3タップルールズ</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    body {
-      background: #f9fff9;
-      font-family: "Helvetica", sans-serif;
-      margin: 0;
-      padding-bottom: calc(100px + env(safe-area-inset-bottom)); /* ✅ ナビ高さ＋iPhone安全領域対応 */
+    body{
+      background:#f9fff9;
+      font-family:"Helvetica",sans-serif;
+      margin:0;
+      /* ⬇︎ 下ナビ高さ(70)＋iPhone安全領域を常に確保 */
+      padding-bottom:calc(70px + env(safe-area-inset-bottom));
     }
 
-    header {
-      background: #00bfa5;
-      color: #fff;
-      text-align: center;
-      padding: 16px 0;
-      font-size: 24px;
-      font-weight: bold;
-      border-bottom-left-radius: 25px;
-      border-bottom-right-radius: 25px;
+    header{
+      background:#00bfa5;color:#fff;text-align:center;
+      padding:16px 0;font-size:24px;font-weight:bold;
+      border-bottom-left-radius:25px;border-bottom-right-radius:25px;
     }
 
-    .back-btn {
-      display: block;
-      width: 220px;
-      text-align: center;
-      background: #FFD84D;
-      color: #333;
-      text-decoration: none;
-      margin: 20px auto;
-      font-weight: bold;
-      padding: 10px 0;
-      border-radius: 40px;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.15);
-      transition: 0.2s;
+    .back-btn{
+      display:block;width:220px;text-align:center;background:#FFD84D;color:#333;
+      text-decoration:none;margin:20px auto;font-weight:bold;padding:10px 0;border-radius:40px;
+      box-shadow:0 5px 12px rgba(0,0,0,.15);transition:.2s;
     }
-    .back-btn:hover {
-      background: #ffcc33;
-      transform: translateY(-2px);
+    .back-btn:hover{background:#ffcc33;transform:translateY(-2px);}
+
+    #searchArea{text-align:center;margin:10px auto 20px;}
+    #searchInput{
+      width:80%;max-width:400px;padding:10px 14px;font-size:16px;border-radius:25px;
+      border:1px solid #ccc;box-shadow:0 2px 5px rgba(0,0,0,.1);outline:none;
     }
 
-    #searchArea {
-      text-align: center;
-      margin: 10px auto 20px;
+    #search-results{padding:0 20px;}
+
+    .rule-item{
+      background:#fff;border-radius:6px;padding:12px;border:1px solid #ddd;font-size:16px;
+      margin-bottom:10px;cursor:pointer;transition:.2s ease;
+    }
+    .rule-item:hover{background:#eaf9e6;}
+
+    .local-badge{
+      display:inline-block;background-color:#ffeaa7;color:#444;font-size:12px;font-weight:bold;
+      padding:3px 8px;border-radius:10px;margin-left:6px;
     }
 
-    #searchInput {
-      width: 80%;
-      max-width: 400px;
-      padding: 10px 14px;
-      font-size: 16px;
-      border-radius: 25px;
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      outline: none;
+    /* ==== 下ナビ（デザインそのまま・中央揃え&安全領域対応） ==== */
+    .bottom-nav{
+      position:fixed;left:0;right:0;bottom:0;height:70px;
+      background:#fff;border-top:1px solid #ddd;
+      display:flex;justify-content:space-around;align-items:center;
+      box-shadow:0 -2px 8px rgba(0,0,0,.05);
+      z-index:1000;
+      padding-bottom:env(safe-area-inset-bottom);
     }
-
-    #search-results {
-      padding: 0 20px;
+    .bottom-nav a{
+      /* ⬇︎ 行間の影響を排除＆中央にピタッと */
+      display:flex;align-items:center;justify-content:center;height:100%;
+      text-decoration:none;
     }
-
-    .rule-item {
-      background: #fff;
-      border-radius: 6px;
-      padding: 12px;
-      border: 1px solid #ddd;
-      font-size: 16px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-    .rule-item:hover {
-      background: #eaf9e6;
-    }
-
-    .local-badge {
-      display: inline-block;
-      background-color: #ffeaa7;
-      color: #444;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 3px 8px;
-      border-radius: 10px;
-      margin-left: 6px;
-    }
-
-    /* ✅ 下ナビを常に固定＋安全領域対応 */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #fff;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      height: 80px; /* ← iPhoneでも隠れない高さ */
-      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
-      z-index: 1000;
-      padding-bottom: env(safe-area-inset-bottom); /* ✅ iPhoneのホームバー分の余白 */
-    }
-
-    .bottom-nav img {
-      width: 48px;
-      height: auto;
-      display: block;
-      vertical-align: middle; /* ✅ アイコン中央揃え */
+    .bottom-nav img{
+      width:50px;height:auto;display:block; /* ⬅︎ baselineずれ防止 */
     }
   </style>
 </head>
-
 <body>
   <header>ルール一覧</header>
   <a href="index.html" class="back-btn">トップへ戻る</a>
@@ -125,9 +76,9 @@
   <main id="search-results"></main>
 
   <nav class="bottom-nav">
-    <a href="index.html"><img src="home-icon.png" alt="ホーム" /></a>
-    <a href="rules.html"><img src="book-icon.png" alt="ルール一覧" /></a>
-    <a href="favorites.html"><img src="star-icon.png" alt="お気に入り" /></a>
+    <a href="index.html"><img src="home-icon.png" alt="ホーム"></a>
+    <a href="rules.html"><img src="book-icon.png" alt="ルール一覧"></a>
+    <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
   </nav>
 
   <script>
@@ -136,57 +87,45 @@ document.addEventListener("DOMContentLoaded", async () => {
   const results = document.getElementById("search-results");
 
   try {
-    // ✅ GitHub Pages対応: サブフォルダ対応
     const basePath = window.location.pathname.replace(/\/[^\/]*$/, "/");
     const res = await fetch(basePath + "rules.json?v=" + Date.now());
     if (!res.ok) throw new Error("HTTP status " + res.status);
     const rules = await res.json();
 
-    // ソート
-    rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
-
-    // 表示
+    rules.sort((a,b)=>a.title.localeCompare(b.title,"ja"));
     renderList(rules);
 
-    // ✅ URLパラメータで絞り込み
     const params = new URLSearchParams(window.location.search);
-    const q = (params.get("q") || "").toLowerCase();
-    const category = (params.get("category") || "").toLowerCase();
-
-    if (q || category) {
+    const q = (params.get("q")||"").toLowerCase();
+    const category = (params.get("category")||"").toLowerCase();
+    if(q||category){
       const filtered = rules.filter(r =>
-        (q && (
-          (r.title && r.title.toLowerCase().includes(q)) ||
-          (r.description && r.description.toLowerCase().includes(q))
-        )) ||
-        (category && (
-          (r.category && r.category.toLowerCase().includes(category))
-        ))
+        (q && ((r.title&&r.title.toLowerCase().includes(q))||(r.description&&r.description.toLowerCase().includes(q))))
+        || (category && (r.category&&r.category.toLowerCase().includes(category)))
       );
       renderList(filtered);
     }
 
-    // 検索機能
-    input.addEventListener("input", (e) => {
+    input.addEventListener("input",(e)=>{
       const q = e.target.value.trim().toLowerCase();
       const filtered = rules.filter(r =>
-        r.title.toLowerCase().includes(q) ||
-        r.description.toLowerCase().includes(q)
+        (r.title&&r.title.toLowerCase().includes(q)) ||
+        (r.description&&r.description.toLowerCase().includes(q))
       );
       renderList(filtered);
     });
 
-  } catch (err) {
-    console.error("読み込みエラー:", err);
+  } catch(err){
+    console.error("読み込みエラー:",err);
     results.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
   }
 
-  function renderList(list) {
-    if (!list.length) {
+  function renderList(list){
+    if(!list.length){
       results.innerHTML = "<p>該当するルールがありません。</p>";
       return;
     }
-    results.innerHTML = list.map(r => `
+    results.innerHTML = list.map(r=>`
       <div class="rule-item" onclick="location.href='rule_detail.html?id=${r.id}'">
         <strong>${r.title}</strong>
         ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ''}
