@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const res = await fetch(basePath + "rules.json?v=" + Date.now());
     const rules = await res.json();
 
-    // ✅ カテゴリーでグループ化
+    // ✅ カテゴリーでグループ化（種類・場所共通で）
     const grouped = {};
     rules.forEach(rule => {
       const cat = rule.category || "その他";
@@ -188,11 +188,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       grouped[cat].push(rule);
     });
 
-    // ✅ URLパラメータ（トップページ連携）
+    // ✅ URLパラメータ（トップページ連動）
     const params = new URLSearchParams(window.location.search);
     const selectedCategory = params.get("category") || "";
 
-    // ✅ HTML生成（選択カテゴリーのみopen）
+    // ✅ HTML生成（選択カテゴリーだけopen）
     results.innerHTML = Object.keys(grouped).map(cat => `
       <details class="rule-group" ${cat === selectedCategory ? "open" : ""}>
         <summary>${cat}</summary>
