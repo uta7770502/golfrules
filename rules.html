@@ -114,99 +114,6 @@ body {
     .bottom-nav a.active {
       transform: translateY(-2px);
     }
-    details.rule-group {
-  background: #fff;
-  border-radius: 10px;
-  margin: 10px 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-summary {
-  font-weight: bold;
-  background: #00bfa5;
-  color: #fff;
-  padding: 10px 15px;
-  border-radius: 10px 10px 0 0;
-  cursor: pointer;
-  user-select: none;
-}
-
-details[open] summary {
-  background: #00997f;
-}
-    details.rule-group {
-  background: #fff;
-  border-radius: 10px;
-  margin: 10px 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-summary {
-  font-weight: bold;
-  background: #00bfa5;
-  color: #fff;
-  padding: 10px 15px;
-  border-radius: 10px 10px 0 0;
-  cursor: pointer;
-  user-select: none;
-}
-
-details[open] summary {
-  background: #00997f;
-}
-    .rule-section-title {
-  text-align: center;
-  font-size: 20px;
-  color: #007f3b;
-  margin: 25px 0 10px;
-  font-weight: bold;
-}
-
-details.rule-group {
-  background: #fff;
-  border-radius: 10px;
-  margin: 10px auto;
-  width: 90%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  overflow: hidden;
-}
-
-summary {
-  font-weight: bold;
-  background: #00bfa5;
-  color: #fff;
-  padding: 12px 16px;
-  border-radius: 10px 10px 0 0;
-  cursor: pointer;
-  user-select: none;
-  font-size: 17px;
-}
-
-details[open] summary {
-  background: #00997f;
-}
-
-.rule-item {
-  border-top: 1px solid #eee;
-  padding: 10px 15px;
-  font-size: 15px;
-  transition: 0.2s ease;
-}
-
-.rule-item:hover {
-  background: #eaf9e6;
-}
-
-.local-badge {
-  display: inline-block;
-  background-color: #ffeaa7;
-  color: #444;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 3px 8px;
-  border-radius: 10px;
-  margin-left: 6px;
-}
   </style>
 </head>
 <body>
@@ -224,58 +131,66 @@ details[open] summary {
     <a href="rules.html"><img src="book-icon.png" alt="ルール一覧" /></a>
     <a href="favorites.html"><img src="star-icon.png" alt="お気に入り" /></a>
   </nav>
-<script>
+
+  <script>
 document.addEventListener("DOMContentLoaded", async () => {
+  const input = document.getElementById("searchInput");
   const results = document.getElementById("search-results");
 
   try {
     const basePath = window.location.pathname.replace(/\/[^\/]*$/, "/");
     const res = await fetch(basePath + "rules.json?v=" + Date.now());
+    if (!res.ok) throw new Error("HTTP status " + res.status);
     const rules = await res.json();
 
-    // ✅ トップページと完全連動するカテゴリを定義
-    const validCategories = {
-      "場所で探す": ["ティー", "フェアウェイ", "ラフ", "バンカー", "グリーン上"],
-      "種類で探す": ["基本ルール", "ローカルルール", "コンペルール", "マナー・エチケット", "クラブ"]
-    };
+    rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
+    renderList(rules);
 
-    // ✅ URLパラメータ（トップページから遷移時に使う）
     const params = new URLSearchParams(window.location.search);
-    const selectedCategory = params.get("category") || "";
+    const q = (params.get("q") || "").toLowerCase();
+    const category = (params.get("category") || "").toLowerCase();
 
-    // ✅ グループを「場所」「種類」で構成
-    const sections = Object.entries(validCategories).map(([groupTitle, cats]) => {
-      const innerHTML = cats.map(cat => {
-        const filtered = rules.filter(r => r.category === cat);
-        if (!filtered.length) return ""; // 該当ルールなしなら非表示
+    if (q || category) {
+      const filtered = rules.filter(r =>
+        (q && (
+          (r.title && r.title.toLowerCase().includes(q)) ||
+          (r.description && r.description.toLowerCase().includes(q))
+        )) ||
+        (category && (
+          (r.category && r.category.toLowerCase().includes(category))
+        ))
+      );
+      renderList(filtered);
+    }
 
-        return `
-          <details class="rule-group" ${cat === selectedCategory ? "open" : ""}>
-            <summary>${cat}</summary>
-            ${filtered.map(r => `
-              <div class="rule-item" onclick="location.href='rule_detail.html?id=${r.id}'">
-                <strong>${r.title}</strong>
-                ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ''}
-                <p>${r.description}</p>
-              </div>
-            `).join("")}
-          </details>
-        `;
-      }).join("");
-
-      return `
-        <h2 class="rule-section-title">${groupTitle}</h2>
-        <div class="rule-section">${innerHTML}</div>
-      `;
-    }).join("");
-
-    results.innerHTML = sections;
+    input.addEventListener("input", (e) => {
+      const q = e.target.value.trim().toLowerCase();
+      const filtered = rules.filter(r =>
+        r.title.toLowerCase().includes(q) ||
+        r.description.toLowerCase().includes(q)
+      );
+      renderList(filtered);
+    });
 
   } catch (err) {
     console.error("読み込みエラー:", err);
     results.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
   }
+
+  function renderList(list) {
+    if (!list.length) {
+      results.innerHTML = "<p>該当するルールがありません。</p>";
+      return;
+    }
+    results.innerHTML = list.map(r => `
+      <div class="rule-item" onclick="location.href='rule_detail.html?id=${r.id}'">
+        <strong>${r.title}</strong>
+        ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ''}
+        <p>${r.description}</p>
+      </div>
+    `).join("");
+  }
 });
-</script>
+  </script>
 </body>
 </html>
