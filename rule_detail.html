@@ -1,166 +1,262 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>ルール詳細 | 3タップルールズ</title>
-<style>
-  body {
-    background: #f9fff9;
-    font-family: "Helvetica", sans-serif;
-    margin: 0;
-    padding-bottom: 90px;
-  }
-  header {
-    background: #00bfa5;
-    color: #fff;
-    text-align: center;
-    padding: 16px 0;
-    font-size: 24px;
-    font-weight: bold;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-  }
-  .container {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  h1 {
-    font-size: 22px;
-    margin-bottom: 8px;
-    color: #007f3b;
-  }
-  p.desc {
-    font-size: 16px;
-    color: #333;
-    line-height: 1.6;
-    margin-bottom: 25px;
-  }
-  .section {
-    background: #fff;
-    border-radius: 10px;
-    padding: 15px 18px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-  .section h2 {
-    font-size: 18px;
-    margin: 0 0 8px;
-    color: #00997f;
-    border-left: 6px solid #FFD84D;
-    padding-left: 10px;
-  }
-  .section p {
-    margin: 0;
-    font-size: 15px;
-    color: #333;
-    line-height: 1.6;
-  }
-  .back-btn {
-    display: block;
-    width: 220px;
-    text-align: center;
-    background: #FFD84D;
-    color: #00997f;
-    text-decoration: none;
-    margin: 30px auto;
-    font-weight: bold;
-    padding: 10px 0;
-    border-radius: 40px;
-    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
-    transition: 0.2s;
-  }
-  .back-btn:hover { transform: translateY(-2px); }
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    border-top: 1px solid #ddd;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 70px;
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-    z-index: 1000;
-  }
-  .bottom-nav img {
-    width: 50px;
-    height: auto;
-    display: block;
-  }
-</style>
-</head>
-<body>
-  <header>ルール詳細</header>
-  <div class="container" id="detail"></div>
-  <a href="rules.html" class="back-btn">ルール一覧へ戻る</a>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>詳細と処置｜3タップルールズ</title>
+  <link rel="stylesheet" href="style.css">
 
-  <nav class="bottom-nav">
-    <a href="index.html"><img src="home-icon.png" alt="ホーム" /></a>
-    <a href="rules.html"><img src="book-icon.png" alt="ルール一覧" /></a>
-    <a href="favorites.html"><img src="star-icon.png" alt="お気に入り" /></a>
-  </nav>
-
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const detail = document.getElementById("detail");
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
-
-  if (!id) {
-    detail.innerHTML = "<p>ルールが見つかりません。</p>";
-    return;
-  }
-
-  try {
-    const basePath = window.location.pathname.replace(/\/[^\/]*$/, "/");
-    const res = await fetch(basePath + "rules.json?v=" + Date.now());
-    const rules = await res.json();
-    const rule = rules.find(r => String(r.id) === id);
-
-    if (!rule) {
-      detail.innerHTML = "<p>該当するルールが見つかりません。</p>";
-      return;
+  <style>
+    body {
+      background: #f9fff9;
+      font-family: "Helvetica", sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
-    // ✅ 補足・豆知識を除いた構成
-    detail.innerHTML = `
-      <h1>${rule.title}</h1>
-      <p class="desc">${rule.description || ""}</p>
+    header {
+      background: #00bfa5;
+      color: #fff;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 22px;
+      font-weight: bold;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+    }
 
-      ${rule.correct ? `
-      <div class="section">
-        <h2>正しい処置</h2>
-        <p>${rule.correct}</p>
-      </div>` : ""}
+    main {
+      padding: 20px;
+    }
 
-      ${rule.penalty ? `
-      <div class="section">
-        <h2>ペナルティ</h2>
-        <p>${rule.penalty}</p>
-      </div>` : ""}
+    h2 {
+      color: #007f3b;
+      margin-bottom: 10px;
+    }
 
-      ${rule.example ? `
-      <div class="section">
-        <h2>具体例</h2>
-        <p>${rule.example}</p>
-      </div>` : ""}
+    .section-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
 
-      ${rule.note ? `
-      <div class="section">
-        <h2>注意点</h2>
-        <p>${rule.note}</p>
-      </div>` : ""}
-    `;
-    // ⚠️ rule.supplement / rule.tips / rule.bean は一切使わない
+    .section-box.green {
+      border-left: 5px solid #00bfa5;
+      background: #f0fff4;
+    }
 
-  } catch (e) {
-    detail.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
-  }
-});
-</script>
+    .section-box.red {
+      border-left: 5px solid #ff5555;
+      background: #fff7f7;
+    }
+
+    .section-box h3 {
+      margin-top: 0;
+      color: #007f3b;
+      font-size: 16px;
+    }
+
+    .btn-area.compact {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 150px;
+      max-width: 180px;
+      height: 48px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s ease;
+      box-sizing: border-box;
+      text-align: center;
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .btn.main {
+      background: #00bfa5;
+      color: #fff;
+    }
+
+    .btn.main:hover {
+      background: #00a890;
+    }
+
+    .btn.sub {
+      background: #ffd84d;
+      color: #333;
+    }
+
+    .btn.sub:hover {
+      background: #ffcc33;
+    }
+
+    #fav-btn.active {
+      background: #ffd000;
+    }
+/* === ボタンエリア統一デザイン === */
+.btn-area.compact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  max-width: 180px;
+  height: 48px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+}
+
+/* ✅ 黄色（ルール詳細へ戻る・詳細と処置方法・トップへ） */
+.btn.main {
+  background: #ffd84d;
+  color: #333;
+}
+.btn.main:hover {
+  background: #ffcc33;
+}
+
+/* ✅ 緑（お気に入り登録ボタン） */
+.btn.sub {
+  background: #00bfa5;
+  color: #fff;
+}
+.btn.sub:hover {
+  background: #00a890;
+}
+
+/* ✅ 登録済み（お気に入り済） */
+#fav-btn.active {
+  background: #00a080;
+}
+    .bottom-nav img {
+  width: 76px; /* ← ここを38px→76pxに変更 */
+  height: auto;
+}
+  </style>
+</head>
+
+<body>
+  <header>3タップルールズ</header>
+
+  <main>
+    <h2 id="rule-title"></h2>
+
+    <div class="section-box green">
+      <h3>正しい処置方法</h3>
+      <p id="rule-detail"></p>
+    </div>
+
+    <div class="section-box red">
+      <h3>処置を誤った場合のペナルティ</h3>
+      <p id="rule-penalty"></p>
+    </div>
+
+    <div class="section-box green">
+      <h3>補足・豆知識</h3>
+      <p id="rule-extra"></p>
+    </div>
+
+    <div class="btn-area compact">
+      <button id="back-btn" class="btn main">← ルール詳細へ戻る</button>
+      <button id="fav-btn" class="btn sub">⭐ お気に入り登録</button>
+      <button id="top-btn" class="btn main">トップへ戻る</button>
+    </div>
+  </main>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const $ = (id) => document.getElementById(id);
+
+    try {
+      const res = await fetch(`rules.json?v=${Date.now()}`);
+      const data = await res.json();
+      const rules = Array.isArray(data) ? data : data.rules;
+
+      const params = new URLSearchParams(location.search);
+      const id = parseInt(params.get("id"), 10);
+      const rule = rules.find((r) => r.id === id);
+
+      if (!rule) {
+        $("rule-detail").textContent = "ルールが見つかりません。";
+        return;
+      }
+
+      $("rule-title").textContent = rule.title || "（ルール名不明）";
+      $("rule-detail").textContent = rule.detail || "詳細情報は登録されていません。";
+      $("rule-penalty").textContent = rule.penalty || "特に罰はありません。";
+      $("rule-extra").textContent = rule.extra || "補足情報はありません。";
+
+      // 戻るボタン
+      $("back-btn").addEventListener("click", () => history.back());
+
+      // トップへ
+      $("top-btn").addEventListener("click", () => (location.href = "index.html"));
+
+      // お気に入り登録
+      const favBtn = $("fav-btn");
+      if (favBtn) {
+        let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+        const setFavUI = (on) => {
+          if (on) {
+            favBtn.textContent = "⭐ 登録済み";
+            favBtn.classList.add("active");
+          } else {
+            favBtn.textContent = "⭐ お気に入り登録";
+            favBtn.classList.remove("active");
+          }
+        };
+
+        setFavUI(favorites.includes(rule.id));
+
+        favBtn.addEventListener("click", () => {
+          favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+          if (favorites.includes(rule.id)) {
+            favorites = favorites.filter((x) => x !== rule.id);
+            setFavUI(false);
+          } else {
+            favorites.push(rule.id);
+            setFavUI(true);
+          }
+          localStorage.setItem("favorites", JSON.stringify(favorites));
+        });
+      }
+
+    } catch (e) {
+      console.error(e);
+      $("rule-detail").textContent = "データ読み込みエラー。";
+    }
+  });
+  </script>
 </body>
 </html>

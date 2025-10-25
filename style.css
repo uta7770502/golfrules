@@ -386,12 +386,4 @@ button:hover, .btn:hover, .back-btn:hover {
     width: 100%;
     max-width: 340px;
   }
-.penalty {
-  color: #d50000; /* 赤 */
-  font-weight: bold;
-}
-.penalty-text {
-  margin-top: 4px;
-  color: #d50000;
-  font-weight: bold;
 }
