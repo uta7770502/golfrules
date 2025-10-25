@@ -154,6 +154,59 @@ summary {
 details[open] summary {
   background: #00997f;
 }
+    .rule-section-title {
+  text-align: center;
+  font-size: 20px;
+  color: #007f3b;
+  margin: 25px 0 10px;
+  font-weight: bold;
+}
+
+details.rule-group {
+  background: #fff;
+  border-radius: 10px;
+  margin: 10px auto;
+  width: 90%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+summary {
+  font-weight: bold;
+  background: #00bfa5;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+  user-select: none;
+  font-size: 17px;
+}
+
+details[open] summary {
+  background: #00997f;
+}
+
+.rule-item {
+  border-top: 1px solid #eee;
+  padding: 10px 15px;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.rule-item:hover {
+  background: #eaf9e6;
+}
+
+.local-badge {
+  display: inline-block;
+  background-color: #ffeaa7;
+  color: #444;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
   </style>
 </head>
 <body>
@@ -180,35 +233,47 @@ document.addEventListener("DOMContentLoaded", async () => {
     const res = await fetch(basePath + "rules.json?v=" + Date.now());
     const rules = await res.json();
 
-    // ✅ カテゴリーでグループ化（種類・場所共通で）
-    const grouped = {};
-    rules.forEach(rule => {
-      const cat = rule.category || "その他";
-      if (!grouped[cat]) grouped[cat] = [];
-      grouped[cat].push(rule);
-    });
+    // ✅ トップページと完全連動するカテゴリを定義
+    const validCategories = {
+      "場所で探す": ["ティー", "フェアウェイ", "ラフ", "バンカー", "グリーン上"],
+      "種類で探す": ["基本ルール", "ローカルルール", "コンペルール", "マナー・エチケット", "クラブ"]
+    };
 
-    // ✅ URLパラメータ（トップページ連動）
+    // ✅ URLパラメータ（トップページから遷移時に使う）
     const params = new URLSearchParams(window.location.search);
     const selectedCategory = params.get("category") || "";
 
-    // ✅ HTML生成（選択カテゴリーだけopen）
-    results.innerHTML = Object.keys(grouped).map(cat => `
-      <details class="rule-group" ${cat === selectedCategory ? "open" : ""}>
-        <summary>${cat}</summary>
-        ${grouped[cat].map(r => `
-          <div class="rule-item" onclick="location.href='rule_detail.html?id=${r.id}'">
-            <strong>${r.title}</strong>
-            ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ''}
-            <p>${r.description}</p>
-          </div>
-        `).join("")}
-      </details>
-    `).join("");
+    // ✅ グループを「場所」「種類」で構成
+    const sections = Object.entries(validCategories).map(([groupTitle, cats]) => {
+      const innerHTML = cats.map(cat => {
+        const filtered = rules.filter(r => r.category === cat);
+        if (!filtered.length) return ""; // 該当ルールなしなら非表示
+
+        return `
+          <details class="rule-group" ${cat === selectedCategory ? "open" : ""}>
+            <summary>${cat}</summary>
+            ${filtered.map(r => `
+              <div class="rule-item" onclick="location.href='rule_detail.html?id=${r.id}'">
+                <strong>${r.title}</strong>
+                ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ''}
+                <p>${r.description}</p>
+              </div>
+            `).join("")}
+          </details>
+        `;
+      }).join("");
+
+      return `
+        <h2 class="rule-section-title">${groupTitle}</h2>
+        <div class="rule-section">${innerHTML}</div>
+      `;
+    }).join("");
+
+    results.innerHTML = sections;
 
   } catch (err) {
-    console.error(err);
-    results.innerHTML = "<p>ルールを読み込めませんでした。</p>";
+    console.error("読み込みエラー:", err);
+    results.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
   }
 });
 </script>
