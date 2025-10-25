@@ -32,16 +32,29 @@
       gap: 10px;
     }
 
-    .fav-item {
-      background: #fff;
-      border-radius: 6px;
-      padding: 12px;
-      border: 1px solid #ddd;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-    .fav-item:hover { background: #eaf9e6; }
+    /* ✅ お気に入り一覧ページ：ルール一覧と統一デザイン */
+.favorite-item {
+  display: block;
+  width: 90%;
+  max-width: 500px;
+  margin: 10px auto;
+  padding: 14px 0;
+  text-align: center;
+  background: #fff;
+  color: #333;
+  border-radius: 25px; /* ← 丸ボタン化 */
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.favorite-item:hover {
+  background: #eaf9e6;
+  transform: translateY(-2px);
+}
 
     .empty {
       text-align: center;
