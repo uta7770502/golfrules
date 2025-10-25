@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // ✅ HTML生成（補足は完全削除）
+    // ✅ 補足・豆知識を除いた構成
     detail.innerHTML = `
       <h1>${rule.title}</h1>
       <p class="desc">${rule.description || ""}</p>
@@ -142,7 +142,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         <h2>ペナルティ</h2>
         <p>${rule.penalty}</p>
       </div>` : ""}
+
+      ${rule.example ? `
+      <div class="section">
+        <h2>具体例</h2>
+        <p>${rule.example}</p>
+      </div>` : ""}
+
+      ${rule.note ? `
+      <div class="section">
+        <h2>注意点</h2>
+        <p>${rule.note}</p>
+      </div>` : ""}
     `;
+    // ⚠️ rule.supplement / rule.tips / rule.bean は一切使わない
 
   } catch (e) {
     detail.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
