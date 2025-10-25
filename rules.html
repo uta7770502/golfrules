@@ -96,7 +96,7 @@
     const title = document.getElementById("categoryName");
 
     try {
-      const res = await fetch("rules_v2.json?v=" + Date.now());
+      const res = await fetch("rules.json?v=" + Date.now());
       const rules = await res.json();
 
       // ✅ カテゴリに一致するルールのみ抽出
