@@ -131,7 +131,43 @@ body {
     <a href="rules.html"><img src="book-icon.png" alt="ルール一覧" /></a>
     <a href="favorites.html"><img src="star-icon.png" alt="お気に入り" /></a>
   </nav>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const results = document.getElementById("search-results");
 
+  try {
+    const basePath = window.location.pathname.replace(/\/[^\/]*$/, "/");
+    const res = await fetch(basePath + "rules.json?v=" + Date.now());
+    const rules = await res.json();
+
+    // ✅ カテゴリーごとにグループ化
+    const grouped = {};
+    rules.forEach(rule => {
+      const cat = rule.category || "その他";
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push(rule);
+    });
+
+    // ✅ 折りたたみリスト生成
+    results.innerHTML = Object.keys(grouped).map(cat => `
+      <details class="rule-group">
+        <summary>${cat}</summary>
+        ${grouped[cat].map(r => `
+          <div class="rule-item" onclick="location.href='rule_detail.html?id=${r.id}'">
+            <strong>${r.title}</strong>
+            ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ''}
+            <p>${r.description}</p>
+          </div>
+        `).join("")}
+      </details>
+    `).join("");
+
+  } catch (err) {
+    console.error(err);
+    results.innerHTML = "<p>ルールを読み込めませんでした。</p>";
+  }
+});
+</script>
   <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const input = document.getElementById("searchInput");
