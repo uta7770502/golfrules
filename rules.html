@@ -133,53 +133,56 @@ document.addEventListener("DOMContentLoaded", async () => {
   const listContainer = document.getElementById("rules-list");
   const searchInput = document.getElementById("searchInput");
 
-  try {
-    // ✅ キャッシュ回避＋両方のJSONに対応
-    const urls = [
-      "rules_v2.json?v=" + Date.now(),
-      "rules.json?v=" + Date.now()
-    ];
-
-    let rules = null;
-    for (const url of urls) {
-      const res = await fetch(url);
-      if (res.ok) {
-        rules = await res.json();
-        break;
-      }
+  const tryFetch = async (url) => {
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
     }
+  };
 
-    if (!rules) throw new Error("データなし");
+  const urls = [
+    "./rules_v2.json",
+    "./rules.json",
+    "https://uta7770502.github.io/rules_v2.json",
+    "https://uta7770502.github.io/rules.json"
+  ];
 
-    // ✅ 一覧描画
-    renderList(rules);
+  let rules = null;
+  for (const u of urls) {
+    rules = await tryFetch(u + "?v=" + Date.now());
+    if (rules) break;
+  }
 
-    // 🔍 検索機能
-    searchInput.addEventListener("input", () => {
-      const q = searchInput.value.trim().toLowerCase();
-      const filtered = rules.filter(r =>
-        r.title.toLowerCase().includes(q) ||
-        (r.description && r.description.toLowerCase().includes(q))
-      );
-      renderList(filtered);
-    });
+  if (!rules) {
+    listContainer.innerHTML = "<p>ルールを読み込めませんでした。</p>";
+    return;
+  }
 
-    function renderList(list) {
-      if (!list.length) {
-        listContainer.innerHTML = "<p>該当するルールがありません。</p>";
-        return;
-      }
-      listContainer.innerHTML = list.map(r => `
-        <div class="rule-card" onclick="location.href='rule.html?id=${r.id}'">
-          ${r.title}
-        </div>
-      `).join("");
+  renderList(rules);
+
+  // 🔍 検索機能
+  searchInput.addEventListener("input", () => {
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = rules.filter(r =>
+      r.title.toLowerCase().includes(q) ||
+      (r.description && r.description.toLowerCase().includes(q))
+    );
+    renderList(filtered);
+  });
+
+  function renderList(list) {
+    if (!list.length) {
+      listContainer.innerHTML = "<p>該当するルールがありません。</p>";
+      return;
     }
-
-  } catch (err) {
-    console.error("読み込みエラー:", err);
-    document.getElementById("rules-list").innerHTML =
-      "<p>ルールを読み込めませんでした。</p>";
+    listContainer.innerHTML = list.map(r => `
+      <div class="rule-card" onclick="location.href='rule.html?id=${r.id}'">
+        ${r.title}
+      </div>
+    `).join("");
   }
 });
 </script>
