@@ -134,22 +134,32 @@ document.addEventListener("DOMContentLoaded", async () => {
   const searchInput = document.getElementById("searchInput");
 
   try {
-    // ✅ GitHub Pages対応: 現在のURLパスから正しい相対パスを生成
-    const basePath = window.location.pathname.replace(/\/[^\/]*$/, "/");
+    // ✅ キャッシュ回避＋両方のJSONに対応
+    const urls = [
+      "rules_v2.json?v=" + Date.now(),
+      "rules.json?v=" + Date.now()
+    ];
 
-    let res = await fetch(basePath + "rules_v2.json?v=" + Date.now());
-    if (!res.ok) res = await fetch(basePath + "rules.json?v=" + Date.now());
-    if (!res.ok) throw new Error("ルールデータを取得できませんでした");
+    let rules = null;
+    for (const url of urls) {
+      const res = await fetch(url);
+      if (res.ok) {
+        rules = await res.json();
+        break;
+      }
+    }
 
-    const rules = await res.json();
+    if (!rules) throw new Error("データなし");
+
+    // ✅ 一覧描画
     renderList(rules);
 
     // 🔍 検索機能
     searchInput.addEventListener("input", () => {
-      const query = searchInput.value.trim().toLowerCase();
+      const q = searchInput.value.trim().toLowerCase();
       const filtered = rules.filter(r =>
-        r.title.toLowerCase().includes(query) ||
-        (r.description && r.description.toLowerCase().includes(query))
+        r.title.toLowerCase().includes(q) ||
+        (r.description && r.description.toLowerCase().includes(q))
       );
       renderList(filtered);
     });
@@ -166,9 +176,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       `).join("");
     }
 
-  } catch (e) {
-    console.error(e);
-    listContainer.innerHTML = "<p>ルールを読み込めませんでした。</p>";
+  } catch (err) {
+    console.error("読み込みエラー:", err);
+    document.getElementById("rules-list").innerHTML =
+      "<p>ルールを読み込めませんでした。</p>";
   }
 });
 </script>
