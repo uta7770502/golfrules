@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const res = await fetch(basePath + "rules.json?v=" + Date.now());
     const rules = await res.json();
 
-    // ✅ カテゴリーごとにグループ化
+    // ✅ カテゴリーでグループ化
     const grouped = {};
     rules.forEach(rule => {
       const cat = rule.category || "その他";
@@ -168,9 +168,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       grouped[cat].push(rule);
     });
 
-    // ✅ 折りたたみリスト生成
+    // ✅ URLパラメータ（トップページ連携）
+    const params = new URLSearchParams(window.location.search);
+    const selectedCategory = params.get("category") || "";
+
+    // ✅ HTML生成（選択カテゴリーのみopen）
     results.innerHTML = Object.keys(grouped).map(cat => `
-      <details class="rule-group">
+      <details class="rule-group" ${cat === selectedCategory ? "open" : ""}>
         <summary>${cat}</summary>
         ${grouped[cat].map(r => `
           <div class="rule-item" onclick="location.href='rule_detail.html?id=${r.id}'">
@@ -188,65 +192,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 </script>
-  <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const input = document.getElementById("searchInput");
-  const results = document.getElementById("search-results");
-
-  try {
-    const basePath = window.location.pathname.replace(/\/[^\/]*$/, "/");
-    const res = await fetch(basePath + "rules.json?v=" + Date.now());
-    if (!res.ok) throw new Error("HTTP status " + res.status);
-    const rules = await res.json();
-
-    rules.sort((a, b) => a.title.localeCompare(b.title, "ja"));
-    renderList(rules);
-
-    const params = new URLSearchParams(window.location.search);
-    const q = (params.get("q") || "").toLowerCase();
-    const category = (params.get("category") || "").toLowerCase();
-
-    if (q || category) {
-      const filtered = rules.filter(r =>
-        (q && (
-          (r.title && r.title.toLowerCase().includes(q)) ||
-          (r.description && r.description.toLowerCase().includes(q))
-        )) ||
-        (category && (
-          (r.category && r.category.toLowerCase().includes(category))
-        ))
-      );
-      renderList(filtered);
-    }
-
-    input.addEventListener("input", (e) => {
-      const q = e.target.value.trim().toLowerCase();
-      const filtered = rules.filter(r =>
-        r.title.toLowerCase().includes(q) ||
-        r.description.toLowerCase().includes(q)
-      );
-      renderList(filtered);
-    });
-
-  } catch (err) {
-    console.error("読み込みエラー:", err);
-    results.innerHTML = "<p>ルールデータを読み込めませんでした。</p>";
-  }
-
-  function renderList(list) {
-    if (!list.length) {
-      results.innerHTML = "<p>該当するルールがありません。</p>";
-      return;
-    }
-    results.innerHTML = list.map(r => `
-      <div class="rule-item" onclick="location.href='rule_detail.html?id=${r.id}'">
-        <strong>${r.title}</strong>
-        ${r.isLocal ? '<span class="local-badge">ローカル</span>' : ''}
-        <p>${r.description}</p>
-      </div>
-    `).join("");
-  }
-});
-  </script>
 </body>
 </html>
