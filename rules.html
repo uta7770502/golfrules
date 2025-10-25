@@ -77,45 +77,91 @@
 </head>
 
 <body>
-  <header>3タップルールズ</header>
+  <!-- ✅ header -->
+<header>3タップルールズ</header>
 
-  <div id="categoryName" class="category-title"></div>
-  <div id="ruleList" class="rule-list"></div>
+<!-- ✅ トップへ戻るボタン -->
+<button class="btn main" onclick="location.href='index.html'">トップへ戻る</button>
 
-  <nav class="bottom-nav">
-    <a href="index.html"><img src="home-icon.png" alt="ホーム"></a>
-    <a href="rules.html"><img src="book-icon.png" alt="ルール一覧"></a>
-    <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
-  </nav>
+<!-- ✅ 検索ボックス -->
+<div id="searchArea">
+  <input id="searchInput" type="text" placeholder="ルールを検索..." />
+</div>
 
-  <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const params = new URLSearchParams(window.location.search);
-    const category = params.get("category");
-    const list = document.getElementById("ruleList");
-    const title = document.getElementById("categoryName");
+<!-- ✅ ルール一覧表示 -->
+<main id="rulesList"></main>
 
-    try {
-      const res = await fetch("rules.json?v=" + Date.now());
-      const rules = await res.json();
+<!-- ✅ スクリプト -->
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const list = document.getElementById("rulesList");
+  const input = document.getElementById("searchInput");
 
-      // ✅ カテゴリに一致するルールのみ抽出
-      const filtered = category
-        ? rules.filter(r => r.category === category)
-        : rules;
+  let rules = [];
 
-      title.textContent = category || "すべてのルール";
-      list.innerHTML = filtered.map(r => `
-        <div class="rule-item" onclick="location.href='rule_detail.html?id=${r.id}'">
-          ${r.title}
-        </div>
-      `).join("");
+  try {
+    // ✅ メインは rules.json
+    const res = await fetch("rules.json?v=" + Date.now());
+    if (res.ok) rules = await res.json();
 
-    } catch (err) {
-      list.innerHTML = "<p>ルールを読み込めませんでした。</p>";
-      console.error(err);
-    }
+    // ✅ v2 があれば上書き
+    const resV2 = await fetch("rules_v2.json?v=" + Date.now());
+    if (resV2.ok) rules = await resV2.json();
+  } catch (e) {
+    list.innerHTML = "<p style='text-align:center;'>ルールを読み込めませんでした。</p>";
+    return;
+  }
+
+  // ✅ 初期表示
+  renderRules(rules);
+
+  // ✅ 検索イベント
+  input.addEventListener("input", () => {
+    const q = input.value.trim();
+    const filtered = rules.filter(r =>
+      r.title.includes(q) || r.description.includes(q)
+    );
+    renderRules(filtered);
   });
-  </script>
+
+  function renderRules(items) {
+    if (items.length === 0) {
+      list.innerHTML = "<p style='text-align:center;'>該当するルールがありません。</p>";
+      return;
+    }
+    list.innerHTML = items.map(r => `
+      <div class="rule-card" onclick="location.href='rule.html?id=${r.id}'">
+        ${r.title}
+      </div>
+    `).join("");
+  }
+});
+</script>
+
+<style>
+main#rulesList {
+  width: 90%;
+  max-width: 500px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rule-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 14px;
+  font-size: 17px;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.rule-card:hover {
+  background: #f0fff5;
+  transform: translateY(-2px);
+}
+</style>
 </body>
 </html>
