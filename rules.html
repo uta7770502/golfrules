@@ -115,7 +115,18 @@ body {
       transform: translateY(-2px);
     }
   </style>
-  <style>
+</head>
+<body>
+  <header>ルール一覧</header>
+  <a href="index.html" class="back-btn">トップへ戻る</a>
+
+  <div id="searchArea">
+    <input id="searchInput" type="text" placeholder="ルールを検索..." />
+  </div>
+
+  <main id="rules-list"></main>
+
+<style>
 /* ✅ お気に入り一覧と統一した1行デザイン */
 .rule-card {
   display: block;
@@ -140,14 +151,6 @@ body {
   transform: translateY(-2px);
 }
 </style>
-</head>
-<body>
-  <header>ルール一覧</header>
-  <a href="index.html" class="back-btn">トップへ戻る</a>
-
-  <div id="searchArea">
-    <input id="searchInput" type="text" placeholder="ルールを検索..." />
-  </div>
 
   <div id="search-results"></div>
 
