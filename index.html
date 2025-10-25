@@ -187,17 +187,19 @@ section:nth-of-type(1) {
   background: #eaf9e6;
   transform: translateY(-2px);
 }
-    /* 「種類で探す」ボタン（右列）を個別指定 */
+    /* 🟨 基本ルールボタン：黄色背景＋濃いグリーン文字 */
+.by-type .button-group button:first-child {
+  background: #FFD84D !important; /* 黄色 */
+  color: #00997f !important;      /* 濃いグリーン文字 */
+}
+
+/* 🟩 ローカルルール・コンペルール・マナー・クラブ：濃いグリーン背景 */
 .by-type .button-group button:nth-child(2),  /* ローカルルール */
 .by-type .button-group button:nth-child(3),  /* コンペルール */
 .by-type .button-group button:nth-child(4),  /* マナー・エチケット */
 .by-type .button-group button:nth-child(5) { /* クラブ */
-  background: #00997f !important; /* ← 少し濃いグリーン */
-}
-    /* 🟨 ルール一覧ボタン → 黄色背景＋グリーン文字 */
-.btn.main {
-  background: #FFD84D;
-  color: ##00997f;
+  background: #00997f !important; /* 少し濃いグリーン */
+  color: #fff !important;         /* 白文字で読みやすく */
 }
     
   </style>
