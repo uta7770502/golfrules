@@ -129,45 +129,48 @@
   </nav>
 
   <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const listContainer = document.getElementById("rules-list");
-    const searchInput = document.getElementById("searchInput");
+document.addEventListener("DOMContentLoaded", async () => {
+  const listContainer = document.getElementById("rules-list");
+  const searchInput = document.getElementById("searchInput");
 
-    try {
-      // ✅ v2があれば優先読み込み
-      let res = await fetch("rules_v2.json");
-      if (!res.ok) res = await fetch("rules.json");
-      const rules = await res.json();
+  try {
+    // ✅ GitHub Pages対応: 現在のURLパスから正しい相対パスを生成
+    const basePath = window.location.pathname.replace(/\/[^\/]*$/, "/");
 
-      renderList(rules);
+    let res = await fetch(basePath + "rules_v2.json?v=" + Date.now());
+    if (!res.ok) res = await fetch(basePath + "rules.json?v=" + Date.now());
+    if (!res.ok) throw new Error("ルールデータを取得できませんでした");
 
-      // 🔍 検索機能
-      searchInput.addEventListener("input", () => {
-        const query = searchInput.value.trim().toLowerCase();
-        const filtered = rules.filter(r =>
-          r.title.toLowerCase().includes(query) ||
-          (r.description && r.description.toLowerCase().includes(query))
-        );
-        renderList(filtered);
-      });
+    const rules = await res.json();
+    renderList(rules);
 
-      function renderList(list) {
-        if (!list.length) {
-          listContainer.innerHTML = "<p>該当するルールがありません。</p>";
-          return;
-        }
-        listContainer.innerHTML = list.map(r => `
-          <div class="rule-card" onclick="location.href='rule.html?id=${r.id}'">
-            ${r.title}
-          </div>
-        `).join("");
+    // 🔍 検索機能
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLowerCase();
+      const filtered = rules.filter(r =>
+        r.title.toLowerCase().includes(query) ||
+        (r.description && r.description.toLowerCase().includes(query))
+      );
+      renderList(filtered);
+    });
+
+    function renderList(list) {
+      if (!list.length) {
+        listContainer.innerHTML = "<p>該当するルールがありません。</p>";
+        return;
       }
-
-    } catch (e) {
-      console.error(e);
-      listContainer.innerHTML = "<p>ルールを読み込めませんでした。</p>";
+      listContainer.innerHTML = list.map(r => `
+        <div class="rule-card" onclick="location.href='rule.html?id=${r.id}'">
+          ${r.title}
+        </div>
+      `).join("");
     }
-  });
-  </script>
+
+  } catch (e) {
+    console.error(e);
+    listContainer.innerHTML = "<p>ルールを読み込めませんでした。</p>";
+  }
+});
+</script>
 </body>
 </html>
