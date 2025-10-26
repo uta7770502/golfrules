@@ -123,7 +123,7 @@
     const btn     = document.getElementById("goDetail");
 
     try {
-      const res = await fetch("https://uta7770502.github.io/rules.json?v=" + Date.now());
+      const res = await fetch("rules.json?v=" + Date.now());
       if (!res.ok) throw new Error("fetch failed");
       const rules = await res.json();
 
