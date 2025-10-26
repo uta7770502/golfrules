@@ -38,45 +38,51 @@
   </nav>
 
   <script>
-    (async () => {
-      const params = new URLSearchParams(location.search);
-      const id = params.get("id");
-      const titleEl = document.getElementById("ruleTitle");
-      const descEl  = document.getElementById("ruleDesc");
-      const metaEl  = document.getElementById("ruleMeta");
-      const btn     = document.getElementById("goDetail");
+(async () => {
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id");
+  const titleEl = document.getElementById("ruleTitle");
+  const descEl  = document.getElementById("ruleDesc");
+  const metaEl  = document.getElementById("ruleMeta");
+  const btn     = document.getElementById("goDetail");
 
-      try {
-        const urls = [
-  "https://uta7770502.github.io/rules_v2.json?v=" + Date.now(),
-  "https://uta7770502.github.io/rules.json?v=" + Date.now()
-];
-        let rules = null;
-        for (const u of urls) {
-          const r = await fetch(u);
-          if (r.ok) { rules = await r.json(); break; }
-        }
-        if (!rules) throw new Error("no rules");
+  try {
+    // ✅ fetch前に確実な絶対パスを組み立てる
+    const basePath = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, "/");
+    const urls = [
+      basePath + "rules_v2.json?v=" + Date.now(),
+      basePath + "rules.json?v=" + Date.now()
+    ];
 
-        // ✅ IDで検索
-        const rule = rules.find(r => String(r.id) === String(id));
-        if (!rule) throw new Error("not found");
-
-        titleEl.textContent = rule.title || "ルール";
-        descEl.textContent  = rule.description || rule.detail || "説明がありません";
-        metaEl.textContent  = rule.category ? `カテゴリ：${rule.category}` : "";
-
-        // ✅ 次ページリンク
-        btn.href = `rule_detail.html?id=${encodeURIComponent(rule.id)}`;
-
-      } catch (e) {
-        titleEl.textContent = "ルールの読み込みに失敗しました";
-        descEl.textContent  = "";
-        btn.style.display = "none";
-        console.error(e);
+    let rules = null;
+    for (const u of urls) {
+      const res = await fetch(u, { headers: { "Accept": "application/json" } });
+      if (res.ok) {
+        rules = await res.json();
+        break;
       }
-    })();
-  </script>
+    }
+    if (!rules) throw new Error("no rules");
+
+    // ✅ IDで検索
+    const rule = rules.find(r => String(r.id) === String(id));
+    if (!rule) throw new Error("not found");
+
+    titleEl.textContent = rule.title || "ルール";
+    descEl.textContent  = rule.description || rule.detail || "説明がありません";
+    metaEl.textContent  = rule.category ? `カテゴリ：${rule.category}` : "";
+
+    // ✅ ボタンリンク設定
+    btn.href = `rule_detail.html?id=${encodeURIComponent(rule.id)}`;
+
+  } catch (e) {
+    titleEl.textContent = "ルールの読み込みに失敗しました";
+    descEl.textContent  = "";
+    btn.style.display = "none";
+    console.error("読み込みエラー:", e);
+  }
+})();
+</script>
 </body>
 </html>
 </html>
