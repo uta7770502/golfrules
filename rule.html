@@ -8,83 +8,51 @@
   <style>
     body{background:#f9fff9;font-family:"Helvetica",sans-serif;margin:0;padding-bottom:90px}
     header{background:#00bfa5;color:#fff;text-align:center;padding:16px 0;font-size:24px;font-weight:bold;border-bottom-left-radius:25px;border-bottom-right-radius:25px}
-    .card{background:#fff;border:1px solid #e6e6e6;border-radius:20px;margin:18px 16px;padding:18px 16px;box-shadow:0 4px 10px rgba(0,0,0,.06)}
+    .card{background:#fff;border-radius:20px;margin:18px 16px;padding:18px 16px;box-shadow:0 4px 10px rgba(0,0,0,.06)}
     .title{font-size:26px;font-weight:800;color:#0f8a62;margin:12px 16px 0}
     .desc{font-size:18px;line-height:1.7;color:#222;margin:6px 0 0}
     .meta{color:#666;font-size:14px;margin:0 0 6px}
     .btn-main{display:block;width:82%;max-width:520px;margin:18px auto;background:#FFD84D;color:#00997f;font-weight:800;text-align:center;border-radius:40px;padding:14px 16px;border:none;box-shadow:0 6px 14px rgba(0,0,0,.12);text-decoration:none}
     .btn-main:active{transform:translateY(1px)}
     .bottom-nav{position:fixed;left:0;bottom:0;width:100%;height:70px;background:#fff;border-top:1px solid #ddd;display:flex;justify-content:space-around;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.05);z-index:1000}
-    .bottom-nav a{display:flex;align-items:center;justify-content:center;text-decoration:none;height:100%;width:33.33%}
-    .bottom-nav img{width:50px;height:auto;display:block}
+    .bottom-nav img{width:50px;height:auto}
   </style>
 </head>
 <body>
   <header>3タップルールズ</header>
-
   <h1 id="ruleTitle" class="title"></h1>
-
   <section class="card">
     <div id="ruleMeta" class="meta"></div>
     <p id="ruleDesc" class="desc"></p>
   </section>
-
   <a id="goDetail" class="btn-main" href="#">ペナルティと処置方法 →</a>
-
   <nav class="bottom-nav">
     <a href="index.html"><img src="home-icon.png" alt="ホーム"></a>
     <a href="rules.html"><img src="book-icon.png" alt="ルール一覧"></a>
     <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
   </nav>
 
-  <!-- ✅ JSONを直接埋め込み（CORS対策） -->
-  <script type="application/json" id="rulesData">
-    [
-      {
-        "id": 1,
-        "title": "ティーショットで空振り",
-        "category": "ティー",
-        "description": "空振りは1打に数える。ティーショットでも同様。",
-        "detail": "ストロークの意志があればカウントされる。",
-        "procedure": "再度ティーアップして打ち直し。",
-        "mistakePenalty": "なし"
-      },
-      {
-        "id": 2,
-        "title": "ティーマークの間と後方2クラブ",
-        "category": "ティー",
-        "description": "ティーアップできる範囲はティーマークの間と後方2クラブ以内。",
-        "detail": "エリア外からのショットはペナルティ。",
-        "procedure": "再度正しい場所からプレー。1打罰。"
-      }
-    ]
-  </script>
-
   <script>
-  (() => {
-    const params = new URLSearchParams(location.search);
-    const id = params.get("id");
-    const titleEl = document.getElementById("ruleTitle");
-    const descEl  = document.getElementById("ruleDesc");
-    const metaEl  = document.getElementById("ruleMeta");
-    const btn     = document.getElementById("goDetail");
+  (async()=>{
+    const id=new URLSearchParams(location.search).get("id");
+    const title=document.getElementById("ruleTitle");
+    const desc=document.getElementById("ruleDesc");
+    const meta=document.getElementById("ruleMeta");
+    const btn=document.getElementById("goDetail");
 
-    try {
-      const rulesText = document.getElementById("rulesData").textContent;
-      const rules = JSON.parse(rulesText);
-      const rule = rules.find(r => String(r.id) === String(id));
-
-      if (!rule) throw new Error("not found");
-
-      titleEl.textContent = rule.title || "ルール";
-      descEl.textContent  = rule.description || rule.detail || "説明がありません";
-      metaEl.textContent  = rule.category ? `カテゴリ：${rule.category}` : "";
-      btn.href = `rule_detail.html?id=${encodeURIComponent(rule.id)}`;
-
-    } catch (e) {
-      titleEl.textContent = "ルールの読み込みに失敗しました";
-      btn.style.display = "none";
-      console.error(e);
+    try{
+      const res=await fetch("rules.json?v="+Date.now());
+      const rules=await res.json();
+      const r=rules.find(x=>String(x.id)===String(id));
+      if(!r)throw new Error();
+      title.textContent=r.title;
+      desc.textContent=r.description;
+      meta.textContent="カテゴリ："+r.category;
+      if(!r.penalty&&!r.procedure) btn.style.display="none";
+      else btn.href="rule_detail.html?id="+encodeURIComponent(id);
+    }catch(e){
+      title.textContent="ルールの読み込みに失敗しました";
+      btn.style.display="none";
     }
   })();
   </script>
