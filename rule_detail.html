@@ -61,14 +61,9 @@
       const penEl   = document.getElementById("penBody");
       const backBtn = document.getElementById("backBtn");
 
-      try {
-        const urls = ["rules_v2.json","rules.json"].map(u => `${u}?v=${Date.now()}`);
-        let rules = null;
-        for (const u of urls) {
-          const r = await fetch(u);
-          if (r.ok) { rules = await r.json(); break; }
-        }
-        if (!rules) throw new Error("no rules");
+      const res = await fetch("rules.json?v=" + Date.now());
+　　　　if (!res.ok) throw new Error("fetch failed");
+　　　　const rules = await res.json();
 
         const rule = rules.find(r => String(r.id) === String(id));
         if (!rule) throw new Error("not found");
