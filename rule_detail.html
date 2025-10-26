@@ -57,14 +57,16 @@
 
   // 🧩 ペナルティ自動補完関数
   function inferPenalty(rule){
-    const text = [rule.title, rule.description, rule.detail].filter(Boolean).join(" ");
-    if (text.match(/空振り|ストローク|スイング/)) return "1打罰。";
-    if (text.match(/ロスト|OB|白杭|紛失/)) return "1打罰。";
-    if (text.match(/誤球|誤所/)) return "2打罰。";
-    if (text.match(/アンプレヤブル/)) return "1打罰。";
-    if (text.match(/救済|修理地|カジュアル|障害物/)) return "無罰。";
-    return "";
-  }
+  const text = [rule.title, rule.description, rule.detail].filter(Boolean).join(" ");
+  // 1打罰系を先に
+  if (text.match(/空振り|ストローク|スイング/)) return "1打罰。";
+  if (text.match(/ロスト|OB|白杭|紛失/)) return "1打罰。";
+  if (text.match(/アンプレヤブル/)) return "1打罰。";
+  if (text.match(/誤球|誤所/)) return "2打罰。";
+  // 無罰系は最後に
+  if (text.match(/救済|修理地|カジュアル|障害物|無罰/)) return "無罰。";
+  return "";
+}
 
   // 🧠 JSON取得と表示処理
   (async () => {
