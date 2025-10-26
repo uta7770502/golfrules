@@ -70,9 +70,10 @@
     const btn     = document.getElementById("goDetail");
 
     try {
-      const rulesText = document.getElementById("rulesData").textContent;
-      const rules = JSON.parse(rulesText);
-      const rule = rules.find(r => String(r.id) === String(id));
+  const res = await fetch("https://uta7770502.github.io/rules.json?v=" + Date.now());
+  if (!res.ok) throw new Error("fetch failed");
+  const rules = await res.json();
+  const rule = rules.find(r => String(r.id) === String(id));
 
       if (!rule) throw new Error("not found");
 
