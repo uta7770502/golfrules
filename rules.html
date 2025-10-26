@@ -167,9 +167,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const searchInput = document.getElementById("searchInput");
 
   try {
-    const res = await fetch("rules.json?v=" + Date.now());
-    if (!res.ok) throw new Error("ルールファイルが読み込めません");
-    const rules = await res.json();
+  const res = await fetch("rules.json?v=" + Date.now());
+  if (!res.ok) throw new Error("ルールデータが読み込めませんでした");
+  const rules = await res.json();
 
     renderList(rules);
 
