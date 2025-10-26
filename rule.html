@@ -22,41 +22,6 @@
   <header>3タップルールズ</header>
   <h1 id="ruleTitle" class="title"></h1>
   <section class="card">
-    <div id="ruleMeta" class="meta"></div>
-    <p id="ruleDesc" class="desc"></p>
-  </section>
-  <a id="goDetail" class="btn-main" href="#">ペナルティと処置方法 →</a>
-  <nav class="bottom-nav">
-    <a href="index.html"><img src="home-icon.png" alt="ホーム"></a>
-    <a href="rules.html"><img src="book-icon.png" alt="ルール一覧"></a>
-    <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
-  </nav>
-
-  <script>
-  (async()=>{
-    const id=new URLSearchParams(location.search).get("id");
-    const title=document.getElementById("ruleTitle");
-    const desc=document.getElementById("ruleDesc");
-    const meta=document.getElementById("ruleMeta");
-    const btn=document.getElementById("goDetail");
-
-    try{
-      const res=await fetch("rules.json?v="+Date.now());
-      const rules=await res.json();
-      const r=rules.find(x=>String(x.id)===String(id));
-      if(!r)throw new Error();
-      title.textContent=r.title;
-      desc.textContent=r.description;
-      meta.textContent="カテゴリ："+r.category;
-      if(!r.penalty&&!r.procedure) btn.style.display="none";
-      else btn.href="rule_detail.html?id="+encodeURIComponent(id);
-    }catch(e){
-      title.textContent="ルールの読み込みに失敗しました";
-      btn.style.display="none";
-    }
-  })();
-  </script>
-  <section class="card">
   <div id="ruleMeta" class="meta"></div>
   <p id="ruleDesc" class="desc"></p>
 </section>
@@ -86,5 +51,30 @@ favBtn.addEventListener("click", () => {
   }
 });
 </script>
+
+  <script>
+  (async()=>{
+    const id=new URLSearchParams(location.search).get("id");
+    const title=document.getElementById("ruleTitle");
+    const desc=document.getElementById("ruleDesc");
+    const meta=document.getElementById("ruleMeta");
+    const btn=document.getElementById("goDetail");
+
+    try{
+      const res=await fetch("rules.json?v="+Date.now());
+      const rules=await res.json();
+      const r=rules.find(x=>String(x.id)===String(id));
+      if(!r)throw new Error();
+      title.textContent=r.title;
+      desc.textContent=r.description;
+      meta.textContent="カテゴリ："+r.category;
+      if(!r.penalty&&!r.procedure) btn.style.display="none";
+      else btn.href="rule_detail.html?id="+encodeURIComponent(id);
+    }catch(e){
+      title.textContent="ルールの読み込みに失敗しました";
+      btn.style.display="none";
+    }
+  })();
+
 </body>
 </html>
