@@ -46,95 +46,72 @@
     <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
   </nav>
 
-  <script>
-    // 🔴 赤・緑ハイライト
-    function highlightPenalty(text){
-      if(!text) return "";
-      return text
-        .replace(/([0-9]+打罰|一打罰|二打罰|三打罰|○打罰)/g, "<span class='penalty-red'>$1</span>")
-        .replace(/(無罰|0打罰)/g, "<span class='penalty-green'>$1</span>");
-    }
+<script>
+  // 🔴 赤・緑ハイライト
+  function highlightPenalty(text){
+    if(!text) return "";
+    return text
+      .replace(/([0-9]+打罰|一打罰|二打罰|三打罰)/g, "<span class='penalty-red'>$1</span>")
+      .replace(/(無罰|0打罰)/g, "<span class='penalty-green'>$1</span>");
+  }
 
-    // 🧠 JSON取得と表示処理
-    (async () => {
-      const params = new URLSearchParams(location.search);
-      const id = params.get("id");
+  // 🧩 ペナルティ自動補完関数
+  function inferPenalty(rule){
+    const text = [rule.title, rule.description, rule.detail].filter(Boolean).join(" ");
+    if (text.match(/空振り|ストローク|スイング/)) return "1打罰。";
+    if (text.match(/ロスト|OB|白杭|紛失/)) return "1打罰。";
+    if (text.match(/誤球|誤所/)) return "2打罰。";
+    if (text.match(/アンプレヤブル/)) return "1打罰。";
+    if (text.match(/救済|修理地|カジュアル|障害物/)) return "無罰。";
+    return "";
+  }
 
-      const titleEl = document.getElementById("ruleTitle");
-      const howEl   = document.getElementById("howBody");
-      const penEl   = document.getElementById("penBody");
-      const backBtn = document.getElementById("backBtn");
+  // 🧠 JSON取得と表示処理
+  (async () => {
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
 
-      try {
-        // ✅ キャッシュ回避＆確実読み込み
-        const res = await fetch("https://uta7770502.github.io/golfrules/rules.json?time=" + new Date().getTime(), { cache: "no-store" });
-        if (!res.ok) throw new Error("fetch failed");
+    const titleEl = document.getElementById("ruleTitle");
+    const howEl   = document.getElementById("howBody");
+    const penEl   = document.getElementById("penBody");
+    const backBtn = document.getElementById("backBtn");
 
-        const rules = await res.json();
-        if (!Array.isArray(rules)) throw new Error("rules not array");
+    try {
+      const res = await fetch("https://uta7770502.github.io/golfrules/rules.json?time=" + new Date().getTime(), { cache: "no-store" });
+      if (!res.ok) throw new Error("fetch failed");
+      const rules = await res.json();
+      const rule = rules.find(r => String(r.id) === String(id));
+      if (!rule) throw new Error("rule not found id=" + id);
 
-        const rule = rules.find(r => String(r.id) === String(id));
-        if (!rule) throw new Error("rule not found id=" + id);
+      titleEl.textContent = rule.title || "ルール";
 
-        titleEl.textContent = rule.title || "ルール";
+      let how = rule.procedure || rule.how || rule.correct || "";
+      let pen = rule.penalty || rule.penalties || "";
 
-        // ✅ 修正版
-const how =
-  rule.procedure ||
-  rule.correct ||
-  rule.correctMethod ||
-  rule.correctAction ||
-  rule.how ||
-  rule.howto ||
-  rule.detail ||
-  rule.action ||
-  "";
-
-const pen =
-  rule.penalty ||
-  rule.mistakePenalty ||
-  rule.penalties ||
-  rule.penaltyText ||
-  rule.sanction ||
-  rule.punishment ||
-  "";
-
-// JSON側に記述がなければ推定
-let inferred = { how: "", pen: "" };
-if (!how && !pen) {
-  inferred = inferHowPenalty(rule);
-}
-if (!pen) pen = inferPenalty(rule);
-const finalHow = how || inferred.how || "処置方法の情報が見つかりません。";
-const finalPen = pen || inferred.pen || "ペナルティの情報が見つかりません。";
-
-// ✅ 表示部分
-howEl.innerHTML = highlightPenalty(finalHow).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
-penEl.innerHTML = highlightPenalty(finalPen).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
-
-        backBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (document.referrer) history.back();
-          else location.href = 'rules.html';
-        });
-
-      } catch (e) {
-        console.error("❌ rule_detail error:", e);
-        titleEl.textContent = "内容を読み込めませんでした";
-        howEl.innerHTML = "<p>処置方法の情報が見つかりません。</p>";
-        penEl.innerHTML = "<p>ペナルティの情報が見つかりません。</p>";
+      // ❗ペナルティ自動補完（記載なしの場合）
+      if (!pen || pen.trim() === "") {
+        pen = inferPenalty(rule);
       }
-    })();
-    // 🧩 ペナルティ自動補完
-function inferPenalty(rule){
-  const text = [rule.title, rule.description, rule.detail].filter(Boolean).join(" ");
-  if (text.match(/空振り|ストローク|スイング/)) return "1打罰。";
-  if (text.match(/ロスト|OB|白杭|紛失/)) return "1打罰。";
-  if (text.match(/誤球|誤所/)) return "2打罰。";
-  if (text.match(/アンプレヤブル/)) return "1打罰。";
-  if (text.match(/救済|修理地|カジュアル|障害物/)) return "無罰。";
-  return "";
-}
-  </script>
+
+      const finalHow = how || "処置方法の情報が見つかりません。";
+      const finalPen = pen || "ペナルティの情報が見つかりません。";
+
+      howEl.innerHTML = highlightPenalty(finalHow).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
+      penEl.innerHTML = highlightPenalty(finalPen).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
+
+      backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (document.referrer) history.back();
+        else location.href = 'rules.html';
+      });
+
+    } catch (e) {
+      console.error("❌ rule_detail error:", e);
+      titleEl.textContent = "内容を読み込めませんでした";
+      howEl.innerHTML = "<p>処置方法の情報が見つかりません。</p>";
+      penEl.innerHTML = "<p>ペナルティの情報が見つかりません。</p>";
+    }
+  })();
+</script>
 </body>
 </html>
