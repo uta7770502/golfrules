@@ -968,5 +968,328 @@
     "procedure": "元の位置にリプレース。",
     "penalty": "<span class='penalty'>なし</span>",
     "isLocal": false
+  },
+  {
+    "id": 98,
+    "category": "安全",
+    "title": "落雷時の対応",
+    "description": "雷鳴が聞こえたら即中断・避難。",
+    "detail": "雷雲接近時はプレーを中止し、安全な建物やカート内へ避難。クラブや傘など金属類から離れる。",
+    "procedure": "クラブを地面に置き、建物・避難小屋・車内などに避難する。",
+    "penalty": "<span class='penalty'>危険行為継続で失格</span>",
+    "isLocal": false
+  },
+  {
+    "id": 99,
+    "category": "一般規則",
+    "title": "日没による中断",
+    "description": "視認できない場合は中断。",
+    "detail": "日没などでプレーが困難になった場合、委員会判断で中断。次回は同位置から再開。",
+    "procedure": "中断時にマークして位置を記録し、再開時に同位置からプレー。",
+    "penalty": "<span class='penalty'>続行すると失格</span>",
+    "isLocal": false
+  },
+  {
+    "id": 100,
+    "category": "エチケット",
+    "title": "競技前の練習エリア",
+    "description": "指定範囲内のみ可。",
+    "detail": "コース上では練習禁止。練習グリーンやレンジのみ可。",
+    "procedure": "スタート前に指定練習場を使用する。",
+    "penalty": "<span class='penalty'>2打罰（コース内練習）</span>",
+    "isLocal": false
+  },
+  {
+    "id": 101,
+    "category": "基本ルール",
+    "title": "ホール数と構成",
+    "description": "通常18ホール、アウト9・イン9で構成。",
+    "detail": "ショート（Par3）、ミドル（Par4）、ロング（Par5）の組み合わせで構成される。9ホール2周のコースも多い。",
+    "procedure": "前半・後半でスコアカードを分けて記録する。",
+    "penalty": "<span class='penalty'>なし</span>"
+  },
+  {
+    "id": 102,
+    "category": "基本ルール",
+    "title": "パーの基本",
+    "description": "理想打数を示す基準。",
+    "detail": "18ホールの合計パーは通常72前後で、Par3・4・5の組み合わせが一般的。",
+    "procedure": "各ホールのパーを確認し、目標打数を意識する。",
+    "penalty": "<span class='penalty'>なし</span>"
+  },
+  {
+    "id": 103,
+    "category": "基本ルール",
+    "title": "プレーの順序",
+    "description": "ティーではオナー制、以降は遠い人から。",
+    "detail": "ティーショットは前ホール最少スコアの人が先。以降はカップから遠い人が先に打つ。",
+    "procedure": "周囲に注意し、順番を守って安全にプレー。",
+    "penalty": "<span class='penalty'>なし（マナー違反扱い）</span>"
+  },
+  {
+    "id": 104,
+    "category": "基本ルール",
+    "title": "ホールアウトの定義",
+    "description": "ボールがカップの底に静止した時点で完了。",
+    "detail": "ボールがカップ縁に止まった場合、10秒以内に自然に落ちればホールアウト。",
+    "procedure": "静止後にボールを拾い上げてスコアを記入。",
+    "penalty": "<span class='penalty'>なし</span>"
+  },
+  {
+    "id": 105,
+    "category": "基本ルール",
+    "title": "スコアの数え方",
+    "description": "各ホールの打数合計で算出。",
+    "detail": "OB・池・ロストは＋1罰打。スコアカードは本人確認が必須。",
+    "procedure": "プレー後にマーカーと共に確認・署名。",
+    "penalty": "<span class='penalty'>スコア誤記は失格</span>"
+  },
+  {
+    "id": 106,
+    "category": "基本ルール",
+    "title": "ティーイングエリアの定義",
+    "description": "ティーマークを結んだ線の後方2クラブ以内。",
+    "detail": "前や外から打つと誤所プレー扱いで打ち直し。",
+    "procedure": "ティーマーク位置を確認してティーアップ。",
+    "penalty": "<span class='penalty'>2打罰＋打ち直し</span>"
+  },
+  {
+    "id": 107,
+    "category": "基本ルール",
+    "title": "ボールのライと位置",
+    "description": "ボールが止まった場所を尊重。",
+    "detail": "芝や傾斜で打ち方・クラブを調整。ライ改善は禁止。",
+    "procedure": "芝を踏み固めず自然状態のまま打つ。",
+    "penalty": "<span class='penalty'>2打罰（状況改善）</span>"
+  },
+  {
+    "id": 108,
+    "category": "基本ルール",
+    "title": "スループレーとハーフ休憩",
+    "description": "18H連続または9H休憩形式。",
+    "detail": "スループレーは集中維持しやすいが体力が必要。休憩では遅延注意。",
+    "procedure": "スタート管理に従って進行。",
+    "penalty": "<span class='penalty'>なし（遅延で警告）</span>"
+  },
+  {
+    "id": 109,
+    "category": "ローカルルール",
+    "title": "動物の糞や羽",
+    "description": "無罰救済対象。",
+    "detail": "異常なコース状態扱いで救済可。",
+    "procedure": "拾って清掃後にドロップ。",
+    "penalty": "<span class='penalty'>なし（誤所2打罰）</span>",
+    "isLocal": true
+  },
+  {
+    "id": 110,
+    "category": "ローカルルール",
+    "title": "カート道横の芝生保護エリア",
+    "description": "プレー禁止区域。",
+    "detail": "芝保護のため立入禁止。無罰救済。",
+    "procedure": "最寄りの救済点でドロップ。",
+    "penalty": "<span class='penalty'>なし（侵入は警告）</span>",
+    "isLocal": true
+  },
+  {
+    "id": 111,
+    "category": "ローカルルール",
+    "title": "臨時修理地",
+    "description": "大会期間中に設定される。",
+    "detail": "競技ごとに臨時修理地が追加されることがある。",
+    "procedure": "掲示内容に従って救済。",
+    "penalty": "<span class='penalty'>2打罰（誤所）</span>",
+    "isLocal": true
+  },
+  {
+    "id": 112,
+    "category": "ローカルルール",
+    "title": "距離杭の抜き差し",
+    "description": "動かせるもののみ可。",
+    "detail": "固定杭は不可。小杭は動かして可。",
+    "procedure": "動かしたら元に戻す。",
+    "penalty": "<span class='penalty'>なし（放置は注意）</span>",
+    "isLocal": true
+  },
+  {
+    "id": 113,
+    "category": "ローカルルール",
+    "title": "雪や霜の処理",
+    "description": "異常なコース状態扱い。",
+    "detail": "雪や霜は水と同様に無罰救済可能。",
+    "procedure": "ニアレストポイントにドロップ。",
+    "penalty": "<span class='penalty'>なし（誤所2打罰）</span>",
+    "isLocal": true
+  },
+  {
+    "id": 114,
+    "category": "ローカルルール",
+    "title": "避雷塔付近の救済",
+    "description": "安全確保のため無罰救済。",
+    "detail": "避雷塔や電柱周辺は危険防止目的で救済対象。",
+    "procedure": "安全距離を取ってドロップ。",
+    "penalty": "<span class='penalty'>なし（誤所2打罰）</span>",
+    "isLocal": true
+  },
+  {
+    "id": 115,
+    "category": "ローカルルール",
+    "title": "練習場ネット内のボール",
+    "description": "プレー禁止区域。",
+    "detail": "練習場エリア内は修理地扱い。無罰救済。",
+    "procedure": "外側ニアレストポイントでドロップ。",
+    "penalty": "<span class='penalty'>なし（侵入2打罰）</span>",
+    "isLocal": true
+  },
+  {
+    "id": 116,
+    "category": "安全",
+    "title": "コース外道路への打球",
+    "description": "打ち込み厳禁。",
+    "detail": "道路や歩道方向への打球は危険行為。OB扱い。",
+    "procedure": "方向確認を徹底し、危険ならプレー中断。",
+    "penalty": "<span class='penalty'>失格（危険プレー）</span>",
+    "isLocal": false
+  },
+  {
+    "id": 117,
+    "category": "ローカルルール",
+    "title": "橋や階段でのスタンス",
+    "description": "人工物上は救済可。",
+    "detail": "橋・階段でスタンスを取る場合は無罰救済。",
+    "procedure": "完全救済点でドロップ。",
+    "penalty": "<span class='penalty'>なし（誤所2打罰）</span>",
+    "isLocal": true
+  },
+  {
+    "id": 118,
+    "category": "ローカルルール",
+    "title": "カート道脇のロープ",
+    "description": "動かせる場合のみ可。",
+    "detail": "固定されていないロープは動かして可。杭固定は不可。",
+    "procedure": "動かす際は同伴者に確認。",
+    "penalty": "<span class='penalty'>2打罰（不正動作）</span>",
+    "isLocal": true
+  },
+  {
+    "id": 119,
+    "category": "ローカルルール",
+    "title": "人工芝ティーマット",
+    "description": "指定時は使用義務あり。",
+    "detail": "芝保護のためマット指定時は必ず使用する。",
+    "procedure": "マット上でティーアップ。",
+    "penalty": "<span class='penalty'>2打罰（未使用）</span>",
+    "isLocal": true
+  },
+  {
+    "id": 120,
+    "category": "エチケット",
+    "title": "ゴルフ場内での喫煙",
+    "description": "指定場所以外は禁止。",
+    "detail": "ティー・グリーン上は全面禁煙。火気注意。",
+    "procedure": "灰皿設置場所のみ喫煙可。",
+    "penalty": "<span class='penalty'>警告〜退場</span>",
+    "isLocal": false
+  },
+  {
+    "id": 121,
+    "category": "フェアウェイ",
+    "title": "誤って他人のボールを打つ",
+    "description": "誤球は2打罰。",
+    "detail": "フェアウェイではボール確認を怠ると誤球に。",
+    "procedure": "自分のマークを確認してショット。",
+    "penalty": "<span class='penalty'>2打罰</span>",
+    "isLocal": false
+  },
+  {
+    "id": 122,
+    "category": "フェアウェイ",
+    "title": "インプレー中のボールを拾った",
+    "description": "許可なく拾うと1打罰。",
+    "detail": "プレー中のボールを動かす行為は禁止。",
+    "procedure": "拾った場合は元の位置にリプレース。",
+    "penalty": "<span class='penalty'>1打罰</span>",
+    "isLocal": false
+  },
+  {
+    "id": 123,
+    "category": "フェアウェイ",
+    "title": "ボールが動いたのにそのまま打った",
+    "description": "自分が原因なら1打罰。",
+    "detail": "風や自然以外の動作でボールが動いた場合はペナルティ。",
+    "procedure": "元の位置にリプレース後に打つ。",
+    "penalty": "<span class='penalty'>1打罰</span>",
+    "isLocal": false
+  },
+  {
+    "id": 124,
+    "category": "フェアウェイ",
+    "title": "芝の状態をテストした",
+    "description": "状況改善行為で罰。",
+    "detail": "クラブで芝を叩くなどして状況確認する行為は禁止。",
+    "procedure": "そのまま打つか、別ルールで救済を取る。",
+    "penalty": "<span class='penalty'>2打罰</span>",
+    "isLocal": false
+  },
+  {
+    "id": 125,
+    "category": "フェアウェイ",
+    "title": "他人のディボットを直しすぎた",
+    "description": "形状を変えると罰。",
+    "detail": "善意でも形を変えると状況改善扱い。",
+    "procedure": "軽く戻す程度に留める。",
+    "penalty": "<span class='penalty'>2打罰</span>",
+    "isLocal": false
+  },
+  {
+    "id": 126,
+    "category": "ラフ",
+    "title": "芝を踏み倒してライを良くした",
+    "description": "明確な状況改善行為。",
+    "detail": "ラフを足で押し倒す行為は禁止。",
+    "procedure": "できる限り元の状態に戻す。",
+    "penalty": "<span class='penalty'>2打罰</span>",
+    "isLocal": false
+  },
+  {
+    "id": 127,
+    "category": "ラフ",
+    "title": "ボールを探して動かした",
+    "description": "偶然でも1打罰。",
+    "detail": "探索中に動かした場合は1罰打。",
+    "procedure": "元の位置にリプレース。",
+    "penalty": "<span class='penalty'>1打罰</span>",
+    "isLocal": false
+  },
+  {
+    "id": 128,
+    "category": "ラフ",
+    "title": "アンプレヤブル宣言を忘れてドロップ",
+    "description": "誤所救済で罰。",
+    "detail": "アンプレヤブルを宣言せずにドロップすると誤所扱い。",
+    "procedure": "正しく宣言し、1打罰で救済。",
+    "penalty": "<span class='penalty'>2打罰</span>",
+    "isLocal": false
+  },
+  {
+    "id": 129,
+    "category": "ラフ",
+    "title": "枯れ枝をどかしてボールが動いた",
+    "description": "ボール移動で1打罰。",
+    "detail": "落ち葉や枝を動かす際にボールが動けば罰。",
+    "procedure": "元の位置にリプレース。",
+    "penalty": "<span class='penalty'>1打罰</span>",
+    "isLocal": false
+  },
+  {
+    "id": 130,
+    "category": "ラフ",
+    "title": "二度打ち",
+    "description": "偶然でも1打罰。",
+    "detail": "深いラフでクラブが2度当たるとペナルティ。",
+    "procedure": "そのまま次打を行う。",
+    "penalty": "<span class='penalty'>1打罰</span>",
+    "isLocal": false
   }
-  ］
+]
+
