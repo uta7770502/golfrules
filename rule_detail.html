@@ -117,7 +117,15 @@ penEl.innerHTML = highlightPenalty(finalPen).split(/\n+/).map(p=>`<p>${p}</p>`).
           if (document.referrer) history.back();
           else location.href = 'rules.html';
         });
-// 🧩 ペナルティ自動補完
+
+      } catch (e) {
+        console.error("❌ rule_detail error:", e);
+        titleEl.textContent = "内容を読み込めませんでした";
+        howEl.innerHTML = "<p>処置方法の情報が見つかりません。</p>";
+        penEl.innerHTML = "<p>ペナルティの情報が見つかりません。</p>";
+      }
+    })();
+    // 🧩 ペナルティ自動補完
 function inferPenalty(rule){
   const text = [rule.title, rule.description, rule.detail].filter(Boolean).join(" ");
   if (text.match(/空振り|ストローク|スイング/)) return "1打罰。";
@@ -127,13 +135,6 @@ function inferPenalty(rule){
   if (text.match(/救済|修理地|カジュアル|障害物/)) return "無罰。";
   return "";
 }
-      } catch (e) {
-        console.error("❌ rule_detail error:", e);
-        titleEl.textContent = "内容を読み込めませんでした";
-        howEl.innerHTML = "<p>処置方法の情報が見つかりません。</p>";
-        penEl.innerHTML = "<p>ペナルティの情報が見つかりません。</p>";
-      }
-    })();
   </script>
 </body>
 </html>
