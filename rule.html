@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ルール詳細｜3タップルールズ</title>
+  <title>ルール詳細 | 3タップルールズ</title>
   <link rel="stylesheet" href="style.css">
 
   <style>
@@ -11,125 +11,112 @@
       background: #f9fff9;
       font-family: "Helvetica", sans-serif;
       margin: 0;
-      padding: 0;
+      padding-bottom: 90px;
     }
 
     header {
       background: #00bfa5;
       color: #fff;
       text-align: center;
-      padding: 12px 0;
-      font-size: 22px;
+      padding: 16px 0;
+      font-size: 24px;
       font-weight: bold;
       border-bottom-left-radius: 25px;
       border-bottom-right-radius: 25px;
     }
 
-    main {
-      padding: 20px;
-    }
-
-    .rule-summary {
+    .rule-box {
       background: #fff;
-      border-radius: 10px;
+      border-radius: 15px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 500px;
       padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
 
-    h2 {
+    .rule-title {
+      font-size: 22px;
+      font-weight: bold;
       color: #007f3b;
       margin-bottom: 10px;
+      text-align: left;
     }
 
-    .category {
-      color: #666;
+    .rule-category {
       font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    .description {
-      font-size: 16px;
-      color: #333;
+      color: #666;
       margin-bottom: 15px;
+      text-align: left;
     }
 
-    .rule-detail-box {
-      background: #f0fff4;
+    .rule-description {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .rule-section {
       border-left: 5px solid #00bfa5;
-      border-radius: 8px;
-      padding: 15px;
-      margin-top: 10px;
+      border-radius: 10px;
+      padding: 15px 18px;
+      margin: 15px 0;
     }
 
-    .penalty {
-      background: #fff7f7;
-      border-left: 5px solid #ff5555;
-      border-radius: 8px;
-      padding: 10px 15px;
-      margin-top: 15px;
-      color: #333;
+    .rule-section h3 {
+      color: #007f3b;
+      font-size: 18px;
+      margin-bottom: 8px;
     }
 
-    .penalty strong {
-      color: #d50000;
+    .rule-section.good { background: #ecfff4; }
+    .rule-section.bad { background: #ffeaea; border-left-color: #ff6b6b; }
+
+    /* 🔴 ペナルティ赤文字 */
+    .penalty-red {
+      color: #e60000;
+      font-weight: bold;
     }
 
-    /* === ボタンエリア統一デザイン === */
-.btn-area.compact {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-top: 25px;
-  flex-wrap: wrap;
-}
+    /* 戻るボタン */
+    .back-btn {
+      display: block;
+      width: 230px;
+      text-align: center;
+      background: #FFD84D;
+      color: #00997f;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 14px 0;
+      margin: 25px auto;
+      border-radius: 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: 0.2s;
+    }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 150px;
-  max-width: 180px;
-  height: 48px;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  transition: 0.2s ease;
-  box-sizing: border-box;
-  text-align: center;
-  text-decoration: none;
-  line-height: 1;
-}
+    .back-btn:hover {
+      background: #ffcc33;
+      transform: translateY(-2px);
+    }
 
-/* ✅ 黄色（ルール詳細へ戻る・詳細と処置方法・トップへ） */
-.btn.main {
-  background: #ffd84d;
-  color: #333;
-}
-.btn.main:hover {
-  background: #ffcc33;
-}
-
-/* ✅ 緑（お気に入り登録ボタン） */
-.btn.sub {
-  background: #00bfa5;
-  color: #fff;
-}
-.btn.sub:hover {
-  background: #00a890;
-}
-
-/* ✅ 登録済み（お気に入り済） */
-#fav-btn.active {
-  background: #00a080;
-}
+    /* ナビ */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 70px;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+    }
     .bottom-nav img {
-  width: 76px; /* ← ここを38px→76pxに変更 */
-  height: auto;
-}
+      width: 50px;
+      height: auto;
+    }
   </style>
 </head>
 
@@ -137,191 +124,52 @@
   <header>3タップルールズ</header>
 
   <main>
-    <div class="rule-summary">
-      <h2 id="rule-title"></h2>
-      <p class="category">カテゴリ：<span id="rule-category"></span></p>
-      <p id="rule-description"></p>
+    <div class="rule-box">
+      <div class="rule-title" id="rule-title">ルールタイトル</div>
+      <div class="rule-category" id="rule-category">カテゴリ：---</div>
+      <div class="rule-description" id="rule-description">説明が入ります。</div>
+
+      <div class="rule-section good">
+        <h3>正しい処置方法</h3>
+        <p id="rule-method">---</p>
+      </div>
+
+      <div class="rule-section bad">
+        <h3>処置を誤った場合のペナルティ</h3>
+        <p id="rule-penalty">---</p>
+      </div>
     </div>
 
-    <div class="rule-detail-box">
-      <p id="rule-detail-text"></p>
-      <p class="penalty"><strong>罰：</strong><span id="rule-penalty"></span></p>
-    </div>
-
-    <div class="btn-area compact">
-      <button id="detail-btn" class="btn main">詳細と処置方法</button>
-      <button id="fav-btn" class="btn sub">⭐ お気に入り登録</button>
-    </div>
+    <a href="rules.html" class="back-btn">ルール一覧へ戻る</a>
   </main>
 
   <nav class="bottom-nav">
-  <div class="bar">
-    <a href="index.html">
-      <img src="home-icon.png" alt="ホーム" class="nav-icon">
-    </a>
-    <a href="rules.html">
-      <img src="book-icon.png" alt="ルール一覧" class="nav-icon">
-    </a>
-    <a href="favorites.html">
-      <img src="star-icon.png" alt="お気に入り" class="nav-icon">
-    </a>
-  </div>
-</nav>
+    <a href="index.html"><img src="home-icon.png" alt="ホーム"></a>
+    <a href="rules.html"><img src="book-icon.png" alt="ルール一覧"></a>
+    <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
+  </nav>
 
   <script>
   document.addEventListener("DOMContentLoaded", async () => {
-    const $ = (id) => document.getElementById(id);
+    const params = new URLSearchParams(window.location.search);
+    const ruleId = params.get("id");
 
     try {
-      // ✅ JSONをキャッシュせず常に最新を取得
-      const res = await fetch(`rules.json?v=${Date.now()}`);
-      const data = await res.json();
-      const rules = Array.isArray(data) ? data : data.rules;
+      const res = await fetch("rules.json");
+      const rules = await res.json();
+      const rule = rules.find(r => r.id == ruleId);
 
-      // ✅ URLからルールIDを取得
-      const params = new URLSearchParams(location.search);
-      const id = parseInt(params.get("id"), 10);
-      const rule = rules.find((r) => r.id === id);
+      if (!rule) return;
 
-      if (!rule) {
-        $("rule-detail-text").innerHTML = "<p>該当ルールが見つかりません。</p>";
-        return;
-      }
-
-      // ✅ 各項目の表示内容を反映（空欄でも自然な代替文を表示）
-      $("rule-title").textContent = rule.title || "（タイトル不明）";
-      $("rule-category").textContent = rule.category || "（カテゴリ未設定）";
-      $("rule-description").textContent = rule.description || "（説明なし）";
-      $("rule-detail-text").textContent =
-        rule.detail && rule.detail.trim()
-          ? rule.detail
-          : "詳細情報は登録されていません。";
-      $("rule-penalty").textContent =
-        rule.penalty && rule.penalty.trim()
-          ? rule.penalty
-          : "特に罰はありません。";
-
-      // ✅ 「詳細と処置」ボタンの表示・リンク設定
-      const detailEl = $("detail-btn");
-      if (detailEl) {
-        const hasDetail = !!(rule.detail && rule.detail.trim());
-        if (!hasDetail) {
-          // 詳細がないルールはボタンを非表示
-          detailEl.style.display = "none";
-        } else {
-          detailEl.textContent = "詳細と処置方法 →";
-          detailEl.style.display = "inline-flex";
-          const url = `rule_detail.html?id=${rule.id}`;
-          detailEl.addEventListener("click", () => (location.href = url));
-        }
-      }
-
-      // ✅ お気に入り登録機能
-      const favBtn = $("fav-btn");
-      if (favBtn) {
-        let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-
-        const setFavUI = (on) => {
-          if (on) {
-            favBtn.textContent = "⭐ 登録済み";
-            favBtn.classList.add("active");
-          } else {
-            favBtn.textContent = "⭐ お気に入り登録";
-            favBtn.classList.remove("active");
-          }
-        };
-
-        setFavUI(favorites.includes(rule.id));
-
-        favBtn.addEventListener("click", () => {
-          favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-          if (favorites.includes(rule.id)) {
-            favorites = favorites.filter((x) => x !== rule.id);
-            setFavUI(false);
-          } else {
-            favorites.push(rule.id);
-            setFavUI(true);
-          }
-          localStorage.setItem("favorites", JSON.stringify(favorites));
-        });
-      }
-    } catch (e) {
-      console.error(e);
-      const box = document.getElementById("rule-detail-text");
-      if (box)
-        box.innerHTML = "<p>データの読み込みに失敗しました。</p>";
+      document.getElementById("rule-title").textContent = rule.title;
+      document.getElementById("rule-category").textContent = `カテゴリ：${rule.category}`;
+      document.getElementById("rule-description").textContent = rule.description;
+      document.getElementById("rule-method").innerHTML = rule.method;
+      document.getElementById("rule-penalty").innerHTML = rule.penalty;
+    } catch (err) {
+      console.error("読み込みエラー:", err);
     }
   });
   </script>
-  <!-- ✅ 共通ナビゲーション -->
-<nav class="bottom-nav">
-  <div class="bar">
-    <a href="index.html">
-      <img src="home-icon.png" alt="ホーム" class="nav-icon">
-    </a>
-    <a href="rules.html">
-      <img src="book-icon.png" alt="ルール一覧" class="nav-icon">
-    </a>
-    <a href="favorites.html">
-      <img src="star-icon.png" alt="お気に入り" class="nav-icon">
-    </a>
-  </div>
-</nav>
-
-<style>
-  /* ✅ 共通ナビゲーションスタイル（全ページ統一） */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    border-top: 1px solid #e0e0e0;
-    padding: 8px 0;
-    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
-    z-index: 999;
-  }
-
-  .bottom-nav .bar {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-
-  .bottom-nav img {
-    width: 57px; /* ← 1.5倍の統一サイズ */
-    height: auto;
-    display: block;
-    box-shadow: none;
-  }
-
-  .bottom-nav a {
-    text-decoration: none;
-    color: #666;
-  }
-
-  .bottom-nav a.active {
-    transform: translateY(-2px);
-  }
-</style>
-
-<script>
-  // ✅ 現在ページのアイコンを少し上に持ち上げる
-  (function(){
-    const p = location.pathname.split('/').pop() || 'index.html';
-    const map = {
-      'index.html': 'home-icon.png',
-      'rules.html': 'book-icon.png',
-      'rule.html':  'book-icon.png',
-      'favorites.html': 'star-icon.png'
-    };
-    const sel = map[p];
-    if (sel) {
-      document
-        .querySelectorAll(`img[src="${sel}"]`)
-        .forEach(el => el.parentElement.classList.add("active"));
-    }
-  })();
-</script>
 </body>
 </html>
