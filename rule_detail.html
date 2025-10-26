@@ -54,7 +54,29 @@
         .replace(/([0-9]+打罰|一打罰|二打罰|三打罰|○打罰)/g, "<span class='penalty-red'>$1</span>")
         .replace(/(無罰|0打罰)/g, "<span class='penalty-green'>$1</span>");
     }
+  // 🧠 自動補完関数：ルールから処置とペナルティを推定
+  function inferHowPenalty(rule){
+    const bag = [
+      rule.penalty, rule.penalties, rule.mistakePenalty,
+      rule.procedure, rule.how, rule.correct, rule.correctProcedure,
+      rule.description, rule.detail, rule.note, rule.title, rule.category
+    ].filter(Boolean).join(" ");
+    const has = (...k)=>k.some(word=>bag.includes(word));
 
+    if (has("ロスト","見つから","OB","白杭","紛失"))
+      return { how:"前の打球地点へ戻って打ち直し（ストローク＆ディスタンス）。", pen:"1打罰。" };
+    if (has("赤杭","黄色杭","ペナルティエリア","池","ハザード"))
+      return { how:"最後に横切った点を基準にドロップ。", pen:"1打罰。" };
+    if (has("アンプレヤブル"))
+      return { how:"元の位置・後方線上・1クラブ以内のいずれかにドロップ。", pen:"1打罰。" };
+    if (has("誤球"))
+      return { how:"誤球の打数は無効。自球から打ち直す。", pen:"2打罰。" };
+    if (has("誤所","ティーイングエリア外"))
+      return { how:"正しい位置に戻って打ち直す。", pen:"2打罰。" };
+    if (has("無罰","救済"))
+      return { how:"完全救済点を決めてドロップ。", pen:"無罰。" };
+    return { how:"", pen:"" };
+  }
     // 🔧 メイン処理
     (async () => {
       const params = new URLSearchParams(location.search);
