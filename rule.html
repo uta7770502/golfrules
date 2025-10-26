@@ -37,52 +37,56 @@
     <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
   </nav>
 
-  <script>
-(async () => {
-  const params = new URLSearchParams(location.search);
-  const id = params.get("id");
-  const titleEl = document.getElementById("ruleTitle");
-  const descEl  = document.getElementById("ruleDesc");
-  const metaEl  = document.getElementById("ruleMeta");
-  const btn     = document.getElementById("goDetail");
-
-  try {
-    // ✅ fetch前に確実な絶対パスを組み立てる
-    const basePath = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, "/");
-    const urls = [
-      basePath + "rules_v2.json?v=" + Date.now(),
-      basePath + "rules.json?v=" + Date.now()
-    ];
-
-    let rules = null;
-    for (const u of urls) {
-      const res = await fetch(u, { headers: { "Accept": "application/json" } });
-      if (res.ok) {
-        rules = await res.json();
-        break;
+  <!-- ✅ JSONを直接埋め込み（CORS対策） -->
+  <script type="application/json" id="rulesData">
+    [
+      {
+        "id": 1,
+        "title": "ティーショットで空振り",
+        "category": "ティー",
+        "description": "空振りは1打に数える。ティーショットでも同様。",
+        "detail": "ストロークの意志があればカウントされる。",
+        "procedure": "再度ティーアップして打ち直し。",
+        "mistakePenalty": "なし"
+      },
+      {
+        "id": 2,
+        "title": "ティーマークの間と後方2クラブ",
+        "category": "ティー",
+        "description": "ティーアップできる範囲はティーマークの間と後方2クラブ以内。",
+        "detail": "エリア外からのショットはペナルティ。",
+        "procedure": "再度正しい場所からプレー。1打罰。"
       }
+    ]
+  </script>
+
+  <script>
+  (() => {
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
+    const titleEl = document.getElementById("ruleTitle");
+    const descEl  = document.getElementById("ruleDesc");
+    const metaEl  = document.getElementById("ruleMeta");
+    const btn     = document.getElementById("goDetail");
+
+    try {
+      const rulesText = document.getElementById("rulesData").textContent;
+      const rules = JSON.parse(rulesText);
+      const rule = rules.find(r => String(r.id) === String(id));
+
+      if (!rule) throw new Error("not found");
+
+      titleEl.textContent = rule.title || "ルール";
+      descEl.textContent  = rule.description || rule.detail || "説明がありません";
+      metaEl.textContent  = rule.category ? `カテゴリ：${rule.category}` : "";
+      btn.href = `rule_detail.html?id=${encodeURIComponent(rule.id)}`;
+
+    } catch (e) {
+      titleEl.textContent = "ルールの読み込みに失敗しました";
+      btn.style.display = "none";
+      console.error(e);
     }
-    if (!rules) throw new Error("no rules");
-
-    // ✅ IDで検索
-    const rule = rules.find(r => String(r.id) === String(id));
-    if (!rule) throw new Error("not found");
-
-    titleEl.textContent = rule.title || "ルール";
-    descEl.textContent  = rule.description || rule.detail || "説明がありません";
-    metaEl.textContent  = rule.category ? `カテゴリ：${rule.category}` : "";
-
-    // ✅ ボタンリンク設定
-    btn.href = `rule_detail.html?id=${encodeURIComponent(rule.id)}`;
-
-  } catch (e) {
-    titleEl.textContent = "ルールの読み込みに失敗しました";
-    descEl.textContent  = "";
-    btn.style.display = "none";
-    console.error("読み込みエラー:", e);
-  }
-})();
-</script>
+  })();
+  </script>
 </body>
-</html>
 </html>
