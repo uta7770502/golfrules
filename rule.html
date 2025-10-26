@@ -47,7 +47,10 @@
       const btn     = document.getElementById("goDetail");
 
       try {
-        const urls = ["rules_v2.json", "rules.json"].map(u => `${u}?v=${Date.now()}`);
+        const urls = [
+  "./rules_v2.json?v=" + Date.now(),
+  "./rules.json?v=" + Date.now()
+];
         let rules = null;
         for (const u of urls) {
           const r = await fetch(u);
