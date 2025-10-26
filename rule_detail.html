@@ -104,7 +104,7 @@ let inferred = { how: "", pen: "" };
 if (!how && !pen) {
   inferred = inferHowPenalty(rule);
 }
-
+if (!pen) pen = inferPenalty(rule);
 const finalHow = how || inferred.how || "処置方法の情報が見つかりません。";
 const finalPen = pen || inferred.pen || "ペナルティの情報が見つかりません。";
 
