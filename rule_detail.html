@@ -78,16 +78,39 @@
 
         titleEl.textContent = rule.title || "ルール";
 
-        const how = rule.procedure || rule.correct || rule.how || rule.detail || "";
-        const pen = rule.penalty || rule.mistakePenalty || rule.penalties || "";
+        // ✅ 修正版
+const how =
+  rule.procedure ||
+  rule.correct ||
+  rule.correctMethod ||
+  rule.correctAction ||
+  rule.how ||
+  rule.howto ||
+  rule.detail ||
+  rule.action ||
+  "";
 
-        if (!how && !pen) {
-          howEl.innerHTML = "<p>このルールは参考情報のみで処置・ペナルティはありません。</p>";
-          penEl.innerHTML = "";
-        } else {
-          howEl.innerHTML = highlightPenalty(how).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
-          penEl.innerHTML = highlightPenalty(pen).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
-        }
+const pen =
+  rule.penalty ||
+  rule.mistakePenalty ||
+  rule.penalties ||
+  rule.penaltyText ||
+  rule.sanction ||
+  rule.punishment ||
+  "";
+
+// JSON側に記述がなければ推定
+let inferred = { how: "", pen: "" };
+if (!how && !pen) {
+  inferred = inferHowPenalty(rule);
+}
+
+const finalHow = how || inferred.how || "処置方法の情報が見つかりません。";
+const finalPen = pen || inferred.pen || "ペナルティの情報が見つかりません。";
+
+// ✅ 表示部分
+howEl.innerHTML = highlightPenalty(finalHow).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
+penEl.innerHTML = highlightPenalty(finalPen).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
 
         backBtn.addEventListener('click', (e) => {
           e.preventDefault();
