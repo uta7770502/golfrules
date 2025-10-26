@@ -9,12 +9,11 @@
     body{background:#f9fff9;font-family:"Helvetica",sans-serif;margin:0;padding-bottom:90px}
     header{background:#00bfa5;color:#fff;text-align:center;padding:16px 0;font-size:24px;font-weight:bold;border-bottom-left-radius:25px;border-bottom-right-radius:25px}
     .card{background:#fff;border:1px solid #e6e6e6;border-radius:20px;margin:18px 16px;padding:18px 16px;box-shadow:0 4px 10px rgba(0,0,0,.06)}
-    .title{font-size:26px;font-weight:800;color:#0f8a62;margin:4px 16px 0}
-    .desc{font-size:18px;line-height:1.7;color:#222;margin:6px 0 2px}
-    .meta{color:#666;font-size:14px;margin-bottom:6px}
+    .title{font-size:26px;font-weight:800;color:#0f8a62;margin:12px 16px 0}
+    .desc{font-size:18px;line-height:1.7;color:#222;margin:6px 0 0}
+    .meta{color:#666;font-size:14px;margin:0 0 6px}
     .btn-main{display:block;width:82%;max-width:520px;margin:18px auto;background:#FFD84D;color:#00997f;font-weight:800;text-align:center;border-radius:40px;padding:14px 16px;border:none;box-shadow:0 6px 14px rgba(0,0,0,.12);text-decoration:none}
     .btn-main:active{transform:translateY(1px)}
-    /* 底ナビずれ防止 */
     .bottom-nav{position:fixed;left:0;bottom:0;width:100%;height:70px;background:#fff;border-top:1px solid #ddd;display:flex;justify-content:space-around;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.05);z-index:1000}
     .bottom-nav a{display:flex;align-items:center;justify-content:center;text-decoration:none;height:100%;width:33.33%}
     .bottom-nav img{width:50px;height:auto;display:block}
@@ -23,19 +22,15 @@
 <body>
   <header>3タップルールズ</header>
 
-  <!-- ルールの見出し -->
   <h1 id="ruleTitle" class="title"></h1>
 
-  <!-- ルールの短い説明だけ残す -->
   <section class="card">
     <div id="ruleMeta" class="meta"></div>
     <p id="ruleDesc" class="desc"></p>
   </section>
 
-  <!-- 文字を“ペナルティと処置方法”に統一 -->
   <a id="goDetail" class="btn-main" href="#">ペナルティと処置方法 →</a>
 
-  <!-- そのほかの装飾は変えない -->
   <nav class="bottom-nav">
     <a href="index.html"><img src="home-icon.png" alt="ホーム"></a>
     <a href="rules.html"><img src="book-icon.png" alt="ルール一覧"></a>
@@ -52,8 +47,7 @@
       const btn     = document.getElementById("goDetail");
 
       try {
-        // v2 優先 → v1 の順に読込
-        const urls = ["rules_v2.json","rules.json"].map(u => `${u}?v=${Date.now()}`);
+        const urls = ["rules_v2.json", "rules.json"].map(u => `${u}?v=${Date.now()}`);
         let rules = null;
         for (const u of urls) {
           const r = await fetch(u);
@@ -61,16 +55,15 @@
         }
         if (!rules) throw new Error("no rules");
 
+        // ✅ IDで検索
         const rule = rules.find(r => String(r.id) === String(id));
         if (!rule) throw new Error("not found");
 
-        // 表示（説明だけ）
         titleEl.textContent = rule.title || "ルール";
-        descEl.textContent  = rule.description || rule.desc || "";
-        const cat = rule.category || rule.categories || "";
-        metaEl.textContent  = cat ? `カテゴリ：${cat}` : "";
+        descEl.textContent  = rule.description || rule.detail || "説明がありません";
+        metaEl.textContent  = rule.category ? `カテゴリ：${rule.category}` : "";
 
-        // ボタンは最下層へ
+        // ✅ 次ページリンク
         btn.href = `rule_detail.html?id=${encodeURIComponent(rule.id)}`;
 
       } catch (e) {
