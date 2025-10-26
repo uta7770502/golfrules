@@ -167,11 +167,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const searchInput = document.getElementById("searchInput");
 
   try {
-  const res = await fetch("https://uta7770502.github.io/rules.json?v=" + Date.now());
+  const jsonUrl = `${location.origin}${location.pathname.replace(/\/[^/]*$/, '')}/rules.json?v=${Date.now()}`;
+  const res = await fetch(jsonUrl);
   if (!res.ok) throw new Error("ルールデータが読み込めませんでした");
   const rules = await res.json();
-  renderList(rules);
 
+  renderList(rules);
+    
     // 🔍 検索機能
     searchInput.addEventListener("input", () => {
       const q = searchInput.value.trim().toLowerCase();
