@@ -19,24 +19,7 @@
   <main id="detailArea"></main>
   <a href="rules.html" class="back-btn">ルール一覧へ戻る</a>
 
-  <script>
-  (async()=>{
-    const id=new URLSearchParams(location.search).get("id");
-    const area=document.getElementById("detailArea");
-    try{
-      const res=await fetch("rules.json?v="+Date.now());
-      const rules=await res.json();
-      const r=rules.find(x=>String(x.id)===String(id));
-      if(!r)throw new Error();
-      let html=`<div class='card'><h2>正しい処置方法</h2><p>${r.procedure||"特に処置はありません。"}<\/p>`;
-      html+=`<h2>処置を誤った場合のペナルティ</h2><p>${r.penalty?`<span class='penalty'>${r.penalty}</span>`:"罰則はありません。"}<\/p><\/div>`;
-      area.innerHTML=html;
-    }catch(e){
-      area.innerHTML="<p>ルールの読み込みに失敗しました。</p>";
-    }
-  })();
-  </script>
-  <section class="card">
+ <section class="card">
   <h2>正しい処置方法</h2>
   <p id="procedure"></p>
 
