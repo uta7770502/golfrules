@@ -56,5 +56,35 @@
     }
   })();
   </script>
+  <section class="card">
+  <div id="ruleMeta" class="meta"></div>
+  <p id="ruleDesc" class="desc"></p>
+</section>
+
+<!-- お気に入りボタン追加 -->
+<button id="favButton" class="btn-main" style="background:#fff;border:2px solid #FFD84D;color:#00997f;">
+  ★ お気に入りに追加
+</button>
+
+<a id="goDetail" class="btn-main" href="#">ペナルティと処置方法 →</a>
+
+<script>
+const favBtn = document.getElementById("favButton");
+favBtn.addEventListener("click", () => {
+  const id = new URLSearchParams(location.search).get("id");
+  let favs = JSON.parse(localStorage.getItem("favorites") || "[]");
+  if (!favs.includes(id)) {
+    favs.push(id);
+    localStorage.setItem("favorites", JSON.stringify(favs));
+    favBtn.textContent = "★ 登録済み";
+    favBtn.style.background = "#FFD84D";
+  } else {
+    favs = favs.filter(f => f !== id);
+    localStorage.setItem("favorites", JSON.stringify(favs));
+    favBtn.textContent = "☆ お気に入りに追加";
+    favBtn.style.background = "#fff";
+  }
+});
+</script>
 </body>
 </html>
