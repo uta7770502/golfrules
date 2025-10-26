@@ -47,7 +47,7 @@
   </nav>
 
   <script>
-    // 🔴 赤・緑のハイライト関数
+    // 🔴 赤・緑ハイライト
     function highlightPenalty(text){
       if(!text) return "";
       return text
@@ -55,33 +55,7 @@
         .replace(/(無罰|0打罰)/g, "<span class='penalty-green'>$1</span>");
     }
 
-    // 🧠 自動補完関数：ルールから処置とペナルティを推定
-    function inferHowPenalty(rule){
-      const bag = [
-        rule.penalty, rule.penalties, rule.mistakePenalty,
-        rule.procedure, rule.how, rule.correct, rule.correctProcedure,
-        rule.description, rule.detail, rule.note, rule.title, rule.category
-      ].filter(Boolean).join(" ");
-      const has = (...k)=>k.some(word=>bag.includes(word));
-
-      if (has("空振り"))
-        return { how:"そのまま再度ティーアップして打ち直す。", pen:"無罰（1打としてカウント）。" };
-      if (has("ロスト","見つから","OB","白杭","紛失"))
-        return { how:"前の打球地点へ戻って打ち直し（ストローク＆ディスタンス）。", pen:"1打罰。" };
-      if (has("赤杭","黄色杭","ペナルティエリア","池","ハザード"))
-        return { how:"最後に横切った点を基準にドロップ。", pen:"1打罰。" };
-      if (has("アンプレヤブル"))
-        return { how:"元の位置・後方線上・2クラブ以内のいずれかにドロップ。", pen:"1打罰。" };
-      if (has("誤球"))
-        return { how:"誤球の打数は無効。自球から打ち直す。", pen:"2打罰。" };
-      if (has("誤所","ティーイングエリア外"))
-        return { how:"正しい位置に戻って打ち直す。", pen:"2打罰。" };
-      if (has("無罰","救済"))
-        return { how:"完全救済点を決めてドロップ。", pen:"無罰。" };
-      return { how:"", pen:"" };
-    }
-
-    // 🔧 メイン処理
+    // 🧠 JSON取得と表示処理
     (async () => {
       const params = new URLSearchParams(location.search);
       const id = params.get("id");
@@ -92,47 +66,29 @@
       const backBtn = document.getElementById("backBtn");
 
       try {
-        const res = await fetch("https://uta7770502.github.io/rules.json?v=" + Date.now(), { cache: "no-store" });
+        // ✅ キャッシュ回避＆確実読み込み
+        const res = await fetch("https://uta7770502.github.io/rules.json?time=" + new Date().getTime(), { cache: "no-store" });
         if (!res.ok) throw new Error("fetch failed");
 
         const rules = await res.json();
+        if (!Array.isArray(rules)) throw new Error("rules not array");
+
         const rule = rules.find(r => String(r.id) === String(id));
-        if (!rule) throw new Error("not found");
+        if (!rule) throw new Error("rule not found id=" + id);
 
         titleEl.textContent = rule.title || "ルール";
 
-        let how =
-          rule.procedure ||
-          rule.correct ||
-          rule.correctMethod ||
-          rule.correctAction ||
-          rule.how ||
-          rule.howto ||
-          rule.detail ||
-          rule.action ||
-          "";
+        const how = rule.procedure || rule.correct || rule.how || rule.detail || "";
+        const pen = rule.penalty || rule.mistakePenalty || rule.penalties || "";
 
-        let pen =
-          rule.mistakePenalty ||
-          rule.penalty ||
-          rule.penalties ||
-          rule.penaltyText ||
-          rule.sanction ||
-          rule.punishment ||
-          "";
-
-        // 🧩 不足している場合、自動補完
-        if (!how || !pen) {
-          const guess = inferHowPenalty(rule);
-          if (!how && guess.how) how = guess.how + "（※自動補完）";
-          if (!pen && guess.pen) pen = guess.pen + "（※自動補完）";
+        if (!how && !pen) {
+          howEl.innerHTML = "<p>このルールは参考情報のみで処置・ペナルティはありません。</p>";
+          penEl.innerHTML = "";
+        } else {
+          howEl.innerHTML = highlightPenalty(how).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
+          penEl.innerHTML = highlightPenalty(pen).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
         }
 
-        // ✅ 段落に分割＋装飾
-        howEl.innerHTML = highlightPenalty(how || "処置方法の情報が見つかりません。").split(/\n+/).map(p=>`<p>${p}</p>`).join("");
-        penEl.innerHTML = highlightPenalty(pen || "特に罰はありません。").split(/\n+/).map(p=>`<p>${p}</p>`).join("");
-
-        // ✅ 戻るボタン
         backBtn.addEventListener('click', (e) => {
           e.preventDefault();
           if (document.referrer) history.back();
@@ -140,10 +96,10 @@
         });
 
       } catch (e) {
+        console.error("❌ rule_detail error:", e);
         titleEl.textContent = "内容を読み込めませんでした";
         howEl.innerHTML = "<p>処置方法の情報が見つかりません。</p>";
         penEl.innerHTML = "<p>ペナルティの情報が見つかりません。</p>";
-        console.error("❌ rule_detail load error:", e);
       }
     })();
   </script>
