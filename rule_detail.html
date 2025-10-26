@@ -111,6 +111,12 @@ const finalPen = pen || inferred.pen || "ペナルティの情報が見つかり
 // ✅ 表示部分
 howEl.innerHTML = highlightPenalty(finalHow).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
 penEl.innerHTML = highlightPenalty(finalPen).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
+
+        backBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (document.referrer) history.back();
+          else location.href = 'rules.html';
+        });
 // 🧩 ペナルティ自動補完
 function inferPenalty(rule){
   const text = [rule.title, rule.description, rule.detail].filter(Boolean).join(" ");
@@ -121,12 +127,6 @@ function inferPenalty(rule){
   if (text.match(/救済|修理地|カジュアル|障害物/)) return "無罰。";
   return "";
 }
-        backBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (document.referrer) history.back();
-          else location.href = 'rules.html';
-        });
-
       } catch (e) {
         console.error("❌ rule_detail error:", e);
         titleEl.textContent = "内容を読み込めませんでした";
