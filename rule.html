@@ -1,148 +1,41 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ルール詳細 | 3タップルールズ</title>
-  <link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3タップルールズ</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      background: #f9fff9;
-      font-family: "Helvetica", sans-serif;
-      margin: 0;
-      padding-bottom: 90px;
-    }
-
-    header {
-      background: #00bfa5;
-      color: #fff;
-      text-align: center;
-      padding: 16px 0;
-      font-size: 24px;
-      font-weight: bold;
-      border-bottom-left-radius: 25px;
-      border-bottom-right-radius: 25px;
-    }
-
-    .rule-box {
-      background: #fff;
-      border-radius: 15px;
-      margin: 20px auto;
-      width: 90%;
-      max-width: 500px;
-      padding: 20px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    }
-
-    .rule-title {
-      font-size: 22px;
-      font-weight: bold;
-      color: #007f3b;
-      margin-bottom: 10px;
-      text-align: left;
-    }
-
-    .rule-category {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 15px;
-      text-align: left;
-    }
-
-    .rule-description {
-      font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .rule-section {
-      border-left: 5px solid #00bfa5;
-      border-radius: 10px;
-      padding: 15px 18px;
-      margin: 15px 0;
-    }
-
-    .rule-section h3 {
-      color: #007f3b;
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-
-    .rule-section.good { background: #ecfff4; }
-    .rule-section.bad { background: #ffeaea; border-left-color: #ff6b6b; }
-
-    /* 🔴 ペナルティ赤文字 */
-    .penalty-red {
-      color: #e60000;
-      font-weight: bold;
-    }
-
-    /* 戻るボタン */
-    .back-btn {
-      display: block;
-      width: 230px;
-      text-align: center;
-      background: #FFD84D;
-      color: #00997f;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 14px 0;
-      margin: 25px auto;
-      border-radius: 40px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      transition: 0.2s;
-    }
-
-    .back-btn:hover {
-      background: #ffcc33;
-      transform: translateY(-2px);
-    }
-
-    /* ナビ */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #fff;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      height: 70px;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-    }
-    .bottom-nav img {
-      width: 50px;
-      height: auto;
-    }
+    body{background:#f9fff9;font-family:"Helvetica",sans-serif;margin:0;padding-bottom:90px}
+    header{background:#00bfa5;color:#fff;text-align:center;padding:16px 0;font-size:24px;font-weight:bold;border-bottom-left-radius:25px;border-bottom-right-radius:25px}
+    .card{background:#fff;border:1px solid #e6e6e6;border-radius:20px;margin:18px 16px;padding:18px 16px;box-shadow:0 4px 10px rgba(0,0,0,.06)}
+    .title{font-size:26px;font-weight:800;color:#0f8a62;margin:4px 16px 0}
+    .desc{font-size:18px;line-height:1.7;color:#222;margin:6px 0 2px}
+    .meta{color:#666;font-size:14px;margin-bottom:6px}
+    .btn-main{display:block;width:82%;max-width:520px;margin:18px auto;background:#FFD84D;color:#00997f;font-weight:800;text-align:center;border-radius:40px;padding:14px 16px;border:none;box-shadow:0 6px 14px rgba(0,0,0,.12);text-decoration:none}
+    .btn-main:active{transform:translateY(1px)}
+    /* 底ナビずれ防止 */
+    .bottom-nav{position:fixed;left:0;bottom:0;width:100%;height:70px;background:#fff;border-top:1px solid #ddd;display:flex;justify-content:space-around;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.05);z-index:1000}
+    .bottom-nav a{display:flex;align-items:center;justify-content:center;text-decoration:none;height:100%;width:33.33%}
+    .bottom-nav img{width:50px;height:auto;display:block}
   </style>
 </head>
-
 <body>
   <header>3タップルールズ</header>
 
-  <main>
-    <div class="rule-box">
-      <div class="rule-title" id="rule-title">ルールタイトル</div>
-      <div class="rule-category" id="rule-category">カテゴリ：---</div>
-      <div class="rule-description" id="rule-description">説明が入ります。</div>
+  <!-- ルールの見出し -->
+  <h1 id="ruleTitle" class="title"></h1>
 
-      <div class="rule-section good">
-        <h3>正しい処置方法</h3>
-        <p id="rule-method">---</p>
-      </div>
+  <!-- ルールの短い説明だけ残す -->
+  <section class="card">
+    <div id="ruleMeta" class="meta"></div>
+    <p id="ruleDesc" class="desc"></p>
+  </section>
 
-      <div class="rule-section bad">
-        <h3>処置を誤った場合のペナルティ</h3>
-        <p id="rule-penalty">---</p>
-      </div>
-    </div>
+  <!-- 文字を“ペナルティと処置方法”に統一 -->
+  <a id="goDetail" class="btn-main" href="#">ペナルティと処置方法 →</a>
 
-    <a href="rules.html" class="back-btn">ルール一覧へ戻る</a>
-  </main>
-
+  <!-- そのほかの装飾は変えない -->
   <nav class="bottom-nav">
     <a href="index.html"><img src="home-icon.png" alt="ホーム"></a>
     <a href="rules.html"><img src="book-icon.png" alt="ルール一覧"></a>
@@ -150,26 +43,44 @@
   </nav>
 
   <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const params = new URLSearchParams(window.location.search);
-    const ruleId = params.get("id");
+    (async () => {
+      const params = new URLSearchParams(location.search);
+      const id = params.get("id");
+      const titleEl = document.getElementById("ruleTitle");
+      const descEl  = document.getElementById("ruleDesc");
+      const metaEl  = document.getElementById("ruleMeta");
+      const btn     = document.getElementById("goDetail");
 
-    try {
-      const res = await fetch("rules.json");
-      const rules = await res.json();
-      const rule = rules.find(r => r.id == ruleId);
+      try {
+        // v2 優先 → v1 の順に読込
+        const urls = ["rules_v2.json","rules.json"].map(u => `${u}?v=${Date.now()}`);
+        let rules = null;
+        for (const u of urls) {
+          const r = await fetch(u);
+          if (r.ok) { rules = await r.json(); break; }
+        }
+        if (!rules) throw new Error("no rules");
 
-      if (!rule) return;
+        const rule = rules.find(r => String(r.id) === String(id));
+        if (!rule) throw new Error("not found");
 
-      document.getElementById("rule-title").textContent = rule.title;
-      document.getElementById("rule-category").textContent = `カテゴリ：${rule.category}`;
-      document.getElementById("rule-description").textContent = rule.description;
-      document.getElementById("rule-method").innerHTML = rule.method;
-      document.getElementById("rule-penalty").innerHTML = rule.penalty;
-    } catch (err) {
-      console.error("読み込みエラー:", err);
-    }
-  });
+        // 表示（説明だけ）
+        titleEl.textContent = rule.title || "ルール";
+        descEl.textContent  = rule.description || rule.desc || "";
+        const cat = rule.category || rule.categories || "";
+        metaEl.textContent  = cat ? `カテゴリ：${cat}` : "";
+
+        // ボタンは最下層へ
+        btn.href = `rule_detail.html?id=${encodeURIComponent(rule.id)}`;
+
+      } catch (e) {
+        titleEl.textContent = "ルールの読み込みに失敗しました";
+        descEl.textContent  = "";
+        btn.style.display = "none";
+        console.error(e);
+      }
+    })();
   </script>
 </body>
+</html>
 </html>
