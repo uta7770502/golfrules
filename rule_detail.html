@@ -67,7 +67,7 @@
 
       try {
         // ✅ キャッシュ回避＆確実読み込み
-        const res = await fetch("https://uta7770502.github.io/rules.json?time=" + new Date().getTime(), { cache: "no-store" });
+        const res = await fetch("https://uta7770502.github.io/golfrules/rules.json?time=" + new Date().getTime(), { cache: "no-store" });
         if (!res.ok) throw new Error("fetch failed");
 
         const rules = await res.json();
