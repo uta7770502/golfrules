@@ -113,29 +113,6 @@
     <a href="favorites.html"><img src="star-icon.png" alt="お気に入り"></a>
   </nav>
 
-  <!-- ✅ JSONを直接埋め込み（ローカルフォールバック） -->
-  <script type="application/json" id="rulesData">
-    [
-      {
-        "id": 1,
-        "title": "ティーショットで空振り",
-        "category": "ティー",
-        "description": "空振りは1打に数える。ティーショットでも同様。",
-        "detail": "ストロークの意志があればカウントされる。",
-        "procedure": "再度ティーアップして打ち直し。",
-        "mistakePenalty": "なし"
-      },
-      {
-        "id": 2,
-        "title": "ティーマークの間と後方2クラブ",
-        "category": "ティー",
-        "description": "ティーアップできる範囲はティーマークの間と後方2クラブ以内。",
-        "detail": "エリア外からのショットはペナルティ。",
-        "procedure": "再度正しい場所からプレー。1打罰。"
-      }
-    ]
-  </script>
-
   <script>
   (async () => {
     const params = new URLSearchParams(location.search);
@@ -146,19 +123,13 @@
     const btn     = document.getElementById("goDetail");
 
     try {
-      // ✅ GitHub Pages 上の絶対URLで取得
       const res = await fetch("https://uta7770502.github.io/rules.json?v=" + Date.now());
-      let rules = null;
+      if (!res.ok) throw new Error("fetch failed");
+      const rules = await res.json();
 
-      if (res.ok) {
-        rules = await res.json();
-      } else {
-        // 🔁 フォールバック（埋め込みJSON）
-        const localData = document.getElementById("rulesData").textContent;
-        rules = JSON.parse(localData);
-      }
-
+      // 🔎 IDが数字で比較できるように修正
       const rule = rules.find(r => String(r.id) === String(id));
+
       if (!rule) throw new Error("not found");
 
       titleEl.textContent = rule.title || "ルール";
@@ -169,7 +140,7 @@
     } catch (e) {
       titleEl.textContent = "ルールの読み込みに失敗しました";
       btn.style.display = "none";
-      console.error(e);
+      console.error("❌ rule load error:", e);
     }
   })();
   </script>
