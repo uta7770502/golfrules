@@ -16,6 +16,7 @@
     .sec.pen h2{color:#c31313}
     .sec p{margin:8px 0 0;font-size:17px;line-height:1.8;color:#222}
     .penalty-red{color:#e60000;font-weight:800}
+    .penalty-green{color:#009900;font-weight:800}
     .bottom-nav{position:fixed;left:0;bottom:0;width:100%;height:70px;background:#fff;border-top:1px solid #ddd;display:flex;justify-content:space-around;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.05);z-index:1000}
     .bottom-nav a{display:flex;align-items:center;justify-content:center;text-decoration:none;height:100%;width:33.33%}
     .bottom-nav img{width:50px;height:auto;display:block}
@@ -46,12 +47,15 @@
   </nav>
 
   <script>
+    // 🔴 赤・緑のハイライト関数
     function highlightPenalty(text){
       if(!text) return "";
-      const pattern = /(無罰|0打罰|一打罰|1打罰|二打罰|2打罰|三打罰|3打罰|[0-9]+打罰|○打罰)/g;
-      return text.replace(pattern, m => `<span class="penalty-red">${m}</span>`);
+      return text
+        .replace(/([0-9]+打罰|一打罰|二打罰|三打罰|○打罰)/g, "<span class='penalty-red'>$1</span>")
+        .replace(/(無罰|0打罰)/g, "<span class='penalty-green'>$1</span>");
     }
 
+    // 🔧 メイン処理
     (async () => {
       const params = new URLSearchParams(location.search);
       const id = params.get("id");
@@ -61,23 +65,42 @@
       const penEl   = document.getElementById("penBody");
       const backBtn = document.getElementById("backBtn");
 
-      const res = await fetch("rules.json?v=" + Date.now());
-　　　　if (!res.ok) throw new Error("fetch failed");
-　　　　const rules = await res.json();
+      try {
+        const res = await fetch("https://uta7770502.github.io/rules.json?v=" + Date.now(), { cache: "no-store" });
+        if (!res.ok) throw new Error("fetch failed");
 
+        const rules = await res.json();
         const rule = rules.find(r => String(r.id) === String(id));
         if (!rule) throw new Error("not found");
 
         titleEl.textContent = rule.title || "ルール";
 
+        // ✅ すべての可能性あるキーを包括
         const how =
-          rule.procedure || rule.how || rule.howto || rule.correct || rule.correctAction || rule.correctProcedure || "";
-        const pen =
-          rule.penalty || rule.penalties || rule.penaltyText || rule.sanction || rule.punishment || "";
+          rule.procedure ||
+          rule.correct ||
+          rule.correctMethod ||
+          rule.correctAction ||
+          rule.how ||
+          rule.howto ||
+          rule.detail ||
+          rule.action ||
+          "処置方法の情報が見つかりません。";
 
+        const pen =
+          rule.mistakePenalty ||
+          rule.penalty ||
+          rule.penalties ||
+          rule.penaltyText ||
+          rule.sanction ||
+          rule.punishment ||
+          "特に罰はありません。";
+
+        // ✅ 段落に分割＋装飾
         howEl.innerHTML = highlightPenalty(how).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
         penEl.innerHTML = highlightPenalty(pen).split(/\n+/).map(p=>`<p>${p}</p>`).join("");
 
+        // ✅ 戻るボタン
         backBtn.addEventListener('click', (e) => {
           e.preventDefault();
           if (document.referrer) history.back();
@@ -88,7 +111,7 @@
         titleEl.textContent = "内容を読み込めませんでした";
         howEl.innerHTML = "<p>処置方法の情報が見つかりません。</p>";
         penEl.innerHTML = "<p>ペナルティの情報が見つかりません。</p>";
-        console.error(e);
+        console.error("❌ rule_detail load error:", e);
       }
     })();
   </script>
