@@ -407,3 +407,14 @@ body {
     max-width: 340px;
   }
 }
+.btn.sub {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* 星と文字の間に余白 */
+}
+
+.fav-icon {
+  width: 22px;
+  height: auto;
+}
