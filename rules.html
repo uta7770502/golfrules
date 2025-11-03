@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ルール一覧 | 3タップルールズ</title>
   <style>
-    
-body {
+    body {
       background: #f9fff9;
       font-family: "Helvetica", sans-serif;
       margin: 0;
-      padding-bottom: 90px; /* ← トップページと同じに */
+      padding-bottom: 90px;
       -webkit-text-size-adjust: 100%;
     }
     header {
@@ -23,7 +22,6 @@ body {
       border-bottom-left-radius: 25px;
       border-bottom-right-radius: 25px;
     }
-
     .back-btn {
       display: block;
       width: 220px;
@@ -38,17 +36,14 @@ body {
       box-shadow: 0 5px 12px rgba(0,0,0,0.15);
       transition: 0.2s;
     }
-
     .back-btn:hover {
       background: #ffcc33;
       transform: translateY(-2px);
     }
-
     #searchArea {
       text-align: center;
       margin: 10px auto 20px;
     }
-
     #searchInput {
       width: 80%;
       max-width: 400px;
@@ -59,38 +54,31 @@ body {
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       outline: none;
     }
-
-    #search-results {
+    #rules-list {
       padding: 0 20px;
     }
-
-    .rule-item {
+    .rule-card {
+      display: block;
+      width: 90%;
+      max-width: 500px;
+      margin: 10px auto;
+      padding: 14px 0;
+      text-align: center;
       background: #fff;
-      border-radius: 6px;
-      padding: 12px;
-      border: 1px solid #ddd;
+      color: #333;
+      border-radius: 25px;
       font-size: 16px;
-      margin-bottom: 10px;
+      font-weight: 500;
+      text-decoration: none;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+      border: none;
       cursor: pointer;
       transition: 0.2s ease;
     }
-
-    .rule-item:hover {
+    .rule-card:hover {
       background: #eaf9e6;
+      transform: translateY(-2px);
     }
-
-    .local-badge {
-      display: inline-block;
-      background-color: #ffeaa7;
-      color: #444;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 3px 8px;
-      border-radius: 10px;
-      margin-left: 6px;
-    }
-
-    /* ✅ トップページと同じナビ設計 */
     .bottom-nav {
       position: fixed;
       left: 0; bottom: 0;
@@ -103,16 +91,11 @@ body {
       height: 70px;
       box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
       z-index: 1000;
-      
-      transform: translateZ(0);
     }
     .bottom-nav img {
       width: 50px;
       height: auto;
       display: block;
-    }
-    .bottom-nav a.active {
-      transform: translateY(-2px);
     }
   </style>
 </head>
@@ -126,64 +109,55 @@ body {
 
   <main id="rules-list"></main>
 
-<style>
-/* ✅ お気に入り一覧と統一した1行デザイン */
-.rule-card {
-  display: block;
-  width: 90%;
-  max-width: 500px;
-  margin: 10px auto;
-  padding: 14px 0;
-  text-align: center;
-  background: #fff;
-  color: #333;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: 500;
-  text-decoration: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-  border: none;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-.rule-card:hover {
-  background: #eaf9e6;
-  transform: translateY(-2px);
-}
-</style>
-
-  <div id="search-results"></div>
-
   <nav class="bottom-nav">
     <a href="index.html"><img src="home-icon.png" alt="ホーム" /></a>
     <a href="rules.html"><img src="book-icon.png" alt="ルール一覧" /></a>
     <a href="favorites.html"><img src="star-icon.png" alt="お気に入り" /></a>
   </nav>
 
-  
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const listContainer = document.getElementById("rules-list");
   const searchInput = document.getElementById("searchInput");
 
   try {
-  const jsonUrl = `${location.origin}${location.pathname.replace(/\/[^/]*$/, '')}/rules.json?v=${Date.now()}`;
-  const res = await fetch(jsonUrl);
-  if (!res.ok) throw new Error("ルールデータが読み込めませんでした");
-  const rules = await res.json();
+    // JSONデータを読み込み
+    const jsonUrl = `${location.origin}${location.pathname.replace(/\/[^/]*$/, '')}/rules.json?v=${Date.now()}`;
+    const res = await fetch(jsonUrl);
+    if (!res.ok) throw new Error("ルールデータが読み込めませんでした");
+    const rules = await res.json();
 
-  renderList(rules);
-    
-    // 🔍 検索機能
+    // 🔹 URLパラメータ「q=〇〇」を取得
+    const params = new URLSearchParams(location.search);
+    const query = params.get("q");
+
+    // 🔍 検索ボックスに反映
+    if (query) {
+      searchInput.value = query;
+      const filtered = filterRules(rules, query);
+      renderList(filtered);
+    } else {
+      renderList(rules);
+    }
+
+    // 🔍 検索イベント
     searchInput.addEventListener("input", () => {
       const q = searchInput.value.trim().toLowerCase();
-      const filtered = rules.filter(r =>
-        r.title.toLowerCase().includes(q) ||
-        (r.description && r.description.toLowerCase().includes(q))
-      );
+      const filtered = filterRules(rules, q);
       renderList(filtered);
     });
 
+    // 検索ロジック
+    function filterRules(all, keyword) {
+      if (!keyword) return all;
+      return all.filter(r =>
+        (r.title && r.title.toLowerCase().includes(keyword)) ||
+        (r.description && r.description.toLowerCase().includes(keyword)) ||
+        (r.detail && r.detail.toLowerCase().includes(keyword))
+      );
+    }
+
+    // 一覧描画
     function renderList(list) {
       if (!list.length) {
         listContainer.innerHTML = "<p>該当するルールがありません。</p>";
@@ -195,6 +169,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </button>
       `).join("");
     }
+
   } catch (err) {
     console.error(err);
     listContainer.innerHTML = "<p>ルールを読み込めませんでした。</p>";
