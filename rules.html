@@ -118,50 +118,71 @@
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const listContainer = document.getElementById("rules-list");
-  const searchInput = document.getElementById("searchInput");
+  const searchInput   = document.getElementById("searchInput");
 
+  // ✅ カテゴリ→検索語のゆるい対応表（タグが無くてもヒットさせる）
+  const KEYWORD_MAP = {
+    "ティー": ["ティー", "ティーショット", "ティーグラウンド"],
+    "フェアウェイ": ["フェアウェイ"],
+    "ラフ": ["ラフ"],
+    "バンカー": ["バンカー"],
+    "グリーン": ["グリーン", "グリーン上", "パッティンググリーン"],
+    "基本ルール": ["基本ルール", "基礎", "ストローク", "空振り", "ドロップ"],
+    "ローカルルール": ["ローカル", "ローカルルール", "特設", "白杭内プレー禁止"],
+    "コンペルール": ["コンペ", "新ペリ", "ダブルペリア", "ニアピン", "ドラコン", "HDCP"],
+    "マナー・エチケット": ["マナー", "エチケット", "安全", "スロープレー", "服装"],
+    "クラブ": ["クラブ", "クラブ選択", "用具", "14本", "違反クラブ"]
+  };
+
+  // ---------- ルール読み込み ----------
   try {
-    // JSONデータを読み込み
     const jsonUrl = `${location.origin}${location.pathname.replace(/\/[^/]*$/, '')}/rules.json?v=${Date.now()}`;
     const res = await fetch(jsonUrl);
     if (!res.ok) throw new Error("ルールデータが読み込めませんでした");
     const rules = await res.json();
 
-    // 🔹 URLパラメータ「q」または「category」を取得
-    const params = new URLSearchParams(location.search);
-    const query = params.get("q") || params.get("category");
+    // ---------- URLパラメータ(q / category) ----------
+    const params   = new URLSearchParams(location.search);
+    const qRaw     = params.get("q");
+    const catRaw   = params.get("category");
+    const query    = (qRaw ?? catRaw ?? "").trim();
 
-    // 🔍 検索またはカテゴリ指定時の処理
+    // 初期表示
     if (query) {
       searchInput.value = query;
-      const filtered = filterRules(rules, query);
-      renderList(filtered);
+      renderList(filterByQuery(rules, query));
     } else {
       renderList(rules);
     }
 
-    // 🔍 入力検索イベント
+    // 検索ボックス連動
     searchInput.addEventListener("input", () => {
-      const q = searchInput.value.trim().toLowerCase();
-      const filtered = filterRules(rules, q);
-      renderList(filtered);
+      const q = searchInput.value.trim();
+      renderList(filterByQuery(rules, q));
     });
 
-    // ✅ 検索ロジック
-    function filterRules(all, keyword) {
+    // ---------- 検索ロジック ----------
+    function filterByQuery(all, keyword) {
       if (!keyword) return all;
-      const lower = keyword.toLowerCase();
-      return all.filter(r =>
-        (r.title && r.title.toLowerCase().includes(lower)) ||
-        (r.description && r.description.toLowerCase().includes(lower)) ||
-        (r.detail && r.detail.toLowerCase().includes(lower)) ||
-        (r.category && r.category.toLowerCase().includes(lower))
-      );
+
+      // 対応表にあれば別名も含めて検索、無ければそのまま
+      const keys = KEYWORD_MAP[keyword] || [keyword];
+      const keysLower = keys.map(k => k.toLowerCase());
+
+      return all.filter(r => {
+        const text = [
+          r.title, r.description, r.detail,
+          r.category, (r.tags || []).join(" ")
+        ].filter(Boolean).join(" ").toLowerCase();
+
+        // どれか1つでも含まれればヒット
+        return keysLower.some(k => text.includes(k));
+      });
     }
 
-    // ✅ 一覧描画
+    // ---------- 一覧描画 ----------
     function renderList(list) {
-      if (!list.length) {
+      if (!list || !list.length) {
         listContainer.innerHTML = "<p>該当するルールがありません。</p>";
         return;
       }
@@ -171,7 +192,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         </button>
       `).join("");
     }
-
   } catch (err) {
     console.error(err);
     listContainer.innerHTML = "<p>ルールを読み込めませんでした。</p>";
