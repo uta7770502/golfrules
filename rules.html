@@ -130,7 +130,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 🔹 URLパラメータ「q=〇〇」を取得
     const params = new URLSearchParams(location.search);
 const query = params.get("q") || params.get("category"); // ← この行を追加！
-
+// 🔍 category検索でもルールを絞り込み
+const category = query;
+const filtered = rules.filter(r =>
+  (r.title && r.title.includes(category)) ||
+  (r.description && r.description.includes(category)) ||
+  (r.category && r.category.includes(category))
+);
+if (filtered.length > 0) {
+  renderList(filtered);
+} else {
+  renderList([]);
+}
     // 🔍 検索ボックスに反映
     if (query) {
       searchInput.value = query;
