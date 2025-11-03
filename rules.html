@@ -4,100 +4,114 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ルール一覧 | 3タップルールズ</title>
-  <style>
-    body {
-      background: #f9fff9;
-      font-family: "Helvetica", sans-serif;
-      margin: 0;
-      padding-bottom: 90px;
-      -webkit-text-size-adjust: 100%;
+  <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const listContainer = document.getElementById("rules-list");
+  const searchInput   = document.getElementById("searchInput");
+
+  // ---- 正規化＆同義語マップ ---------------------------------
+  const normalize = (s="") =>
+    s.toLowerCase()
+     .replace(/\s|　/g, "")         // 空白除去（半角/全角）
+     .replace(/[－―—–]/g, "-")     // ダッシュ類
+     .replace(/ティーイング?エリア/g, "ティー")
+     .replace(/グリーン上|パッティンググリーン/g, "グリーン")
+     .replace(/バンカ-/g, "バンカー")
+     .replace(/ペナ(ルティ)?エリア|ハザード/g, "ペナルティエリア")
+     .replace(/赤杭|ラテラル/g, "赤杭")
+     .replace(/黄杭/g, "黄杭")
+     .replace(/ob/g, "ob")
+     .replace(/アンプレ(ヤブル)?/g, "アンプレ")
+     .replace(/修理地/g, "修理地")
+     .replace(/救済/g, "救済");
+
+  // キーワードを同義語セットに展開（どれか当たればOK）
+  const expand = (kw) => {
+    const n = normalize(kw);
+    const set = new Set([n]);
+
+    if (n.includes("ティー")) { set.add("ティー"); }
+    if (n.includes("グリーン")) { set.add("グリーン"); }
+    if (n.includes("フェアウェイ")) { set.add("フェアウェイ"); }
+    if (n.includes("ラフ")) { set.add("ラフ"); }
+    if (n.includes("バンカー")) { set.add("バンカー"); }
+    if (n.includes("赤杭")) { set.add("ペナルティエリア"); set.add("ラテラル"); }
+    if (n.includes("黄杭")) { set.add("ペナルティエリア"); }
+    if (n.includes("ペナルティエリア")) { set.add("赤杭"); set.add("黄杭"); }
+    if (n.includes("アンプレ")) { set.add("アンプレ"); set.add("アンプレヤブル"); }
+    if (n.includes("基本ルール")) { set.add("一般規則"); }
+    if (n.includes("ローカル")) { set.add("ローカルルール"); }
+    if (n.includes("コンペ")) { set.add("コンペルール"); }
+    if (n.includes("マナー")) { set.add("マナー・エチケット"); set.add("エチケット"); }
+    if (n.includes("クラブ")) { set.add("装備"); }
+
+    return Array.from(set);
+  };
+
+  // 1つのルールを正規化テキスト化
+  const packRule = (r) => normalize(
+    `${r.title||""} ${r.description||""} ${r.detail||""} ${r.category||""}`
+  );
+
+  // 実データ読み込み
+  let rules = [];
+  try {
+    const res = await fetch("rules.json?v=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) throw new Error("fetch error");
+    rules = await res.json();
+  } catch (e) {
+    console.error("❌ rules load error:", e);
+    listContainer.innerHTML = "<p>ルールを読み込めませんでした。</p>";
+    return;
+  }
+
+  // URL パラメータ（q / category 両対応）
+  const params = new URLSearchParams(location.search);
+  const rawQuery = (params.get("q") || params.get("category") || "").trim();
+
+  // 初回表示
+  if (rawQuery) {
+    searchInput.value = rawQuery;
+    renderList(filterRules(rules, rawQuery));
+  } else {
+    renderList(rules);
+  }
+
+  // 入力検索
+  searchInput.addEventListener("input", () => {
+    renderList(filterRules(rules, searchInput.value));
+  });
+
+  // 絞り込み本体（同義語・部分一致・全角半角吸収）
+  function filterRules(all, keyword="") {
+    const q = keyword.trim();
+    if (!q) return all;
+
+    // カンマ区切り／空白区切りも許容（複数ワード AND）
+    const words = q.split(/[,、\s　]+/).filter(Boolean);
+    const expandedBags = words.map(expand); // 各ワード→同義語袋
+
+    return all.filter(r => {
+      const hay = packRule(r); // ルールの統合テキスト
+      // すべてのワード袋について「どれか1つでも当たる」= AND のつもり
+      return expandedBags.every(bag => bag.some(key => hay.includes(key)));
+    });
+  }
+
+  // 一覧描画（デザイン変更なし）
+  function renderList(list) {
+    if (!list || !list.length) {
+      listContainer.innerHTML = "<p>該当するルールがありません。</p>";
+      return;
     }
-    header {
-      background: #00bfa5;
-      color: #fff;
-      text-align: center;
-      padding: 16px 0;
-      font-size: 24px;
-      font-weight: bold;
-      border-bottom-left-radius: 25px;
-      border-bottom-right-radius: 25px;
-    }
-    .back-btn {
-      display: block;
-      width: 220px;
-      text-align: center;
-      background: #FFD84D;
-      color: #333;
-      text-decoration: none;
-      margin: 20px auto;
-      font-weight: bold;
-      padding: 10px 0;
-      border-radius: 40px;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.15);
-      transition: 0.2s;
-    }
-    .back-btn:hover {
-      background: #ffcc33;
-      transform: translateY(-2px);
-    }
-    #searchArea {
-      text-align: center;
-      margin: 10px auto 20px;
-    }
-    #searchInput {
-      width: 80%;
-      max-width: 400px;
-      padding: 10px 14px;
-      font-size: 16px;
-      border-radius: 25px;
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      outline: none;
-    }
-    #rules-list {
-      padding: 0 20px;
-    }
-    .rule-card {
-      display: block;
-      width: 90%;
-      max-width: 500px;
-      margin: 10px auto;
-      padding: 14px 0;
-      text-align: center;
-      background: #fff;
-      color: #333;
-      border-radius: 25px;
-      font-size: 16px;
-      font-weight: 500;
-      text-decoration: none;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-      border: none;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-    .rule-card:hover {
-      background: #eaf9e6;
-      transform: translateY(-2px);
-    }
-    .bottom-nav {
-      position: fixed;
-      left: 0; bottom: 0;
-      width: 100%;
-      background: #fff;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      height: 70px;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-      z-index: 1000;
-    }
-    .bottom-nav img {
-      width: 50px;
-      height: auto;
-      display: block;
-    }
-  </style>
+    listContainer.innerHTML = list.map(r => `
+      <button class="rule-card" onclick="location.href='rule.html?id=${r.id}'">
+        ${r.title}
+      </button>
+    `).join("");
+  }
+});
+</script>
 </head>
 <body>
   <header>ルール一覧</header>
