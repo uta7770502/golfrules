@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>カテゴリー統一チェック</title>
+  <style>
+    body { font-family: sans-serif; background: #f9fff9; padding: 20px; }
+    pre { background: #fff; padding: 12px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body>
+  <h1>📋 ルールカテゴリー統一チェック</h1>
+  <div id="result">読み込み中...</div>
+
+  <script>
+    // ✅ 同義語吸収関数（normalize）
+    const normalize = (s = "") =>
+      s
+        .toLowerCase()
+        .replace(/\s|　/g, "")
+        .replace(/[－―—–]/g, "-")
+        .replace(/ティーイング?エリア/g, "ティー")
+        .replace(/フェアウエイ|フェアｳｴｲ|ﾌｪｱｳｴｲ|ﾌｪｱｳｴｰ|フェアウエー/g, "フェアウェイ")
+        .replace(/ラフ地帯|ｾﾐﾗﾌ/g, "ラフ")
+        .replace(/グリーン上|パッティンググリーン/g, "グリーン")
+        .replace(/ペナ(ルティ)?エリア|ハザード/g, "ペナルティエリア")
+        .replace(/赤杭|ラテラル/g, "赤杭")
+        .replace(/黄杭/g, "黄杭")
+        .replace(/アンプレ(ヤブル)?/g, "アンプレ")
+        .replace(/マナー・?エチケット|ｴﾁｹｯﾄ/g, "マナー・エチケット")
+        .replace(/基本ルール|一般規則/g, "基本ルール")
+        .trim();
+
+    (async () => {
+      const result = document.getElementById("result");
+      try {
+        const res = await fetch("rules.json");
+        const rules = await res.json();
+
+        // カテゴリを抽出
+        const categoryMap = {};
+        for (const r of rules) {
+          const raw = (r.category || "").trim();
+          if (!raw) continue;
+          const norm = normalize(raw);
+          if (!categoryMap[norm]) categoryMap[norm] = new Set();
+          categoryMap[norm].add(raw);
+        }
+
+        // 出力整形
+        let html = "<pre>";
+        for (const [norm, originals] of Object.entries(categoryMap)) {
+          html += `✅ 統一後: ${norm}\n`;
+          html += `　┗ 原文: ${Array.from(originals).join(", ")}\n\n`;
+        }
+        html += "</pre>";
+        result.innerHTML = html;
+      } catch (e) {
+        result.textContent = "rules.json を読み込めませんでした。";
+        console.error(e);
+      }
+    })();
+  </script>
+</body>
+</html>
