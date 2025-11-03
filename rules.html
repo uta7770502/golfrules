@@ -137,18 +137,28 @@
        .replace(/救済/g, "救済");
 
     const expand = (kw) => {
-      const n = normalize(kw);
-      const set = new Set([n]);
-      if (n.includes("ティー")) set.add("ティーイングエリア");
-      if (n.includes("グリーン")) set.add("グリーン上").add("パッティンググリーン");
-      if (n.includes("赤杭")) set.add("ペナルティエリア").add("ラテラル");
-      if (n.includes("黄杭")) set.add("ペナルティエリア");
-      if (n.includes("ペナルティエリア")) set.add("赤杭").add("黄杭");
-      if (n.includes("アンプレ")) set.add("アンプレヤブル");
-      if (n.includes("基本ルール")) set.add("一般規則");
-      if (n.includes("マナー")) set.add("エチケット");
-      return Array.from(set);
-    };
+  const n = normalize(kw);
+  const set = new Set([n]);
+
+  // 🟢 同義語・別表記対応
+  if (n.includes("ティー")) set.add("ティーイングエリア");
+  if (n.includes("フェアウェイ")) set.add("フェアウエイ").add("フェアウエー");
+  if (n.includes("ラフ")) set.add("セミラフ").add("ラフ地帯");
+  if (n.includes("グリーン")) set.add("グリーン上").add("パッティンググリーン");
+  if (n.includes("バンカー")) set.add("砂地").add("バンカ―").add("バンカ");
+  if (n.includes("赤杭")) set.add("ペナルティエリア").add("ラテラル");
+  if (n.includes("黄杭")) set.add("ペナルティエリア");
+  if (n.includes("ペナルティエリア")) set.add("赤杭").add("黄杭");
+  if (n.includes("アンプレ")) set.add("アンプレヤブル");
+  if (n.includes("基本ルール")) set.add("一般規則");
+  if (n.includes("ローカル")) set.add("ローカルルール").add("特設ティー");
+  if (n.includes("コンペ")) set.add("競技ルール").add("競技会").add("スコア集計");
+  if (n.includes("マナー")) set.add("エチケット").add("プレー中のマナー");
+  if (n.includes("クラブ")) set.add("用具").add("クラブ規則");
+  if (n.includes("救済")) set.add("ドロップ").add("救済処置");
+
+  return Array.from(set);
+};
 
     const packRule = (r) => normalize(
       `${r.title||""} ${r.description||""} ${r.detail||""} ${r.category||""}`
