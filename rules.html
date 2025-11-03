@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // 🔹 URLパラメータ「q=〇〇」を取得
     const params = new URLSearchParams(location.search);
-    const query = params.get("q");
+const query = params.get("q") || params.get("category"); // ← この行を追加！
 
     // 🔍 検索ボックスに反映
     if (query) {
