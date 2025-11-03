@@ -127,21 +127,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!res.ok) throw new Error("ルールデータが読み込めませんでした");
     const rules = await res.json();
 
-    // 🔹 URLパラメータ「q=〇〇」を取得
+    // 🔹 URLパラメータ「q」または「category」を取得
     const params = new URLSearchParams(location.search);
-const query = params.get("q") || params.get("category"); // ← この行を追加！// 🔍 category検索でもルールを絞り込み
-const category = query;
-const filtered = rules.filter(r =>
-  (r.title && r.title.includes(category)) ||
-  (r.description && r.description.includes(category)) ||
-  (r.category && r.category.includes(category))
-);
-if (filtered.length > 0) {
-  renderList(filtered);
-} else {
-  renderList([]);
-}
-    // 🔍 検索ボックスに反映
+    const query = params.get("q") || params.get("category");
+
+    // 🔍 検索またはカテゴリ指定時の処理
     if (query) {
       searchInput.value = query;
       const filtered = filterRules(rules, query);
@@ -150,24 +140,26 @@ if (filtered.length > 0) {
       renderList(rules);
     }
 
-    // 🔍 検索イベント
+    // 🔍 入力検索イベント
     searchInput.addEventListener("input", () => {
       const q = searchInput.value.trim().toLowerCase();
       const filtered = filterRules(rules, q);
       renderList(filtered);
     });
 
-    // 検索ロジック
+    // ✅ 検索ロジック
     function filterRules(all, keyword) {
       if (!keyword) return all;
+      const lower = keyword.toLowerCase();
       return all.filter(r =>
-        (r.title && r.title.toLowerCase().includes(keyword)) ||
-        (r.description && r.description.toLowerCase().includes(keyword)) ||
-        (r.detail && r.detail.toLowerCase().includes(keyword))
+        (r.title && r.title.toLowerCase().includes(lower)) ||
+        (r.description && r.description.toLowerCase().includes(lower)) ||
+        (r.detail && r.detail.toLowerCase().includes(lower)) ||
+        (r.category && r.category.toLowerCase().includes(lower))
       );
     }
 
-    // 一覧描画
+    // ✅ 一覧描画
     function renderList(list) {
       if (!list.length) {
         listContainer.innerHTML = "<p>該当するルールがありません。</p>";
