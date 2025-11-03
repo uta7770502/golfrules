@@ -123,40 +123,40 @@ document.addEventListener("DOMContentLoaded", async () => {
   const listContainer = document.getElementById("rules-list");
   const searchInput = document.getElementById("searchInput");
 
-  // 🧩 正規化関数（全角→半角・大文字→小文字）
+  // 🧩 正規化：全角→半角、濁点吸収、全カナ小文字
   const normalize = (s = "") =>
     s
       .toLowerCase()
+      .replace(/[Ａ-Ｚａ-ｚ０-９]/g, (ch) =>
+        String.fromCharCode(ch.charCodeAt(0) - 0xfee0)
+      )
       .replace(/\s|　/g, "")
       .replace(/[－―—–]/g, "-")
-      .replace(/ティーイング?エリア/g, "ティー")
-      .replace(/フェアウエイ|フェアウエー/g, "フェアウェイ")
-      .replace(/グリーン上|パッティンググリーン/g, "グリーン")
-      .replace(/ペナ(ルティ)?エリア|ハザード/g, "ペナルティエリア")
-      .replace(/赤杭|ラテラル/g, "赤杭")
+      .replace(/ｳｴｲ|ｳｪｲ/g, "ウェイ")
+      .replace(/ﾃｨｰ|ﾃｨ/g, "ティー")
+      .replace(/ﾌｪｱｳｪｲ|ﾌｪｱｳｴｲ|ﾌｪｱｳｴｰ|フェアウエイ|フェアウエー/g, "フェアウェイ")
+      .replace(/グリーン上|ﾊﾟｯﾃｨﾝｸﾞｸﾞﾘｰﾝ/g, "グリーン")
+      .replace(/ペナ(ルティ)?エリア|ﾍﾟﾅﾙﾃｨｴﾘｱ|ﾊｻﾞｰﾄﾞ/g, "ペナルティエリア")
+      .replace(/赤杭|ﾗﾃﾗﾙ/g, "赤杭")
       .replace(/黄杭/g, "黄杭")
-      .replace(/アンプレ(ヤブル)?/g, "アンプレ")
-      .replace(/救済/g, "救済");
+      .replace(/アンプレ(ヤブル)?|ｱﾝﾌﾟﾚ/g, "アンプレ")
+      .replace(/マナー・?エチケット|ｴﾁｹｯﾄ/g, "マナー・エチケット")
+      .replace(/一般規則/g, "基本ルール");
 
-  // 🧩 同義語・関連語拡張
+  // 🧩 同義語拡張（ボタン⇄categoryのゆれ対応）
   const expand = (kw) => {
     const n = normalize(kw);
     const set = new Set([n]);
-
-    // 場所カテゴリ
     if (n.includes("ティー")) set.add("ティーイングエリア");
     if (n.includes("フェアウェイ")) set.add("フェアウエイ").add("フェアウエー");
     if (n.includes("ラフ")) set.add("セミラフ").add("ラフ地帯");
-    if (n.includes("バンカー")) set.add("砂地").add("バンカ―");
+    if (n.includes("バンカー")) set.add("砂地");
     if (n.includes("グリーン")) set.add("グリーン上").add("パッティンググリーン");
-
-    // 種類カテゴリ
-    if (n.includes("基本ルール")) set.add("一般規則").add("基本的なルール");
+    if (n.includes("基本ルール")) set.add("一般規則");
     if (n.includes("ローカル")) set.add("ローカルルール").add("特設ティー");
-    if (n.includes("コンペ")) set.add("コンペルール").add("競技ルール").add("競技会").add("スコア集計");
+    if (n.includes("コンペ")) set.add("コンペルール").add("競技").add("競技ルール").add("スコア集計");
     if (n.includes("マナー")) set.add("マナー・エチケット").add("エチケット");
     if (n.includes("クラブ")) set.add("クラブ規則").add("用具");
-
     return Array.from(set);
   };
 
@@ -175,11 +175,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // 🟢 URLパラメータ取得（q または category）
+  // 🟢 URLパラメータ取得
   const params = new URLSearchParams(location.search);
   const rawQuery = (params.get("q") || params.get("category") || "").trim();
 
-  // 初回表示
   if (rawQuery) {
     searchInput.value = rawQuery;
     renderList(filterRules(rules, rawQuery));
@@ -192,23 +191,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderList(filterRules(rules, searchInput.value));
   });
 
-  // 🔎 フィルター処理
+  // 🔎 強化フィルター
   function filterRules(all, keyword = "") {
-    const q = keyword.trim();
+    const q = normalize(keyword);
     if (!q) return all;
 
-    const words = q.split(/[,、\s　]+/).filter(Boolean);
-    const expandedBags = words.map(expand);
+    const expanded = expand(q);
 
     return all.filter((r) => {
       const hay = packRule(r);
-      return expandedBags.some((bag) => bag.some((key) => hay.includes(key)));
+      // どのexpanded語でも部分一致したらOK
+      return expanded.some((key) => hay.includes(key));
     });
   }
 
-  // 🟩 ルール一覧を描画
+  // 🟩 表示
   function renderList(list) {
-    if (!list || !list.length) {
+    if (!list.length) {
       listContainer.innerHTML = "<p>該当するルールがありません。</p>";
       return;
     }
@@ -217,8 +216,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         (r) => `
         <button class="rule-card" onclick="location.href='rule.html?id=${r.id}'">
           ${r.title}
-        </button>
-      `
+        </button>`
       )
       .join("");
   }
